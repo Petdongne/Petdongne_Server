@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.review.domain.PetResidenceReview;
+import org.songeun.petdongne_server.review.domain.ResidenceReview;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
@@ -20,11 +20,11 @@ public class SurveyResponse extends BaseEntity {
     private SurveyOption surveyOption;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_residence_review_id")
-    private PetResidenceReview residenceReview;
+    @JoinColumn(name = "residence_review_id")
+    private ResidenceReview residenceReview;
 
     @Builder
-    private SurveyResponse(SurveyOption surveyOption, PetResidenceReview residenceReview) {
+    private SurveyResponse(SurveyOption surveyOption, ResidenceReview residenceReview) {
         this.surveyOption = surveyOption;
         this.residenceReview = residenceReview;
     }

@@ -14,7 +14,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PetResidenceReview extends BaseEntity {
+public class ResidenceReview extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -42,7 +42,7 @@ public class PetResidenceReview extends BaseEntity {
     private User user;
 
     @Builder
-    private PetResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex) {
+    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex) {
         this.rating = rating;
         this.reviewText = reviewText;
         this.lastOccupiedYear = lastOccupiedYear;

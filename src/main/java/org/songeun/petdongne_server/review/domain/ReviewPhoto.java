@@ -23,11 +23,11 @@ public class ReviewPhoto extends BaseEntity {
     private Boolean petPhoto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_residence_review_id")
-    private PetResidenceReview review;
+    @JoinColumn(name = "residence_review_id")
+    private ResidenceReview review;
 
     @Builder
-    private ReviewPhoto(String url, Boolean petPhoto, PetResidenceReview review) {
+    private ReviewPhoto(String url, Boolean petPhoto, ResidenceReview review) {
         this.url = url;
         this.petPhoto = petPhoto;
         this.review = review;
