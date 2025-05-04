@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.global.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.songeun.petdongne_server.domain.facility.entity.FacilityType;
+import org.songeun.petdongne_server.facility.domain.FacilityType;
 
 @Converter
 public class FacilityTypeConverter implements AttributeConverter<FacilityType, String> {

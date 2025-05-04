@@ -1,5 +1,4 @@
-package org.songeun.petdongne_server.domain.review.entity;
-
+package org.songeun.petdongne_server.user.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +9,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewPhoto extends BaseEntity {
+public class ProfileImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,18 +18,9 @@ public class ReviewPhoto extends BaseEntity {
     @NotNull
     private String url;
 
-    @NotNull
-    private Boolean petPhoto;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_residence_review_id")
-    private PetResidenceReview review;
-
     @Builder
-    private ReviewPhoto(String url, Boolean petPhoto, PetResidenceReview review) {
+    private ProfileImage(String url) {
         this.url = url;
-        this.petPhoto = petPhoto;
-        this.review = review;
     }
 
 }

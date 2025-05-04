@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.domain.facility.entity;
+package org.songeun.petdongne_server.facility.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
