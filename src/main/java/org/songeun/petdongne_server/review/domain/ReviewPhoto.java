@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.review.entity;
+package org.songeun.petdongne_server.review.domain;
 
 
 import jakarta.persistence.*;

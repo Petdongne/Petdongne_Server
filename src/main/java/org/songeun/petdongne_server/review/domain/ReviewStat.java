@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.review.entity;
+package org.songeun.petdongne_server.review.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.residentialComplex.entity.ResidentialComplex;
+import org.songeun.petdongne_server.residentialComplex.domain.ResidentialComplex;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity

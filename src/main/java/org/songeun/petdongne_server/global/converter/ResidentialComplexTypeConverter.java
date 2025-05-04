@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.global.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.songeun.petdongne_server.residentialComplex.entity.ResidentialComplexType;
+import org.songeun.petdongne_server.residentialComplex.domain.ResidentialComplexType;
 
 @Converter
 public class ResidentialComplexTypeConverter implements AttributeConverter<ResidentialComplexType, String> {

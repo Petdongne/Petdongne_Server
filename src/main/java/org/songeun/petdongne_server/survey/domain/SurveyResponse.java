@@ -1,10 +1,10 @@
-package org.songeun.petdongne_server.survey.entity;
+package org.songeun.petdongne_server.survey.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.review.entity.PetResidenceReview;
+import org.songeun.petdongne_server.review.domain.PetResidenceReview;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
