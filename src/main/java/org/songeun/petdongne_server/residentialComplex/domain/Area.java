@@ -16,7 +16,6 @@ public class Area extends BaseEntity {
     private Long id;
 
     @NotNull
-    @Column(precision = 6, scale = 2)
     private Double areaInSquareMeters;
 
     @ManyToOne(fetch = FetchType.LAZY)

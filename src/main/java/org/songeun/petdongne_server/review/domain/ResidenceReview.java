@@ -23,7 +23,6 @@ public class ResidenceReview extends BaseEntity {
     @NotNull
     @DecimalMin("0.0")
     @DecimalMax("5.0")
-    @Column(precision = 2, scale = 1)
     private Double rating;
 
     @NotNull

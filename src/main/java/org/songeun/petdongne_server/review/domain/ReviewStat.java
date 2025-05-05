@@ -24,7 +24,6 @@ public class ReviewStat extends BaseEntity {
     @NotNull
     @DecimalMin("0.00")
     @DecimalMax("5.00")
-    @Column(precision = 3, scale = 2)
     private Double averageRating;
 
     @OneToOne(fetch = FetchType.LAZY)
