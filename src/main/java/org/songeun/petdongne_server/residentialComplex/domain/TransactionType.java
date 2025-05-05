@@ -1,12 +1,13 @@
 package org.songeun.petdongne_server.residentialComplex.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TransactionType {
 
     SALE("SALE", "매매"),
