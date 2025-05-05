@@ -1,12 +1,13 @@
 package org.songeun.petdongne_server.facility.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
-@AllArgsConstructor
 @Getter
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum FacilityType {
 
     VET("VET", "동물 병원"),
@@ -25,3 +26,4 @@ public enum FacilityType {
     }
 
 }
+

@@ -1,12 +1,13 @@
 package org.songeun.petdongne_server.residentialComplex.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
-@AllArgsConstructor
 @Getter
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ResidentialComplexType {
 
     OFFICETEL("OFFICETEL", "오피스텔"),
