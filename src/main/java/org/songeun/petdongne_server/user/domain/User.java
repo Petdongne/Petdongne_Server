@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
