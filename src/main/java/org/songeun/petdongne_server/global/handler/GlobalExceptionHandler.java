@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.global.common.ErrorStatus;
-import org.songeun.petdongne_server.global.exception.ApplicationException;
+import org.songeun.petdongne_server.global.exception.SystemException;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -67,13 +67,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * ApplicationException을 handling 합니다.
+     * SystemException을 handling 합니다.
      */
-    @ExceptionHandler(ApplicationException.class)
+    @ExceptionHandler(SystemException.class)
     public ResponseEntity<ApiResponse<Object>> handleBusinessException(
-            ApplicationException e
+            SystemException e
     ) {
-        log.warn(">>> handle: ApplicationException | " +e.getStatus() + ": "+ e.getMessage());
+        log.warn(">>> handle: SystemException | " +e.getStatus() + ": "+ e.getMessage());
 
         return ApiResponse.fail(e.getStatus(), e.getMessage());
     }
