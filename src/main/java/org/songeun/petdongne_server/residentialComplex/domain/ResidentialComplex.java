@@ -34,7 +34,7 @@ public class ResidentialComplex extends BaseEntity {
     private LocalDate approvalDate;
 
     @Builder
-    public ResidentialComplex(String name, ResidentialComplexType type, Point<G2D> location, LocalDate approvalDate) {
+    private ResidentialComplex(String name, ResidentialComplexType type, Point<G2D> location, LocalDate approvalDate) {
         this.name = name;
         this.type = type;
         this.location = location;
