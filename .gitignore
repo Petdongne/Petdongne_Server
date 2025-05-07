@@ -1,3 +1,6 @@
+# queryDSL Q type
+/src/main/generated/
+
 *.properties
 *.yaml
 *.yml
