@@ -33,6 +33,14 @@ public class ResidentialComplex extends BaseEntity {
     @NotNull
     private LocalDate approvalDate;
 
+    public static ResidentialComplex of(String name, ResidentialComplexType type, Point<G2D> location, LocalDate approvalDate){
+        return ResidentialComplex.builder()
+                .name(name)
+                .type(type)
+                .location(location)
+                .approvalDate(approvalDate).build();
+    }
+
     @Builder
     private ResidentialComplex(String name, ResidentialComplexType type, Point<G2D> location, LocalDate approvalDate) {
         this.name = name;
