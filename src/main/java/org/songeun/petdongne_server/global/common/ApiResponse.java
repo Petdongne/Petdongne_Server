@@ -18,14 +18,14 @@ public class ApiResponse<T> {
     private final T data;
 
     public static <T> ResponseEntity<ApiResponse<T>> ok(T data) {
-        return success(SuccessStatus.OK, data);
+        return success(GlobalSuccessStatus.OK, data);
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> created(T data) {
-        return success(SuccessStatus.CREATED, data);
+        return success(GlobalSuccessStatus.CREATED, data);
     }
 
-    public static <T> ResponseEntity<ApiResponse<T>> success(SuccessStatus status, T data) {
+    public static <T> ResponseEntity<ApiResponse<T>> success(GlobalSuccessStatus status, T data) {
         return ResponseEntity.status(status.getHttpStatus()).body(
                 new ApiResponse<>(true, status.getCode(), status.getMessage(), data)
         );

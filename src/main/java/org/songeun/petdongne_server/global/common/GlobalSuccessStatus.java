@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum SuccessStatus {
+public enum GlobalSuccessStatus {
 
     /**
      * COMMON
