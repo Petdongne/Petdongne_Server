@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.review.domain;
+package org.songeun.petdongne_server.review.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
