@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.user.domain;
+package org.songeun.petdongne_server.user.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
