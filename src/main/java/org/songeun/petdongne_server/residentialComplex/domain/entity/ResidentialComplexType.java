@@ -3,8 +3,11 @@ package org.songeun.petdongne_server.residentialComplex.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
+
+import static org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus.RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,7 +26,7 @@ public enum ResidentialComplexType {
         return Arrays.stream(ResidentialComplexType.values())
                 .filter(t-> t.code.equals(code))
                 .findAny()
-                .orElseThrow(()-> new RuntimeException("에엥"));
+                .orElseThrow(()-> new BusinessException(RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND));
     }
 
 }
