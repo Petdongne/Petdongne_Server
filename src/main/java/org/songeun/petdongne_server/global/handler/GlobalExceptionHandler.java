@@ -3,7 +3,7 @@ package org.songeun.petdongne_server.global.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.global.common.ApiResponse;
-import org.songeun.petdongne_server.global.common.ErrorStatus;
+import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
 import org.songeun.petdongne_server.global.exception.SystemException;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     ) {
         log.warn(">>> handle: MissingServletRequestParameterException", e);
 
-        return ApiResponse.fail(ErrorStatus.BAD_REQUEST, e.getMessage());
+        return ApiResponse.fail(GlobalErrorStatus.BAD_REQUEST, e.getMessage());
     }
 
     /**
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     ) {
         log.warn(">>> handle: HttpRequestMethodNotSupportedException", e);
 
-        return ApiResponse.fail(ErrorStatus.METHOD_NOT_ALLOWED, e.getMessage());
+        return ApiResponse.fail(GlobalErrorStatus.METHOD_NOT_ALLOWED, e.getMessage());
     }
 
     /**
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     ) {
         log.warn(">>> handle: NoResourceException", e);
 
-        return ApiResponse.fail(ErrorStatus.NOT_FOUND, e.getMessage());
+        return ApiResponse.fail(GlobalErrorStatus.NOT_FOUND, e.getMessage());
     }
 
     /**
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
         log.error("예상치 못한 오류 발생: {}", e.getMessage(), e);
         log.error("발생 지점: {}", e.getStackTrace()[0]);
 
-        return ApiResponse.fail(ErrorStatus.INTERNAL_SERVER_ERROR);
+        return ApiResponse.fail(GlobalErrorStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
