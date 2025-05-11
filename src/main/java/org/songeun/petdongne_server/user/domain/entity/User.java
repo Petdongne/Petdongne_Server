@@ -32,6 +32,16 @@ public class User extends BaseEntity {
     @JoinColumn(name = "profile_image_id")
     private ProfileImage profileImage;
 
+    public static User of(String nickname, String email, String providerId, ProfileImage profileImage){
+
+        return User.builder()
+                .nickname(nickname)
+                .email(email)
+                .providerId(providerId)
+                .profileImage(profileImage)
+                .build();
+    }
+
     @Builder
     private User(String nickname, String email, String providerId, ProfileImage profileImage) {
         this.nickname = nickname;

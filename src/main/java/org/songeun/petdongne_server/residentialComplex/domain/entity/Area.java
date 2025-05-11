@@ -22,6 +22,13 @@ public class Area extends BaseEntity {
     @JoinColumn(name = "residential_complex_id")
     private ResidentialComplex residentialComplex;
 
+    public static Area of(Double areaInSquareMeters, ResidentialComplex residentialComplex){
+
+        return Area.builder()
+                .areaInSquareMeters(areaInSquareMeters)
+                .residentialComplex(residentialComplex).build();
+    }
+
     @Builder
     private Area(Double areaInSquareMeters, ResidentialComplex residentialComplex) {
         this.areaInSquareMeters = areaInSquareMeters;
