@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.residentialComplex.domain.ResidentialComplex;
+import org.songeun.petdongne_server.residentialComplex.domain.entity.ResidentialComplex;
 import org.songeun.petdongne_server.user.domain.User;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
