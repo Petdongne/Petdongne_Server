@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.survey.domain;
+package org.songeun.petdongne_server.survey.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
