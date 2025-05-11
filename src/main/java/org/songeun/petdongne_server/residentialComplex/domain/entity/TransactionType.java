@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.residentialComplex.domain;
+package org.songeun.petdongne_server.residentialComplex.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
