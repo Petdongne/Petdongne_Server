@@ -18,6 +18,12 @@ public class ProfileImage extends BaseEntity {
     @NotNull
     private String url;
 
+    public ProfileImage of(String url) {
+
+        return ProfileImage.builder()
+                .url(url).build();
+    }
+
     @Builder
     private ProfileImage(String url) {
         this.url = url;

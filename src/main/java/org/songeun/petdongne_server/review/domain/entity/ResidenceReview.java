@@ -40,12 +40,23 @@ public class ResidenceReview extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public static ResidenceReview of(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex, User user) {
+
+        return ResidenceReview.builder()
+                .rating(rating)
+                .reviewText(reviewText)
+                .lastOccupiedYear(lastOccupiedYear)
+                .residentialComplex(residentialComplex)
+                .user(user).build();
+    }
+
     @Builder
-    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex) {
+    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex, User user) {
         this.rating = rating;
         this.reviewText = reviewText;
         this.lastOccupiedYear = lastOccupiedYear;
         this.residentialComplex = residentialComplex;
+        this.user = user;
     }
 
 }

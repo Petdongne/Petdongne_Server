@@ -33,6 +33,14 @@ public class SurveyOptionStat extends BaseEntity {
     @JoinColumn(name = "survey_option_id")
     private SurveyOption surveyOption;
 
+    public static SurveyOptionStat of(Integer selectedCount, ResidentialComplex residentialComplex, SurveyOption surveyOption){
+
+        return SurveyOptionStat.builder()
+                .selectedCount(selectedCount)
+                .residentialComplex(residentialComplex)
+                .surveyOption(surveyOption).build();
+    }
+
     @Builder
     private SurveyOptionStat(Integer selectedCount, ResidentialComplex residentialComplex, SurveyOption surveyOption) {
         this.selectedCount = selectedCount == null ? 0 : selectedCount;

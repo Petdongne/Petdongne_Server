@@ -24,6 +24,13 @@ public class SurveyOption extends BaseEntity {
     @JoinColumn(name = "survey_question_id")
     private SurveyQuestion question;
 
+    public static SurveyOption of(String optionText, SurveyQuestion question){
+
+        return SurveyOption.builder()
+                .optionText(optionText)
+                .question(question).build();
+    }
+
     @Builder
     private SurveyOption(String optionText, SurveyQuestion question) {
         this.optionText = optionText;

@@ -23,6 +23,13 @@ public class SurveyResponse extends BaseEntity {
     @JoinColumn(name = "residence_review_id")
     private ResidenceReview residenceReview;
 
+    public static SurveyResponse of(SurveyOption surveyOption, ResidenceReview residenceReview) {
+
+        return SurveyResponse.builder()
+                .surveyOption(surveyOption)
+                .residenceReview(residenceReview).build();
+    }
+
     @Builder
     private SurveyResponse(SurveyOption surveyOption, ResidenceReview residenceReview) {
         this.surveyOption = surveyOption;

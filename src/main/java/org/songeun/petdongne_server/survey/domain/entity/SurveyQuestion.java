@@ -20,6 +20,12 @@ public class SurveyQuestion extends BaseEntity {
     @Size(min = 1, max = 255)
     private String questionText;
 
+    public static SurveyQuestion of(String questionText){
+
+        return SurveyQuestion.builder().
+                questionText(questionText).build();
+    }
+
     @Builder
     private SurveyQuestion(String questionText) {
         this.questionText = questionText;

@@ -30,6 +30,15 @@ public class ReviewStat extends BaseEntity {
     @JoinColumn(name = "residential_complex_id")
     private ResidentialComplex residentialComplex;
 
+    public static ReviewStat of(Integer reviewCount, Double averageRating, ResidentialComplex residentialComplex) {
+
+        return ReviewStat.builder()
+                .reviewCount(reviewCount)
+                .averageRating(averageRating)
+                .residentialComplex(residentialComplex)
+                .build();
+    }
+
     @Builder
     private ReviewStat(Integer reviewCount, Double averageRating, ResidentialComplex residentialComplex) {
         this.reviewCount = reviewCount;
