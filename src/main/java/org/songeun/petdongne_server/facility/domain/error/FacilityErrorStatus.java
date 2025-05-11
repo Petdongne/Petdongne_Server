@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum FacilityErrorStatus implements ErrorStatus {
 
+    FACILITY_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "FACILITY_TYPE_NOT_FOUND", "존재하지 않는 시설 유형입니다."),
     ;
 
     private final HttpStatus httpStatus;
