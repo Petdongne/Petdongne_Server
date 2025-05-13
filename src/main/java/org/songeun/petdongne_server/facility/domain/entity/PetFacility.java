@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.facility.domain;
+package org.songeun.petdongne_server.facility.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +27,14 @@ public class PetFacility extends BaseEntity {
 
     @NotNull
     private Point<G2D> location;
+
+    public static PetFacility of(Point<G2D> location, FacilityType type, String name){
+
+        return PetFacility.builder()
+                .location(location)
+                .type(type)
+                .name(name).build();
+    }
 
     @Builder
     private PetFacility(Point<G2D> location, FacilityType type, String name) {

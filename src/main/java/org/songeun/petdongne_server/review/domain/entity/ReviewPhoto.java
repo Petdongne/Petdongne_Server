@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.review.domain;
+package org.songeun.petdongne_server.review.domain.entity;
 
 
 import jakarta.persistence.*;
@@ -25,6 +25,14 @@ public class ReviewPhoto extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "residence_review_id")
     private ResidenceReview review;
+
+    public static ReviewPhoto of(String url, Boolean petPhoto, ResidenceReview review){
+
+        return ReviewPhoto.builder()
+                .url(url)
+                .petPhoto(petPhoto)
+                .review(review).build();
+    }
 
     @Builder
     private ReviewPhoto(String url, Boolean petPhoto, ResidenceReview review) {

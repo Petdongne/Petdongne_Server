@@ -1,8 +1,10 @@
-package org.songeun.petdongne_server.facility.domain;
+package org.songeun.petdongne_server.facility.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.songeun.petdongne_server.facility.domain.error.FacilityErrorStatus;
+import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
 
@@ -22,7 +24,7 @@ public enum FacilityType {
         return Arrays.stream(FacilityType.values())
                 .filter(t-> t.code.equals(code))
                 .findAny()
-                .orElseThrow(()-> new RuntimeException("에엥"));
+                .orElseThrow(()-> new BusinessException(FacilityErrorStatus.FACILITY_TYPE_NOT_FOUND));
     }
 
 }

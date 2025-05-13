@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.review.domain;
+package org.songeun.petdongne_server.review.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.residentialComplex.domain.ResidentialComplex;
+import org.songeun.petdongne_server.residentialComplex.domain.entity.ResidentialComplex;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
@@ -29,6 +29,15 @@ public class ReviewStat extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "residential_complex_id")
     private ResidentialComplex residentialComplex;
+
+    public static ReviewStat of(Integer reviewCount, Double averageRating, ResidentialComplex residentialComplex) {
+
+        return ReviewStat.builder()
+                .reviewCount(reviewCount)
+                .averageRating(averageRating)
+                .residentialComplex(residentialComplex)
+                .build();
+    }
 
     @Builder
     private ReviewStat(Integer reviewCount, Double averageRating, ResidentialComplex residentialComplex) {

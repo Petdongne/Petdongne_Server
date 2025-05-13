@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.survey.domain;
+package org.songeun.petdongne_server.survey.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +23,13 @@ public class SurveyOption extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_question_id")
     private SurveyQuestion question;
+
+    public static SurveyOption of(String optionText, SurveyQuestion question){
+
+        return SurveyOption.builder()
+                .optionText(optionText)
+                .question(question).build();
+    }
 
     @Builder
     private SurveyOption(String optionText, SurveyQuestion question) {

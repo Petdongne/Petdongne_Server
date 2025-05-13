@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.residentialComplex.domain;
+package org.songeun.petdongne_server.residentialComplex.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +21,13 @@ public class Area extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "residential_complex_id")
     private ResidentialComplex residentialComplex;
+
+    public static Area of(Double areaInSquareMeters, ResidentialComplex residentialComplex){
+
+        return Area.builder()
+                .areaInSquareMeters(areaInSquareMeters)
+                .residentialComplex(residentialComplex).build();
+    }
 
     @Builder
     private Area(Double areaInSquareMeters, ResidentialComplex residentialComplex) {

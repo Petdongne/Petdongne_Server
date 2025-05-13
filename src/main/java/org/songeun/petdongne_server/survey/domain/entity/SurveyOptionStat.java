@@ -1,11 +1,11 @@
-package org.songeun.petdongne_server.survey.domain;
+package org.songeun.petdongne_server.survey.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.residentialComplex.domain.ResidentialComplex;
+import org.songeun.petdongne_server.residentialComplex.domain.entity.ResidentialComplex;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
@@ -32,6 +32,14 @@ public class SurveyOptionStat extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_option_id")
     private SurveyOption surveyOption;
+
+    public static SurveyOptionStat of(Integer selectedCount, ResidentialComplex residentialComplex, SurveyOption surveyOption){
+
+        return SurveyOptionStat.builder()
+                .selectedCount(selectedCount)
+                .residentialComplex(residentialComplex)
+                .surveyOption(surveyOption).build();
+    }
 
     @Builder
     private SurveyOptionStat(Integer selectedCount, ResidentialComplex residentialComplex, SurveyOption surveyOption) {

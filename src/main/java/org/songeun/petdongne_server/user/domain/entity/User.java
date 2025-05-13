@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.user.domain;
+package org.songeun.petdongne_server.user.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +31,16 @@ public class User extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_image_id")
     private ProfileImage profileImage;
+
+    public static User of(String nickname, String email, String providerId, ProfileImage profileImage){
+
+        return User.builder()
+                .nickname(nickname)
+                .email(email)
+                .providerId(providerId)
+                .profileImage(profileImage)
+                .build();
+    }
 
     @Builder
     private User(String nickname, String email, String providerId, ProfileImage profileImage) {

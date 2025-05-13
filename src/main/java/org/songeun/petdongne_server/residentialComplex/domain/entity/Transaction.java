@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.residentialComplex.domain;
+package org.songeun.petdongne_server.residentialComplex.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +31,15 @@ public class Transaction extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_id")
     private Area area;
+
+    public static Transaction of(LocalDate date, Double price, TransactionType type, Area area){
+
+        return Transaction.builder()
+                .date(date)
+                .price(price)
+                .type(type)
+                .area(area).build();
+    }
 
     @Builder
     private Transaction(LocalDate date, Double price, TransactionType type, Area area) {

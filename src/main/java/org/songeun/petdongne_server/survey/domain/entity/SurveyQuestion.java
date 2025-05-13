@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.survey.domain;
+package org.songeun.petdongne_server.survey.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +19,12 @@ public class SurveyQuestion extends BaseEntity {
     @NotNull
     @Size(min = 1, max = 255)
     private String questionText;
+
+    public static SurveyQuestion of(String questionText){
+
+        return SurveyQuestion.builder().
+                questionText(questionText).build();
+    }
 
     @Builder
     private SurveyQuestion(String questionText) {
