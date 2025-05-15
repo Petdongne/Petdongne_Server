@@ -11,8 +11,8 @@ import org.songeun.petdongne_server.testSupport.GeometryTestUtils;
 class PetFacilityTest {
 
     @Test
-    @DisplayName("좌표, 시설 유형, 시설 이름을 바탕으로 정적 팩토리 메서드가 PetFacility 인스턴스를 생성할 수 있다.")
-    void create() {
+    @DisplayName("좌표, 시설 유형, 시설 이름으로 PetFacility 인스턴스를 생성한다.")
+    void createPetFacility() {
         //given
         Point<G2D> location = GeometryTestUtils.defaultPoint();
         FacilityType type = FacilityType.PET_HOTEL;
