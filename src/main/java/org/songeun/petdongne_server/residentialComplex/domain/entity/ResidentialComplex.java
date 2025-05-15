@@ -49,4 +49,9 @@ public class ResidentialComplex extends BaseEntity {
         this.approvalDate = approvalDate;
     }
 
+    public LocalDate approvalDate() {
+        return approvalDate;
+    }
+
+
 }

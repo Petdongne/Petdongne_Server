@@ -35,4 +35,8 @@ public class Area extends BaseEntity {
         this.residentialComplex = residentialComplex;
     }
 
+    public LocalDate getResidentialComplexApprovalDate(){
+        return residentialComplex.approvalDate();
+    }
+
 }
