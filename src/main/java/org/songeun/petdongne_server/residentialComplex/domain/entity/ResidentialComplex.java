@@ -90,7 +90,7 @@ public class ResidentialComplex extends BaseEntity {
         NAME("이름", RESIDENTIAL_COMPLEX_NAME_REQUIRED),
         TYPE("유형", RESIDENTIAL_COMPLEX_TYPE_REQUIRED),
         LOCATION("경위도", RESIDENTIAL_COMPLEX_LOCATION_REQUIRED),
-        APPROVAL_DATE("사용 승인일", APPROVAL_DATE_IS_REQUIRED),
+        APPROVAL_DATE("사용 승인일", APPROVAL_DATE_REQUIRED),
         ;
 
         private final String description;
