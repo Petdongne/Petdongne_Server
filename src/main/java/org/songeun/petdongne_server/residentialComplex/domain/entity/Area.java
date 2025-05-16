@@ -3,10 +3,12 @@ package org.songeun.petdongne_server.residentialComplex.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 import org.songeun.petdongne_server.global.exception.BusinessException;
+import org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus;
 
 import java.time.LocalDate;
 
@@ -28,8 +30,9 @@ public class Area extends BaseEntity {
     private ResidentialComplex residentialComplex;
 
     public static Area of(Double areaInSquareMeters, ResidentialComplex residentialComplex){
-        ensureNotNull(areaInSquareMeters);
-        ensureNotNull(residentialComplex);
+        ensureNotNull(areaInSquareMeters, NotNullField.AREA_IN_SQUARE_METERS);
+        ensureNotNull(residentialComplex, NotNullField.RESIDENTIAL_COMPLEX);
+
         ensureAreaInMeterIsPositive(areaInSquareMeters);
 
         return Area.builder()
@@ -41,15 +44,9 @@ public class Area extends BaseEntity {
         return residentialComplex.approvalDate();
     }
 
-    private static void ensureNotNull(Double areaInSquareMeters) {
-        if (areaInSquareMeters == null){
-            throw new BusinessException(AREA_REQUIRED);
-        }
-    }
-
-    private static void ensureNotNull(ResidentialComplex residentialComplex) {
-        if (residentialComplex == null){
-            throw new BusinessException(RESIDENTIAL_COMPLEX_REQUIRED);
+    private static <T> void ensureNotNull(T value, NotNullField notNullField) {
+        if (value == null) {
+            throw new BusinessException(notNullField.errorStatus);
         }
     }
 
@@ -63,6 +60,17 @@ public class Area extends BaseEntity {
     private Area(Double areaInSquareMeters, ResidentialComplex residentialComplex) {
         this.areaInSquareMeters = areaInSquareMeters;
         this.residentialComplex = residentialComplex;
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    private enum NotNullField{
+        AREA_IN_SQUARE_METERS("주거 면적 value (단위: 제곱 미터)", AREA_REQUIRED),
+        RESIDENTIAL_COMPLEX("주거 단지", RESIDENTIAL_COMPLEX_REQUIRED),
+
+        ;
+
+        private final String description;
+        private final ResidentialComplexErrorStatus errorStatus;
     }
 
 }
