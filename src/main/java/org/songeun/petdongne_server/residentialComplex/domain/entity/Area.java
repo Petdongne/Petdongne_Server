@@ -10,8 +10,7 @@ import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.time.LocalDate;
 
-import static org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus.AREA_MUST_BE_POSITIVE;
-import static org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus.AREA_REQUIRED;
+import static org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +29,7 @@ public class Area extends BaseEntity {
 
     public static Area of(Double areaInSquareMeters, ResidentialComplex residentialComplex){
         ensureNotNull(areaInSquareMeters);
+        ensureNotNull(residentialComplex);
         ensureAreaInMeterIsPositive(areaInSquareMeters);
 
         return Area.builder()
@@ -44,6 +44,12 @@ public class Area extends BaseEntity {
     private static void ensureNotNull(Double areaInSquareMeters) {
         if (areaInSquareMeters == null){
             throw new BusinessException(AREA_REQUIRED);
+        }
+    }
+
+    private static void ensureNotNull(ResidentialComplex residentialComplex) {
+        if (residentialComplex == null){
+            throw new BusinessException(RESIDENTIAL_COMPLEX_REQUIRED);
         }
     }
 
