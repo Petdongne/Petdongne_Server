@@ -68,13 +68,13 @@ public class Transaction extends BaseEntity {
 
     private static void ensureTxnDateIsNotEarlierThanApproveDate(LocalDate date, Area area) {
         if (date.isBefore(area.getResidentialComplexApprovalDate())) {
-            throw new BusinessException(TRANSACTION_DATE_BEFORE_APPROVE_DATE);
+            throw new BusinessException(TRANSACTION_DATE_BEFORE_APPROVAL_DATE);
         }
     }
 
     private static void ensurePriceIsPositive(Long price) {
         if(price <= 0){
-            throw new BusinessException(PRICE_MUST_BE_POSITIVE);
+            throw new BusinessException(TRANSACTION_PRICE_MUST_BE_POSITIVE);
         }
     }
 

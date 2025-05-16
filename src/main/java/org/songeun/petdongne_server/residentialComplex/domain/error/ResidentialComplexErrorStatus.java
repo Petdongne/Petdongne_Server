@@ -23,13 +23,14 @@ public enum ResidentialComplexErrorStatus implements ErrorStatus {
 
     TRANSACTION_DATE_IS_FUTURE(HttpStatus.BAD_REQUEST, "TRANSACTION_DATE_IS_FUTURE", "거래 일자는 과거 또는 현재여야 합니다."),
     TRANSACTION_DATE_REQUIRED(HttpStatus.BAD_REQUEST, "TRANSACTION_DATE_REQUIRED", "거래 일자는 NULL일 수 없습니다."),
-    TRANSACTION_DATE_BEFORE_APPROVE_DATE(HttpStatus.BAD_REQUEST, "TRANSACTION_DATE_BEFORE_APPROVE_DATE", "거래 일자는 사용 승인일자와 같거나 이전이어야 합니다."),
+    TRANSACTION_DATE_BEFORE_APPROVAL_DATE(HttpStatus.BAD_REQUEST, "TRANSACTION_DATE_BEFORE_APPROVE_DATE", "거래 일자는 사용 승인일자와 같거나 이전이어야 합니다."),
+
     TRANSACTION_PRICE_REQUIRED(HttpStatus.BAD_REQUEST, "TRANSACTION_PRICE_REQUIRED", "거래 금액은 NULL일 수 없습니다."),
+    TRANSACTION_PRICE_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "PRICE_MUST_BE_POSITIVE", "거래 가격은 0원을 초과해야 합니다."),
 
     AREA_REQUIRED(HttpStatus.BAD_REQUEST, "AREA_REQUIRED", "주거 면적은 NULL일 수 없습니다."),
     AREA_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "AREA_MUST_BE_POSITIVE", "주거 면적은 주거 면적은 0보다 커야 합니다."),
 
-    PRICE_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "PRICE_MUST_BE_POSITIVE", "거래 가격은 0원을 초과해야 합니다."),
 
     ;
 
