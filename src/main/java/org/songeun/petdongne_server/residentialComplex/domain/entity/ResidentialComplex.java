@@ -50,7 +50,7 @@ public class ResidentialComplex extends BaseEntity {
 
         ensureNameIsValid(name);
         ensureApprovalDateIsNotFuture(approvalDate);
-
+      
         return ResidentialComplex.builder()
                 .name(name)
                 .type(type)

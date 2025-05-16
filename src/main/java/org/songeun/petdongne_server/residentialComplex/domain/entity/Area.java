@@ -72,5 +72,5 @@ public class Area extends BaseEntity {
         private final String description;
         private final ResidentialComplexErrorStatus errorStatus;
     }
-
+  
 }

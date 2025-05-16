@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum ResidentialComplexErrorStatus implements ErrorStatus {
 
     RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND", "존재하지 않는 주거 단지 유형입니다."),
+
     RESIDENTIAL_COMPLEX_TYPE_REQUIRED(HttpStatus.BAD_REQUEST, "RESIDENTIAL_COMPLEX_TYPE_REQUIRED", "주거 단지 유형은 NULL일 수 없습니다."),
     RESIDENTIAL_COMPLEX_REQUIRED(HttpStatus.BAD_REQUEST, "RESIDENTIAL_COMPLEX_REQUIRED", "주거 단지는 NULL일 수 없습니다."),
     RESIDENTIAL_COMPLEX_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "RESIDENTIAL_COMPLEX_NAME_REQUIRED", "주거 단지명은 NULL 또는 공백일 수 없습니다."),
@@ -30,8 +31,6 @@ public enum ResidentialComplexErrorStatus implements ErrorStatus {
 
     AREA_REQUIRED(HttpStatus.BAD_REQUEST, "AREA_REQUIRED", "주거 면적은 NULL일 수 없습니다."),
     AREA_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "AREA_MUST_BE_POSITIVE", "주거 면적은 주거 면적은 0보다 커야 합니다."),
-
-
     ;
 
     private final HttpStatus httpStatus;
