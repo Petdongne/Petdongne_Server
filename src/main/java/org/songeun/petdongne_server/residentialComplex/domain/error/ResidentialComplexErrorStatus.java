@@ -29,7 +29,8 @@ public enum ResidentialComplexErrorStatus implements ErrorStatus {
     TRANSACTION_PRICE_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "PRICE_MUST_BE_POSITIVE", "거래 가격은 0원을 초과해야 합니다."),
 
     AREA_REQUIRED(HttpStatus.BAD_REQUEST, "AREA_REQUIRED", "주거 면적은 NULL일 수 없습니다."),
-    AREA_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "AREA_MUST_BE_POSITIVE", "주거 면적은 주거 면적은 0보다 커야 합니다."),
+    AREA_VALUE_REQUIRED(HttpStatus.BAD_REQUEST, "AREA_VALUE_REQUIRED", "주거 면적 값은 NULL일 수 없습니다."),
+    AREA_VALUE_MUST_BE_POSITIVE(HttpStatus.BAD_REQUEST, "AREA_MUST_BE_POSITIVE", "주거 면적 값은 0보다 커야 합니다."),
 
 
     ;

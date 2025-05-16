@@ -52,7 +52,7 @@ public class Area extends BaseEntity {
 
     private static void ensureAreaInMeterIsPositive(Double areaInSquareMeters) {
         if (areaInSquareMeters <= 0){
-            throw new BusinessException(AREA_MUST_BE_POSITIVE);
+            throw new BusinessException(AREA_VALUE_MUST_BE_POSITIVE);
         }
     }
 
@@ -64,7 +64,7 @@ public class Area extends BaseEntity {
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     private enum NotNullField{
-        AREA_IN_SQUARE_METERS("주거 면적 value (단위: 제곱 미터)", AREA_REQUIRED),
+        AREA_IN_SQUARE_METERS("주거 면적 value (단위: 제곱 미터)", AREA_VALUE_REQUIRED),
         RESIDENTIAL_COMPLEX("주거 단지", RESIDENTIAL_COMPLEX_REQUIRED),
 
         ;
