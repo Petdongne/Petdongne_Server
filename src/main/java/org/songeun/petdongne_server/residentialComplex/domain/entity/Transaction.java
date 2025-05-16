@@ -38,6 +38,8 @@ public class Transaction extends BaseEntity {
     private Area area;
 
     public static Transaction of(LocalDate date, Long price, TransactionType type, Area area){
+        ensureNotNull(date, NotNullField.DATE);
+        ensureNotNull(price, NotNullField.PRICE);
         ensureNotNull(type, NotNullField.TYPE);
         ensureNotNull(area, NotNullField.AREA);
 
@@ -86,6 +88,8 @@ public class Transaction extends BaseEntity {
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     private enum NotNullField{
+        DATE("거래일자", TRANSACTION_DATE_REQUIRED),
+        PRICE("거래 금액", TRANSACTION_PRICE_REQUIRED),
         TYPE("거래 유형", TRANSACTION_TYPE_REQUIRED),
         AREA("주거 면적", AREA_REQUIRED),
 
