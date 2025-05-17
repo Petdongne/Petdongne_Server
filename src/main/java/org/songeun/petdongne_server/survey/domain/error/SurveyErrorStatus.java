@@ -24,7 +24,7 @@ public enum SurveyErrorStatus implements ErrorStatus {
     SURVEY_OPTION_STAT_RESIDENTIAL_COMPLEX_REQUIRED(HttpStatus.BAD_REQUEST, "SURVEY_OPTION_STAT_RESIDENTIAL_COMPLEX_REQUIRED", "주거 단지는 NULL일 수 없습니다."),
 
     SURVEY_OPTION_REQUIRED(HttpStatus.BAD_REQUEST, "SURVEY_OPTION_REQUIRED", "설문 옵션은 NULL일 수 없습니다."),
-    ;
+    RESIDENCE_REVIEW_REQUIRED(HttpStatus.BAD_REQUEST, "", "거주 리뷰는 NULL일 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
