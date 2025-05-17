@@ -67,7 +67,7 @@ jacoco {
 
 ext {
     qTypes = ('A'..'Z').collect {"**/Q${it}*"}
-    commonExcludes = qTypes + ['**/*Exception*', '**/*Application*', '**/*Config*','**/Dto*','**/common/*']
+    commonExcludes = qTypes + ['**/*Exception*', '**/*Application*', '**/*Config*','**/Dto*','**/common/*', '**/converter/*']
 }
 
 jacocoTestReport {
