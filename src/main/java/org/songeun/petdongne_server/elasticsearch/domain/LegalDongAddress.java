@@ -16,19 +16,31 @@ import org.springframework.data.elasticsearch.annotations.*;
 public class LegalDongAddress {
 
     @Id
-    @Field(type = FieldType.Keyword, analyzer = "korean")
+    @Field(type = FieldType.Keyword)
     private String id;
 
-    @Field(type = FieldType.Text, analyzer = "korean")
+    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            })
     private String sido;
 
-    @Field(type = FieldType.Text, analyzer = "korean")
+    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            })
     private String sigungu;
 
-    @Field(type = FieldType.Text, analyzer = "korean")
+    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            })
     private String eupmyeondong;
 
-    @Field(type = FieldType.Text, analyzer = "korean")
+    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            })
     private String re;
 
     @Field(type = FieldType.Text, analyzer = "korean")
@@ -41,3 +53,4 @@ public class LegalDongAddress {
     private Long population;
 
 }
+
