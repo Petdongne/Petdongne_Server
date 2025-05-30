@@ -26,6 +26,12 @@ public class LegalDongAddressUploader {
     private final ElasticsearchOperations elasticsearchOperations;
 
     public List<IndexedObjectInformation> indexLegalDongAddressesFromCSV(InputStream csvInputStream) {
+
+        if (elasticsearchOperations.indexOps(IndexCoordinates.of(LEGAL_DONG_ADDRESSES)).exists()) {
+            elasticsearchOperations.indexOps(IndexCoordinates.of(LEGAL_DONG_ADDRESSES)).delete();
+        }
+        elasticsearchOperations.indexOps(LegalDongAddress.class).createWithMapping();
+
         try (Reader reader = new InputStreamReader(csvInputStream, KOREAN_CSV_CHARSET)) {
             // 쉼표로 구분된 CSV 형식으로 파싱
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
