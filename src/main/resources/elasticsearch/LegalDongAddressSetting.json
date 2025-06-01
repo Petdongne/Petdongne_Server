@@ -11,6 +11,10 @@
           "edge_ngram_filter",
           "unique_filter"
         ]
+      },
+      "whitespace_analyzer": {
+        "type": "custom",
+        "tokenizer": "whitespace"
       }
     },
     "tokenizer": {
