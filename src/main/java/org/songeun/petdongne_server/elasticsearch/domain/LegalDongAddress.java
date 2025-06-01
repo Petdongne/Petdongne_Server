@@ -19,28 +19,16 @@ public class LegalDongAddress {
     @Field(type = FieldType.Keyword)
     private String id;
 
-    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
-            otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
-            })
+    @Field(type = FieldType.Keyword)
     private String sido;
 
-    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
-            otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
-            })
+    @Field(type = FieldType.Keyword)
     private String sigungu;
 
-    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
-            otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
-            })
+    @Field(type = FieldType.Keyword)
     private String eupmyeondong;
 
-    @MultiField(mainField = @Field(type = FieldType.Text, analyzer = "korean"),
-            otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
-            })
+    @Field(type = FieldType.Keyword)
     private String re;
 
     @Field(type = FieldType.Text, analyzer = "korean")
