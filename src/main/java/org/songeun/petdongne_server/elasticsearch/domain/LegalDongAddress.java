@@ -31,7 +31,7 @@ public class LegalDongAddress {
     @Field(type = FieldType.Keyword)
     private String re;
 
-    @Field(type = FieldType.Text, analyzer = "korean")
+    @Field(type = FieldType.Text, analyzer = "kor_address_analyzer", searchAnalyzer = "whitespace_analyzer")
     private String fullAddress;
 
     @Field(type = FieldType.Integer)
