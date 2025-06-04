@@ -1,7 +1,7 @@
-package org.songeun.petdongne_server.elasticsearch.application;
+package org.songeun.petdongne_server.search.application;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.elasticsearch.infrastructure.LegalDongAddressUploader;
+import org.songeun.petdongne_server.search.infrastructure.LegalDongAddressUploader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

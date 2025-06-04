@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.elasticsearch.domain;
+package org.songeun.petdongne_server.search.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

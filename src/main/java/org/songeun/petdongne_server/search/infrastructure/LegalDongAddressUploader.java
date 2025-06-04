@@ -1,9 +1,9 @@
-package org.songeun.petdongne_server.elasticsearch.infrastructure;
+package org.songeun.petdongne_server.search.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.songeun.petdongne_server.elasticsearch.domain.LegalDongAddress;
+import org.songeun.petdongne_server.search.domain.LegalDongAddress;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;

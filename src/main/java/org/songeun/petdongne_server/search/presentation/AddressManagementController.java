@@ -1,8 +1,8 @@
-package org.songeun.petdongne_server.elasticsearch.presentation;
+package org.songeun.petdongne_server.search.presentation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.elasticsearch.application.AddressManagementService;
+import org.songeun.petdongne_server.search.application.AddressManagementService;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
