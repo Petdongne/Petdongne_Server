@@ -37,8 +37,5 @@ public class LegalDongAddress {
     @Field(type = FieldType.Integer)
     private Integer hierarchyLevel;
 
-    @Field(type = FieldType.Long)
-    private Long population;
-
 }
 

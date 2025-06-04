@@ -30,6 +30,7 @@ public class LegalDongAddressUploader {
         if (elasticsearchOperations.indexOps(IndexCoordinates.of(LEGAL_DONG_ADDRESSES)).exists()) {
             elasticsearchOperations.indexOps(IndexCoordinates.of(LEGAL_DONG_ADDRESSES)).delete();
         }
+
         elasticsearchOperations.indexOps(LegalDongAddress.class).createWithMapping();
 
         try (Reader reader = new InputStreamReader(csvInputStream, KOREAN_CSV_CHARSET)) {
@@ -48,7 +49,6 @@ public class LegalDongAddressUploader {
                 String eupmyeondong = record.get("읍면동명");
                 String re = record.get("리명");
                 String fullAddress = record.get("주소");
-                Long population = Long.parseLong(record.get("인구수"));
                 Integer level = Integer.parseInt(record.get("행정구역레벨"));
                 String code = record.get("법정동코드");
 
@@ -59,7 +59,6 @@ public class LegalDongAddressUploader {
                         .eupmyeondong(eupmyeondong)
                         .re(re)
                         .fullAddress(fullAddress)
-                        .population(population)
                         .hierarchyLevel(level)
                         .build();
 
