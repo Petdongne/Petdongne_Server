@@ -1,0 +1,31 @@
+{
+    "properties": {
+
+      "id": {
+        "type": "keyword"
+      },
+      "sido": {
+        "type": "keyword"
+      },
+      "sigungu": {
+        "type": "keyword"
+      },
+      "eupmyeondong": {
+        "type": "keyword"
+      },
+      "re": {
+        "type": "keyword"
+      },
+      "fullAddress": {
+        "type": "text",
+        "analyzer": "address_search_analyzer"
+      },
+      "hierarchyLevel": {
+        "type": "integer"
+      },
+      "type": {
+        "type": "keyword"
+      }
+
+    }
+}
