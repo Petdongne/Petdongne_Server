@@ -1,0 +1,58 @@
+{
+  "number_of_shards": 1,
+  "number_of_replicas": 1,
+  "index": {
+    "max_ngram_diff": 2
+  },
+
+  "analysis": {
+
+    "analyzer": {
+      "address_search_analyzer": {
+        "type": "custom",
+        "char_filter": ["sido_synonym_char_filter"],
+        "tokenizer": "kor_address_tokenizer",
+        "filter": []
+      }
+    },
+
+    "char_filter": {
+      "sido_synonym_char_filter": {
+        "type": "mapping",
+        "mappings": [
+          "경남 => 경상남도",
+          "경북 => 경상북도",
+          "경북도 => 경상북도",
+          "서울시 => 서울특별시",
+          "광주시 => 광주광역시",
+          "인천시 => 인천광역시",
+          "대구시 => 대구광역시",
+          "대전시 => 대전광역시",
+          "부산시 => 부산광역시",
+          "세종시 => 세종특별자치시",
+          "울산시 => 울산광역시",
+          "전남 => 전라남도",
+          "전남도 => 전라남도",
+          "전북 => 전라북도",
+          "전북도 => 전라북도",
+          "충남 => 충청남도",
+          "충남도 => 충청남도",
+          "충북 => 충청북도",
+          "충북도 => 충청북도",
+          "강원 => 강원특별자치도",
+          "강원도 => 강원특별자치도",
+          "제주도 => 제주특별자치도"
+        ]
+      }
+    },
+
+    "tokenizer" : {
+        "kor_address_tokenizer" : {
+          "type": "ngram",
+          "min_gram": 1,
+          "max_gram": 3,
+          "token_chars": ["letter", "digit"]
+        }
+    }
+  }
+}
