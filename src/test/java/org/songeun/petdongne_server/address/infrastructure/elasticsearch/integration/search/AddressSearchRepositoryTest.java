@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search.integration;
+package org.songeun.petdongne_server.address.infrastructure.elasticsearch.integration.search;
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
