@@ -8,7 +8,12 @@ import org.songeun.petdongne_server.search.domain.converter.AddressTypeConverter
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
-@Document(indexName = "kor-address-v1", createIndex = false, aliases = @Alias(value = "kor-address"))
+@Document(
+        indexName = "kor-address-v1",
+        createIndex = false,
+        aliases = @Alias(value = "kor-address"),
+        writeTypeHint = WriteTypeHint.FALSE
+)
 @Setting(settingPath = "/elasticsearch/address-setting.json")
 @Getter
 @NoArgsConstructor
