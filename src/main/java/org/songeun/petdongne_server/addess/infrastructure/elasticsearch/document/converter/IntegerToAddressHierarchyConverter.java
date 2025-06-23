@@ -1,6 +1,6 @@
-package org.songeun.petdongne_server.search.infrastructure.converter;
+package org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.converter;
 
-import org.songeun.petdongne_server.search.domain.document.AddressHierarchy;
+import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressHierarchy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 

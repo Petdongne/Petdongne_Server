@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.search.presentation;
+package org.songeun.petdongne_server.addess.presentation.dto;
 
 import lombok.Builder;
 

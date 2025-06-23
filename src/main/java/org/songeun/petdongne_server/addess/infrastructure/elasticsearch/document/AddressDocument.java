@@ -1,10 +1,10 @@
-package org.songeun.petdongne_server.search.domain.document;
+package org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.*;
-import org.songeun.petdongne_server.search.domain.converter.AddressHierarchyConverter;
-import org.songeun.petdongne_server.search.domain.converter.AddressTypeConverter;
+import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.converter.AddressHierarchyCsvConverter;
+import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.converter.AddressTypeCsvConverter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
@@ -58,11 +58,11 @@ public class AddressDocument {
             })
     private String fullAddress;
 
-    @CsvCustomBindByName(column = "계층", converter = AddressHierarchyConverter.class)
+    @CsvCustomBindByName(column = "계층", converter = AddressHierarchyCsvConverter.class)
     @Field(type = FieldType.Integer, name = AddressDocumentFields.HIERARCHY_LEVEL)
     private AddressHierarchy hierarchyLevel;
 
-    @CsvCustomBindByName(column = "유형", converter = AddressTypeConverter.class)
+    @CsvCustomBindByName(column = "유형", converter = AddressTypeCsvConverter.class)
     @Field(type = FieldType.Keyword, name = AddressDocumentFields.TYPE)
     private AddressType type;
 

@@ -1,9 +1,11 @@
-package org.songeun.petdongne_server.search.presentation;
+package org.songeun.petdongne_server.addess.presentation.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.search.application.AddressSearchService;
+import org.songeun.petdongne_server.addess.application.AddressSearchService;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.global.common.PagedResult;
+import org.songeun.petdongne_server.addess.presentation.dto.AddressSearchResponseDto;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

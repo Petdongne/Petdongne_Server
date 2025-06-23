@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.search.domain.error;
+package org.songeun.petdongne_server.addess.infrastructure.elasticsearch.error;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

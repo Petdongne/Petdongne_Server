@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.search.domain.document;
+package org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,8 +6,8 @@ import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
 
-import static org.songeun.petdongne_server.search.domain.error.AddressErrorStatus.ADDRESS_HIERARCHY_INVALID_FORMAT;
-import static org.songeun.petdongne_server.search.domain.error.AddressErrorStatus.ADDRESS_HIERARCHY_NOT_FOUND;
+import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_INVALID_FORMAT;
+import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_NOT_FOUND;
 
 @Getter
 @RequiredArgsConstructor

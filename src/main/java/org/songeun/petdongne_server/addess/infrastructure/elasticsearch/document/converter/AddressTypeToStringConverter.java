@@ -1,6 +1,6 @@
-package org.songeun.petdongne_server.search.infrastructure.converter;
+package org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.converter;
 
-import org.songeun.petdongne_server.search.domain.document.AddressType;
+import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 
