@@ -41,7 +41,21 @@ public class Address {
     private String re;
 
     @CsvBindByName(column = "주소")
-    @Field(type = FieldType.Text, analyzer = "address_search_analyzer")
+    @MultiField(
+            mainField = @Field(
+                    type = FieldType.Text,
+                    name = AddressDocumentFields.FULL_ADDRESS,
+                    analyzer = "address_ngram_analyzer"),
+            otherFields = {
+                    @InnerField(
+                            suffix = AddressDocumentFields.FULL_ADDRESS_PER_CHAR_SUFFIX,
+                            type = FieldType.Text,
+                            analyzer = "address_per_char_analyzer"),
+                    @InnerField(
+                            suffix = AddressDocumentFields.FULL_ADDRESS_FIRST_CHAR_SUFFIX,
+                            type = FieldType.Text,
+                            analyzer = "address_first_char_analyzer")
+            })
     private String fullAddress;
 
     @CsvCustomBindByName(column = "계층", converter = AddressHierarchyConverter.class)
