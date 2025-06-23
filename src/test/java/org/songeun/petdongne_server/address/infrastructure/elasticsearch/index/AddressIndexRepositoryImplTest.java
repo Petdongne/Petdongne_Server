@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.*;
 class AddressIndexRepositoryImplTest {
 
     @Mock
-    ElasticsearchOperations integratedOperations;
+    ElasticsearchOperations elasticsearchOperations;
 
     @Mock
     IndexOperations indexOperations;
@@ -30,7 +30,7 @@ class AddressIndexRepositoryImplTest {
     @DisplayName("인덱스 생성에 성공하면 true를 반환한다.")
     void shouldReturnTrueWhenSuccess(){
         //given
-        given(integratedOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
+        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
         given(indexOperations.createWithMapping())
                 .willReturn(true);
 
@@ -45,7 +45,7 @@ class AddressIndexRepositoryImplTest {
     @DisplayName("이미 존재하는 인덱스라면 true를 반환한다.")
     void shouldReturnTrueWhenExists(){
         //given
-        given(integratedOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
+        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
         given(indexOperations.exists())
                 .willReturn(true);
 
@@ -60,7 +60,7 @@ class AddressIndexRepositoryImplTest {
     @DisplayName("존재하지 않는 인덱스라면 false를 반환한다.")
     void shouldReturnFalseWhenNotExists(){
         //given
-        given(integratedOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
+        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
         given(indexOperations.exists())
                 .willReturn(false);
 
