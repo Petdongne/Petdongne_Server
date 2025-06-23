@@ -6,13 +6,23 @@
   },
 
   "analysis": {
-
     "analyzer": {
-      "address_search_analyzer": {
+
+      "address_ngram_analyzer": {
         "type": "custom",
         "char_filter": ["sido_synonym_char_filter"],
-        "tokenizer": "kor_address_tokenizer",
-        "filter": []
+        "tokenizer": "address_ngram_tokenizer"
+      },
+
+      "address_per_char_analyzer" : {
+        "type" : "custom",
+        "char_filter": ["sido_synonym_char_filter"],
+        "tokenizer" : "per_char_tokenizer"
+      },
+
+      "address_first_char_analyzer" : {
+        "type" : "custom",
+        "tokenizer" : "first_char_edge_ngram_tokenizer"
       }
     },
 
@@ -23,14 +33,14 @@
           "경남 => 경상남도",
           "경북 => 경상북도",
           "경북도 => 경상북도",
-          "서울시 => 서울특별시",
-          "광주시 => 광주광역시",
-          "인천시 => 인천광역시",
-          "대구시 => 대구광역시",
-          "대전시 => 대전광역시",
-          "부산시 => 부산광역시",
-          "세종시 => 세종특별자치시",
-          "울산시 => 울산광역시",
+          "서울특별시 => 서울시",
+          "광주광역시 => 광주시",
+          "인천광역시 => 인천시",
+          "대구광역시 => 대구시",
+          "대전광역시 => 대전시",
+          "부산광역시 => 부산시",
+          "세종특별자치시 => 세종시",
+          "울산광역시 => 울산시",
           "전남 => 전라남도",
           "전남도 => 전라남도",
           "전북 => 전라북도",
@@ -39,7 +49,6 @@
           "충남도 => 충청남도",
           "충북 => 충청북도",
           "충북도 => 충청북도",
-          "강원 => 강원특별자치도",
           "강원도 => 강원특별자치도",
           "제주도 => 제주특별자치도"
         ]
@@ -47,12 +56,36 @@
     },
 
     "tokenizer" : {
-        "kor_address_tokenizer" : {
-          "type": "ngram",
-          "min_gram": 1,
-          "max_gram": 3,
-          "token_chars": ["letter", "digit"]
-        }
+
+      "address_ngram_tokenizer" : {
+        "type": "ngram",
+        "min_gram": 2,
+        "max_gram": 3,
+        "token_chars": [
+          "letter",
+          "digit"
+        ]
+      },
+
+      "per_char_tokenizer": {
+        "type" : "ngram",
+        "min_gram" : 1,
+        "max_gram" : 1,
+        "token_chars": [
+          "letter",
+          "digit"
+        ]
+      },
+
+      "first_char_edge_ngram_tokenizer": {
+        "type" : "edge_ngram",
+        "min_gram" : 1,
+        "max_gram" : 1,
+        "token_chars": [
+          "letter",
+          "digit"
+        ]
+      }
     }
   }
 }
