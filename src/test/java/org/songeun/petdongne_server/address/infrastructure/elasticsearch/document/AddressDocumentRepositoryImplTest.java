@@ -27,7 +27,7 @@ class AddressDocumentRepositoryImplTest {
 
     @Test
     @DisplayName("모든 객체 저장에 성공하면 true를 반환한다.")
-    void bulkSave(){
+    void shouldReturnTrueWhenSuccess(){
         //given
         int requestDocumentCount = 3;
         int responseDocumentCount = 3;
@@ -47,7 +47,7 @@ class AddressDocumentRepositoryImplTest {
 
     @Test
     @DisplayName("저장된 객체 수가 요청 수보다 적으면 false를 반환한다.")
-    void bulkSave_fail(){
+    void shouldReturnFalseWhenFewerDocumentsAreSavedThanRequested(){
         //given
         int requestDocumentCount = 3;
         int responseDocumentCount = 2;
