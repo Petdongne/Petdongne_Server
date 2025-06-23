@@ -17,7 +17,7 @@ import org.springframework.data.elasticsearch.annotations.*;
 @Setting(settingPath = "/elasticsearch/address-setting.json")
 @Getter
 @NoArgsConstructor
-public class Address {
+public class AddressDocument {
 
     @Id
     @CsvBindByName(column = "코드")
