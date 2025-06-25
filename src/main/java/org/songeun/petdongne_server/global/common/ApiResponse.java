@@ -43,4 +43,10 @@ public class ApiResponse<T> {
         );
     }
 
+    public static <T> ResponseEntity<ApiResponse<T>> failWithDetails(ErrorStatus status, T errors) {
+        return ResponseEntity.status(status.getHttpStatus()).body(
+                new ApiResponse<>(false, status.getCode(), status.getMessage(), errors)
+        );
+    }
+
 }
