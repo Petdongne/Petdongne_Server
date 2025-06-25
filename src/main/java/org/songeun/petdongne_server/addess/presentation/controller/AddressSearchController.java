@@ -2,10 +2,11 @@ package org.songeun.petdongne_server.addess.presentation.controller;
 
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.addess.application.AddressSearchService;
+import org.songeun.petdongne_server.addess.application.service.AddressSearchService;
+import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
+import org.songeun.petdongne_server.addess.presentation.converter.AddressSearchConverter;
 import org.songeun.petdongne_server.global.common.ApiResponse;
-import org.songeun.petdongne_server.global.common.PagedResult;
-import org.songeun.petdongne_server.addess.presentation.dto.AddressSearchResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +37,7 @@ public class AddressSearchController {
             @Max(value = 100, message = "한 페이지당 최대 100개까지만 조회할 수 있습니다.")
             int size
     ) {
-        PagedResult<AddressSearchResponseDto> response = searchService.search(searchText, PageRequest.of(page, size));
+        Page<AddressDocument> response = searchService.search(searchText, PageRequest.of(page, size));
 
         return ApiResponse.ok(response);
     }
