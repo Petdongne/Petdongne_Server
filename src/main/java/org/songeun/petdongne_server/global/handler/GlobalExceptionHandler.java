@@ -1,8 +1,10 @@
 package org.songeun.petdongne_server.global.handler;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.global.common.ApiResponse;
+import org.songeun.petdongne_server.global.common.FieldErrorResponse;
 import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
 import org.songeun.petdongne_server.global.exception.SystemException;
 import org.songeun.petdongne_server.global.exception.BusinessException;
@@ -27,7 +29,32 @@ public class GlobalExceptionHandler {
     ) {
         log.warn(">>> handle: MissingServletRequestParameterException", e);
 
-        return ApiResponse.fail(GlobalErrorStatus.BAD_REQUEST, e.getMessage());
+        String field = e.getParameterName();
+        String message = String.format("요청 파라미터 '%s'는 필수입니다.", field);
+
+        var error = new FieldErrorResponse(field, message);
+
+        return ApiResponse.failWithDetails(GlobalErrorStatus.MISSING_REQUEST_PARAMETER, error);
+    }
+
+    /**
+     * 제약 조건 위반 시 발생하는 error를 handling합니다.
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleConstraintViolationException(
+            ConstraintViolationException e
+    ) {
+        log.warn(">>> handle: ConstraintViolationException", e);
+
+        var errors = e.getConstraintViolations().stream()
+                .map(violation -> {
+                    String field = extractFieldName(violation.getPropertyPath().toString());
+                    String message = violation.getMessage();
+                    return new FieldErrorResponse(field, message);
+                })
+                .toList();
+
+        return ApiResponse.failWithDetails(GlobalErrorStatus.BAD_REQUEST, errors);
     }
 
     /**
@@ -89,6 +116,11 @@ public class GlobalExceptionHandler {
         log.error("발생 지점: {}", e.getStackTrace()[0]);
 
         return ApiResponse.fail(GlobalErrorStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private String extractFieldName(String propertyPath) {
+        String[] parts = propertyPath.split("\\.");
+        return parts.length > 0 ? parts[parts.length - 1] : propertyPath;
     }
 
 }
