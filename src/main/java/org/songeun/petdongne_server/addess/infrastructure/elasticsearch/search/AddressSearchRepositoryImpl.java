@@ -8,10 +8,7 @@ import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
-import org.springframework.data.elasticsearch.core.SearchHitSupport;
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.SearchOperations;
-import org.springframework.data.elasticsearch.core.SearchPage;
+import org.springframework.data.elasticsearch.core.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +51,7 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
     }
 
     private Query buildFullAddressQueryExcluding(String query, String excludeField, String excludeValue) {
-        int slop = 50;
+        int slop = 35;
 
         Query matchQuery = QueryBuilders.match(builder -> builder
                 .field(AddressDocumentFields.FULL_ADDRESS)
@@ -82,7 +79,7 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
     }
 
     private Query buildDefaultFullAddressQuery(String query) {
-        int slop = 50;
+        int slop = 35;
 
         Query matchQuery = QueryBuilders.match(builder -> builder
                 .field(AddressDocumentFields.FULL_ADDRESS)
