@@ -39,7 +39,7 @@ public class AddressSearchController {
     ) {
         Page<AddressDocument> response = searchService.search(searchText, PageRequest.of(page, size));
 
-        return ApiResponse.ok(response);
+        return ApiResponse.ok(AddressSearchConverter.convert(response));
     }
 
 }
