@@ -1,8 +1,9 @@
-package org.songeun.petdongne_server.addess.presentation.controller;
+package org.songeun.petdongne_server.address.presentation.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.songeun.petdongne_server.addess.application.service.AddressSearchService;
+import org.songeun.petdongne_server.addess.presentation.controller.AddressSearchController;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
