@@ -12,7 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.testcontainers.elasticsearch.ElasticsearchContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +39,11 @@ class AddressSearchRepositoryTest {
             new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
                     .withReuse(true);
 
+    @DynamicPropertySource
+    static void overrideProps(DynamicPropertyRegistry registry) {
+        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
+    }
+
     @Autowired
     private AddressSearchRepository searchRepository;
 
@@ -42,13 +52,6 @@ class AddressSearchRepositoryTest {
 
     @Autowired
     private AddressIndexRepository addressIndexRepository;
-
-    private static final int DEFAULT_SLOP = 30;
-
-    @DynamicPropertySource
-    static void overrideProps(DynamicPropertyRegistry registry) {
-        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }
 
     @BeforeAll
     void beforeAll() {
