@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
+import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -11,12 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.testcontainers.elasticsearch.ElasticsearchContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,30 +23,8 @@ import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
 
 // TODO: 통합 테스트 모듈 분리
-@SpringBootTest
-@ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Testcontainers
-class AddressSearchRepositoryTest {
-
-    @Container
-    static ElasticsearchContainer elasticsearchContainer =
-            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
-                    .withReuse(true);
-
-    @DynamicPropertySource
-    static void overrideProps(DynamicPropertyRegistry registry) {
-        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }
-
-    @Autowired
-    private AddressSearchRepository searchRepository;
-
-    @Autowired
-    private AddressDocumentRepository documentRepository;
-
-    @Autowired
-    private AddressIndexRepository addressIndexRepository;
+class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
