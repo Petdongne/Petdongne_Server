@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.infrastructure.elasticsearch.integration.search;
+package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search;
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.HIERARCHY_LEVEL;
 import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
 
+// TODO: 통합 테스트 모듈 분리
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
