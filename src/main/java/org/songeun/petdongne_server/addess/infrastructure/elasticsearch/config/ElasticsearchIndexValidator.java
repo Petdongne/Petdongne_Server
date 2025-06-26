@@ -5,16 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-@Slf4j
 @Profile("prod")
+@Component
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "feature.validation.elasticsearch.enabled", havingValue = "true")
+@Slf4j
 public class ElasticsearchIndexValidator implements ApplicationRunner {
 
     private final ElasticsearchOperations operations;
