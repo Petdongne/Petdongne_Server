@@ -21,6 +21,7 @@ class AddressHierarchyTest {
         AddressHierarchy hierarchy = AddressHierarchy.fromLevel(level);
 
         //then
+        assertThat(hierarchy).isEqualTo(AddressHierarchy.SIDO);
         assertThat(hierarchy.getLevel()).isEqualTo(1);
     }
 
@@ -46,6 +47,7 @@ class AddressHierarchyTest {
         AddressHierarchy hierarchy = AddressHierarchy.fromLevel(level);
 
         //then
+        assertThat(hierarchy).isEqualTo(AddressHierarchy.SIDO);
         assertThat(hierarchy.getLevel()).isEqualTo(1);
     }
 
