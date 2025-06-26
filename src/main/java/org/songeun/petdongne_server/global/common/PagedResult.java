@@ -3,7 +3,6 @@ package org.songeun.petdongne_server.global.common;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.songeun.petdongne_server.addess.presentation.dto.AddressSearchResponseDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

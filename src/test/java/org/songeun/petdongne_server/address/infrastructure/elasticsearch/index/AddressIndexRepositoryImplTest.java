@@ -7,8 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.index.AddressIndexRepositoryImpl;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 

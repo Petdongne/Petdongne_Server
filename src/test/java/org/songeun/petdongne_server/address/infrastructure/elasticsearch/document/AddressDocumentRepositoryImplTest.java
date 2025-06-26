@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.repository.AddressDocumentRepositoryImpl;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.repository.ElasticsearchAddressRepository;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepositoryImpl;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.ElasticsearchAddressRepository;
 
 import java.util.Collections;
 import java.util.List;

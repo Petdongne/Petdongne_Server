@@ -1,10 +1,10 @@
 package org.songeun.petdongne_server.address.application;
 
 import org.junit.jupiter.api.*;
-import org.songeun.petdongne_server.addess.application.service.AddressSearchService;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.index.AddressIndexRepository;
+import org.songeun.petdongne_server.address.application.service.AddressSearchService;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;

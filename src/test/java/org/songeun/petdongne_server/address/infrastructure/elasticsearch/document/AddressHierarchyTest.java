@@ -2,12 +2,11 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressHierarchy;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_INVALID_FORMAT;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_NOT_FOUND;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_INVALID_FORMAT;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_NOT_FOUND;
 
 class AddressHierarchyTest {
 

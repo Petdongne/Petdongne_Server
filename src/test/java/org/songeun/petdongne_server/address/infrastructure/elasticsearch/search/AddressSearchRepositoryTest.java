@@ -1,10 +1,9 @@
 package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search;
 
 import org.junit.jupiter.api.*;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.index.AddressIndexRepository;
-import org.songeun.petdongne_server.addess.infrastructure.elasticsearch.search.AddressSearchRepository;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.HIERARCHY_LEVEL;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.HIERARCHY_LEVEL;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
 
 // TODO: 통합 테스트 모듈 분리
 @SpringBootTest
