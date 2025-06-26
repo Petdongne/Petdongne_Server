@@ -43,6 +43,9 @@ dependencies {
     // 공간/지도 기능
     implementation 'org.hibernate.orm:hibernate-spatial:6.6.13.Final'
 
+    // 파일
+    implementation 'com.opencsv:opencsv:5.11.1'
+
     // API 문서화
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
 
