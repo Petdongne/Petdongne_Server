@@ -12,7 +12,7 @@ import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.e
 class AddressHierarchyTest {
 
     @Test
-    @DisplayName("String type의 level값을 통해 매칭되는 enum을 반환한다.")
+    @DisplayName("String type의 level값을 통해 매칭되는 AddressHierarchy를 반환한다.")
     void shouldReturnAddressHierarchyFromStringLevel() {
         //given
         String level = "1";
@@ -38,7 +38,7 @@ class AddressHierarchyTest {
     }
 
     @Test
-    @DisplayName("Integer type의 level값을 통해 매칭되는 enum을 반환한다.")
+    @DisplayName("Integer type의 level값을 통해 매칭되는 AddressHierarchy를 반환한다.")
     void shouldReturnAddressHierarchyFromIntegerLevel() {
         //given
         Integer level = 1;
