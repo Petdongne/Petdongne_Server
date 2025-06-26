@@ -1,5 +1,6 @@
 package org.songeun.petdongne_server.address.infrastructure.elasticsearch.index;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +27,16 @@ class AddressIndexRepositoryImplTest {
     @InjectMocks
     AddressIndexRepositoryImpl repository;
 
+    @BeforeEach
+    void setUp() {
+        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
+    }
+
     @Test
     @DisplayName("인덱스 생성에 성공하면 true를 반환한다.")
     void shouldReturnTrueWhenSuccess(){
         //given
-        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
-        given(indexOperations.createWithMapping())
-                .willReturn(true);
+        given(indexOperations.createWithMapping()).willReturn(true);
 
         //when
         boolean result = repository.createIndex();
@@ -45,9 +49,7 @@ class AddressIndexRepositoryImplTest {
     @DisplayName("이미 존재하는 인덱스라면 true를 반환한다.")
     void shouldReturnTrueWhenExists(){
         //given
-        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
-        given(indexOperations.exists())
-                .willReturn(true);
+        given(indexOperations.exists()).willReturn(true);
 
         //when
         boolean result = repository.existIndex();
@@ -60,9 +62,7 @@ class AddressIndexRepositoryImplTest {
     @DisplayName("존재하지 않는 인덱스라면 false를 반환한다.")
     void shouldReturnFalseWhenNotExists(){
         //given
-        given(elasticsearchOperations.indexOps(AddressDocument.class)).willReturn(indexOperations);
-        given(indexOperations.exists())
-                .willReturn(false);
+        given(indexOperations.exists()).willReturn(false);
 
         //when
         boolean result = repository.existIndex();
