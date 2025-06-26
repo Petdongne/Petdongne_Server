@@ -11,7 +11,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 import static com.opencsv.enums.CSVReaderNullFieldIndicator.EMPTY_SEPARATORS;
 
-public class CsvParser {
+// 이름.....................
+public class OpenCsvParserUtil {
 
     private static final char CSV_SEPARATOR = ',';
     private static final boolean IGNORE_WHITESPACE = true;
@@ -46,7 +47,7 @@ public class CsvParser {
             );
 
         } catch (IOException e) {
-            throw new SystemException(GlobalErrorStatus.CSV_FILE_READ_FAILED, e);
+            throw new SystemException(GlobalErrorStatus.CSV_FILE_READ_FAILED, e); // todo
         }
 
     }

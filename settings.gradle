@@ -1,1 +1,4 @@
 rootProject.name = 'petdongne_server'
+include 'src:integrationTest'
+findProject(':src:integrationTest')?.name = 'integrationTest'
+

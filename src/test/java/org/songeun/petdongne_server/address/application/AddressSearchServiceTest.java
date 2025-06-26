@@ -25,10 +25,10 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Testcontainers
+//@Testcontainers
 class AddressSearchServiceTest {
 
-    @Container
+/*    @Container
     static ElasticsearchContainer elasticsearchContainer =
             new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
                     .withReuse(true);
@@ -36,7 +36,7 @@ class AddressSearchServiceTest {
     @DynamicPropertySource
     static void overrideProps(DynamicPropertyRegistry registry) {
         registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }
+    }*/
 
     @Autowired
     private AddressIndexRepository addressIndexRepository;

@@ -30,10 +30,10 @@ import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Testcontainers
+//@Testcontainers
 class AddressSearchRepositoryTest {
 
-    @Container
+/*    @Container
     static ElasticsearchContainer elasticsearchContainer =
             new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
                     .withReuse(true);
@@ -41,7 +41,7 @@ class AddressSearchRepositoryTest {
     @DynamicPropertySource
     static void overrideProps(DynamicPropertyRegistry registry) {
         registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }
+    }*/
 
     @Autowired
     private AddressSearchRepository searchRepository;

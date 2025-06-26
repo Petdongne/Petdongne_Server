@@ -3,6 +3,7 @@ package org.songeun.petdongne_server.global.util;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.apache.commons.io.input.BOMInputStream;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -27,6 +28,21 @@ public class CsvFileLoader {
         }
     }
 
+    public static <T> List<T> loadFromFile(
+            Resource resource,
+            Charset charset,
+            Function<BufferedReader, CsvToBeanBuilder<T>> builderConfigurer
+    ) throws IOException {
+
+        try (BOMInputStream bomInputStream = createBomInputStream(resource.getInputStream());
+             BufferedReader reader = new BufferedReader(
+                     new InputStreamReader(bomInputStream, charset))) {
+
+            CsvToBean<T> csvToBean = builderConfigurer.apply(reader).build();
+            return csvToBean.parse();
+        }
+    }
+
     /**
      * BOM(Byte Order Mark)이 포함되어 있을 수 있는 파일의 인코딩 문제를 방지하기 위해
      * BOMInputStream을 사용하여 스트림을 감쌉니다.
@@ -39,6 +55,12 @@ public class CsvFileLoader {
     private static BOMInputStream createBomInputStream(MultipartFile file) throws IOException {
         return BOMInputStream.builder()
                 .setInputStream(file.getInputStream())
+                .get();
+    }
+
+    private static BOMInputStream createBomInputStream(InputStream input) throws IOException {
+        return BOMInputStream.builder()
+                .setInputStream(input)
                 .get();
     }
 

@@ -20,6 +20,13 @@ public enum GlobalErrorStatus implements ErrorStatus {
     NOT_FOUND(HttpStatus.NOT_FOUND,"NOT_FOUND", "요청하신 리소스를 찾을 수 없습니다."),
     CONFLICT(HttpStatus.CONFLICT, "CONFLICT", "이미 존재하는 리소스입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버에 오류가 발생했습니다."),
+
+    /**
+     * File
+     */
+    FILE_IS_EMPTY(HttpStatus.BAD_REQUEST, "FILE_IS_EMPTY", "비어있는 파일입니다."),
+    MAX_FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "MAX_FILE_SIZE_EXCEEDED","업로드 가능한 최대 파일 용량을 초과하였습니다."),
+    INVALID_FILE_FORMAT(HttpStatus.BAD_REQUEST, "INVALID_FILE_FORMAT", "지원하지 않는 파일 형식입니다."),
     CSV_FILE_READ_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "CSV_FILE_READ_FAILED", "CSV 파일을 읽는데 실패했습니다.");
 
     private final HttpStatus httpStatus;

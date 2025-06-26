@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 @Document(
-        indexName = "kor-address-v1",
+        indexName = "kor-address-test",
         createIndex = false,
         aliases = @Alias(value = "kor-address"),
         writeTypeHint = WriteTypeHint.FALSE
