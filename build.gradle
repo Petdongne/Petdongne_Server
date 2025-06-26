@@ -78,7 +78,8 @@ ext {
             '**/common/*',
             '**/converter/*',
             '**.*Constants.class',
-            '**/*$*Constants.class'
+            '**/*$*Constants.class',
+            '**/ElasticsearchIndexValidator.class'
     ]
 }
 
