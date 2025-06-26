@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.AddressDocumentFields.HIERARCHY_LEVEL;
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.AddressDocumentFields.SCORE;
+import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.HIERARCHY_LEVEL;
+import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
 
 @SpringBootTest
 @ActiveProfiles("test")

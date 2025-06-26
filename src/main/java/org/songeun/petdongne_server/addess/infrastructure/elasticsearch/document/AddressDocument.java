@@ -21,60 +21,60 @@ public class AddressDocument {
 
     @Id
     @CsvBindByName(column = "코드")
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.ID)
+    @Field(type = FieldType.Keyword, name = FieldConstants.ID)
     private String id;
 
     @CsvBindByName(column = "시도명")
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.SIDO)
+    @Field(type = FieldType.Keyword, name = FieldConstants.SIDO)
     private String sido;
 
     @CsvBindByName(column = "시군구명")
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.SIGUNGU)
+    @Field(type = FieldType.Keyword, name = FieldConstants.SIGUNGU)
     private String sigungu;
 
     @CsvBindByName(column = "읍면동명")
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.EUPMYEONDONG)
+    @Field(type = FieldType.Keyword, name = FieldConstants.EUPMYEONDONG)
     private String eupmyeondong;
 
     @CsvBindByName(column = "리명")
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.RE)
+    @Field(type = FieldType.Keyword, name = FieldConstants.RE)
     private String re;
 
     @CsvBindByName(column = "주소")
     @MultiField(
             mainField = @Field(
                     type = FieldType.Text,
-                    name = AddressDocumentFields.FULL_ADDRESS,
+                    name = FieldConstants.FULL_ADDRESS,
                     analyzer = "address_ngram_analyzer"),
             otherFields = {
                     @InnerField(
-                            suffix = AddressDocumentFields.FULL_ADDRESS_PER_CHAR_SUFFIX,
+                            suffix = FieldConstants.FULL_ADDRESS_PER_CHAR_SUFFIX,
                             type = FieldType.Text,
                             analyzer = "address_per_char_analyzer"),
                     @InnerField(
-                            suffix = AddressDocumentFields.FULL_ADDRESS_FIRST_CHAR_SUFFIX,
+                            suffix = FieldConstants.FULL_ADDRESS_FIRST_CHAR_SUFFIX,
                             type = FieldType.Text,
                             analyzer = "address_first_char_analyzer")
             })
     private String fullAddress;
 
     @CsvCustomBindByName(column = "계층", converter = AddressHierarchyCsvConverter.class)
-    @Field(type = FieldType.Integer, name = AddressDocumentFields.HIERARCHY_LEVEL)
+    @Field(type = FieldType.Integer, name = FieldConstants.HIERARCHY_LEVEL)
     private AddressHierarchy hierarchyLevel;
 
     @CsvCustomBindByName(column = "유형", converter = AddressTypeCsvConverter.class)
-    @Field(type = FieldType.Keyword, name = AddressDocumentFields.TYPE)
+    @Field(type = FieldType.Keyword, name = FieldConstants.TYPE)
     private AddressType type;
 
-    public static class AddressDocumentFields {
+    public static class FieldConstants {
         public static final String ID = "id";
         public static final String SIDO = "sido";
         public static final String SIGUNGU = "sigungu";
         public static final String EUPMYEONDONG = "eupmyeondong";
         public static final String RE = "re";
         public static final String FULL_ADDRESS = "fullAddress";
-        private static final String FULL_ADDRESS_PER_CHAR_SUFFIX = "per_char";
-        private static final String FULL_ADDRESS_FIRST_CHAR_SUFFIX = "first_char";
+        public static final String FULL_ADDRESS_PER_CHAR_SUFFIX = "per_char";
+        public static final String FULL_ADDRESS_FIRST_CHAR_SUFFIX = "first_char";
         public static final String HIERARCHY_LEVEL = "hierarchyLevel";
         public static final String TYPE = "type";
         public static final String SCORE = "_score";

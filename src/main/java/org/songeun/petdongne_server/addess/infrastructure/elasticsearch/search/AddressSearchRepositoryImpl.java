@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.core.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.AddressDocumentFields;
+import static org.songeun.petdongne_server.addess.infrastructure.elasticsearch.document.AddressDocument.FieldConstants;
 
 @Repository
 @Transactional
@@ -29,7 +29,7 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
         final Query searchQuery;
 
         if (isSpecialGwangjuQuery(query)) {
-            searchQuery = buildFullAddressQueryExcluding(query, AddressDocumentFields.SIGUNGU, GWANGJU_CITY);
+            searchQuery = buildFullAddressQueryExcluding(query, FieldConstants.SIGUNGU, GWANGJU_CITY);
         } else if (isSingleCharQuery(query)) {
             searchQuery = buildFirstCharFullAddressQuery(query);
         } else {
@@ -54,12 +54,12 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
         int slop = 35;
 
         Query matchQuery = QueryBuilders.match(builder -> builder
-                .field(AddressDocumentFields.FULL_ADDRESS)
+                .field(FieldConstants.FULL_ADDRESS)
                 .operator(Operator.And)
                 .query(query));
 
         Query matchPhraseQuery = QueryBuilders.matchPhrase(builder -> builder
-                .field(AddressDocumentFields.getFullAddressPerChar())
+                .field(FieldConstants.getFullAddressPerChar())
                 .slop(slop)
                 .query(query));
 
@@ -74,7 +74,7 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
 
     private Query buildFirstCharFullAddressQuery(String query) {
         return QueryBuilders.match(builder -> builder
-                .field(AddressDocumentFields.getFullAddressFirstChar())
+                .field(FieldConstants.getFullAddressFirstChar())
                 .query(query));
     }
 
@@ -82,12 +82,12 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
         int slop = 35;
 
         Query matchQuery = QueryBuilders.match(builder -> builder
-                .field(AddressDocumentFields.FULL_ADDRESS)
+                .field(FieldConstants.FULL_ADDRESS)
                 .operator(Operator.And)
                 .query(query));
 
         Query matchPhraseQuery = QueryBuilders.matchPhrase(builder -> builder
-                .field(AddressDocumentFields.getFullAddressPerChar())
+                .field(FieldConstants.getFullAddressPerChar())
                 .query(query)
                 .slop(slop));
 
