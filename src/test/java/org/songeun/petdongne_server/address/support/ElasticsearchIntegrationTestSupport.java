@@ -27,7 +27,10 @@ public abstract class ElasticsearchIntegrationTestSupport {
         if (!elasticsearchContainer.isRunning()) {
             elasticsearchContainer.start();
         }
-        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
+        String hostAndPort = elasticsearchContainer.getHost() + ":" + elasticsearchContainer.getMappedPort(9200);
+        registry.add("app.elasticsearch.hostAndPort", () -> hostAndPort);
+        registry.add("app.elasticsearch.connectionTimeout", () -> 5);
+        registry.add("app.elasticsearch.socketTimeout", () -> 20);
     }
 
     @Autowired
