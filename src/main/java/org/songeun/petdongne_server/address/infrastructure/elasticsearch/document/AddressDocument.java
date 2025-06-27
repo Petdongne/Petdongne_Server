@@ -67,10 +67,18 @@ public class AddressDocument {
         public static final String TYPE = "type";
         public static final String SCORE = "_score";
 
+        /**
+         * Elasticsearch 멀티 필드 중 first_char 필드의 전체 경로를 반환합니다.
+         * 예: "fullAddress.first_char"
+         */
         public static String getFullAddressFirstChar(){
             return FULL_ADDRESS + "." + FULL_ADDRESS_FIRST_CHAR_SUFFIX;
         }
 
+        /**
+         * Elasticsearch 멀티 필드 중 per_char 필드의 전체 경로를 반환합니다.
+         * 예: "fullAddress.per_char"
+         */
         public static String getFullAddressPerChar(){
             return FULL_ADDRESS + "." + FULL_ADDRESS_PER_CHAR_SUFFIX;
         }
