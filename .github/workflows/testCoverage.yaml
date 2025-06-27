@@ -22,7 +22,7 @@ jobs:
     - name: Run Coverage
       run: |
         chmod +x gradlew
-        ./gradlew test jacocoTestReport -x jacocoTestCoverageVerification --info
+        ./gradlew test jacocoTestReport -x jacocoTestCoverageVerification
         
     - name: Add coverage to PR
       id: jacoco
