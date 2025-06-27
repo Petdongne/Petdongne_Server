@@ -9,7 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest
@@ -17,17 +16,18 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public abstract class ElasticsearchIntegrationTestSupport {
 
-    @Container
-    static ElasticsearchContainer elasticsearchContainer =
-            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
-                    .withReuse(true);
+    public static final String ELASTICSEARCH_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:7.17.10";
+
+    static final ElasticsearchContainer ELASTICSEARCH_CONTAINER;
+
+    static {
+        ELASTICSEARCH_CONTAINER = new ElasticsearchContainer(ELASTICSEARCH_IMAGE);
+        ELASTICSEARCH_CONTAINER.start();
+    }
 
     @DynamicPropertySource
     static void overrideProps(DynamicPropertyRegistry registry) {
-        if (!elasticsearchContainer.isRunning()) {
-            elasticsearchContainer.start();
-        }
-        String hostAndPort = elasticsearchContainer.getHost() + ":" + elasticsearchContainer.getMappedPort(9200);
+        String hostAndPort = ELASTICSEARCH_CONTAINER.getHost() + ":" + ELASTICSEARCH_CONTAINER.getMappedPort(9200);
         registry.add("app.elasticsearch.hostAndPort", () -> hostAndPort);
         registry.add("app.elasticsearch.connectionTimeout", () -> 5);
         registry.add("app.elasticsearch.socketTimeout", () -> 20);
