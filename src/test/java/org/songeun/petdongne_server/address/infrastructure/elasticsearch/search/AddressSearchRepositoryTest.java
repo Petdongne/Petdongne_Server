@@ -2,16 +2,11 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
 import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchPage;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
@@ -232,7 +227,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("광주시를 입력했을 때 광주광역시와 경기도 광주시를 검색할 수 있다.")
+    @DisplayName("검색어가 '광주시'일 때 광주광역시와 경기도 광주시를 검색할 수 있다.")
     void shouldReturnBothGwangjuCities(){
         //given
         var addressDocs = createAddressDocuments(
@@ -268,8 +263,8 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("광주광역시를 입력했을 때 경기도 광주시는 검색되지 않아야 한다.")
-    void shouldExcludeGyeonggiGwangjusi(){
+    @DisplayName("검색어가 '광주광역시'일 때 경기도 광주시는 검색되지 않아야 한다.")
+    void shouldExcludeGyeonggiGwangjusi_givenQueryEqualsSpecialCase() {
         //given
         var addressDocuments = createAddressDocuments(
                 "광주광역시",
