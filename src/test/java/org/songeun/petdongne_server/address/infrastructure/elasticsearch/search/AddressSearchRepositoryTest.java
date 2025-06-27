@@ -300,6 +300,36 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 );
     }
 
+    @Test
+    @DisplayName("검색어에 '광주광역시'가 포함되었을 때 경기도 광주시는 검색되지 않아야 한다.")
+    void shouldExcludeGyeonggiGwangjusi_givenQueryContainsSpecialCase(){
+        //given
+        var addressDocuments = createAddressDocuments(
+                "광주광역시",
+                "광주광역시 동구",
+                "광주광역시 서구",
+                "경기도 광주시",
+                "경기도 광주시 삼동",
+                "경기도 광주시 직동"
+        );
+        documentRepository.bulkSave(addressDocuments);
+
+        String query = "광주광역시 동";
+        Sort sort = Sort.by(
+                Sort.Order.by(HIERARCHY_LEVEL),
+                Sort.Order.desc(SCORE)
+        );
+
+        //when
+        var searchHits = searchRepository.searchAddress(query, PageRequest.ofSize(addressDocuments.size()), sort);
+
+        //then
+        assertThat(extractDocuments(searchHits)).hasSize(1)
+                .extracting("fullAddress")
+                .containsExactlyInAnyOrder(
+                        "광주광역시 동구"
+                );
+    }
 
     private List<AddressDocument> extractDocuments(SearchPage<AddressDocument> hits) {
         if (hits.getSize() == 0){
