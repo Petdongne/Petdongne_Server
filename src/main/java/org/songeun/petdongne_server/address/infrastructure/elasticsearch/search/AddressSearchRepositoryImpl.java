@@ -19,6 +19,7 @@ import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.
 @RequiredArgsConstructor
 public class AddressSearchRepositoryImpl implements AddressSearchRepository {
 
+    public static final int KOR_ADDRESS_MAX_LENGTH = 25; // 현재 주소 최대 길이(21자) + 향후 확장 여유분
     private static final String SPECIAL_QUERY_GWANGJU = "광주광역시";
     private static final String GWANGJU_CITY = "광주시";
 
