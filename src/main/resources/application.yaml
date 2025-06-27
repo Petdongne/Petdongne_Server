@@ -1,0 +1,104 @@
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  elasticsearch:
+    hostAndPort: ${ELASTICSEARCH_HOST_AND_PORT:localhost:9200}
+    connectionTimeout: ${ELASTICSEARCH_CONNECTION_TIME_OUT:5}
+    socketTimeout: ${ELASTICSEARCH_SOCKET_TIME_OUT:20}
+
+feature:
+  validation:
+    elasticsearch:
+      enabled : false
+
+spring:
+  application:
+    name: petdongne_server
+
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongne}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database: postgresql
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      jdbc:
+        time_zone: Aisa/Seoul
+
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        default_batch_fetch_size: 1000
+        validator:
+          apply_to_ddl: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# 스웨거 설정
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+# 로깅 설정
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace
+      elasticsearch.client: trace
+      springframework.data.elasticsearch.core: DEBUG
+      org.apache.http: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:~/petDongne
+    username: test
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database: h2
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  data:
+    redis:
+      host: localhost
+      port: 6378
