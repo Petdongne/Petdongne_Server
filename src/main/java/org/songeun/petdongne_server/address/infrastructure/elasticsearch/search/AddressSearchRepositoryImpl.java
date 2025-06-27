@@ -85,6 +85,9 @@ public class AddressSearchRepositoryImpl implements AddressSearchRepository {
                 .field(FieldConstants.FULL_ADDRESS)
                 .operator(Operator.And)
                 .query(query));
+    private boolean isSpecialGwangjuQuery(String query) {
+        return query.contains(SPECIAL_QUERY_GWANGJU);
+    }
 
         Query matchPhraseQuery = QueryBuilders.matchPhrase(builder -> builder
                 .field(FieldConstants.getFullAddressPerChar())
