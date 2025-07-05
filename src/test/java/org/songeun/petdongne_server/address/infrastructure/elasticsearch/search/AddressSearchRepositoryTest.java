@@ -2,21 +2,12 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchPage;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.testcontainers.elasticsearch.ElasticsearchContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,30 +18,8 @@ import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument.FieldConstants.SCORE;
 
 // TODO: 통합 테스트 모듈 분리
-@SpringBootTest
-@ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@Testcontainers
-class AddressSearchRepositoryTest {
-
-/*    @Container
-    static ElasticsearchContainer elasticsearchContainer =
-            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
-                    .withReuse(true);
-
-    @DynamicPropertySource
-    static void overrideProps(DynamicPropertyRegistry registry) {
-        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }*/
-
-    @Autowired
-    private AddressSearchRepository searchRepository;
-
-    @Autowired
-    private AddressDocumentRepository documentRepository;
-
-    @Autowired
-    private AddressIndexRepository addressIndexRepository;
+class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
@@ -258,7 +227,7 @@ class AddressSearchRepositoryTest {
     }
 
     @Test
-    @DisplayName("광주시를 입력했을 때 광주광역시와 경기도 광주시를 검색할 수 있다.")
+    @DisplayName("검색어가 '광주시'일 때 광주광역시와 경기도 광주시를 검색할 수 있다.")
     void shouldReturnBothGwangjuCities(){
         //given
         var addressDocs = createAddressDocuments(
@@ -294,8 +263,8 @@ class AddressSearchRepositoryTest {
     }
 
     @Test
-    @DisplayName("광주광역시를 입력했을 때 경기도 광주시는 검색되지 않아야 한다.")
-    void shouldExcludeGyeonggiGwangjusi(){
+    @DisplayName("검색어가 '광주광역시'일 때 경기도 광주시는 검색되지 않아야 한다.")
+    void shouldExcludeGyeonggiGwangjusi_givenQueryEqualsSpecialCase() {
         //given
         var addressDocuments = createAddressDocuments(
                 "광주광역시",
@@ -326,6 +295,36 @@ class AddressSearchRepositoryTest {
                 );
     }
 
+    @Test
+    @DisplayName("검색어에 '광주광역시'가 포함되었을 때 경기도 광주시는 검색되지 않아야 한다.")
+    void shouldExcludeGyeonggiGwangjusi_givenQueryContainsSpecialCase(){
+        //given
+        var addressDocuments = createAddressDocuments(
+                "광주광역시",
+                "광주광역시 동구",
+                "광주광역시 서구",
+                "경기도 광주시",
+                "경기도 광주시 삼동",
+                "경기도 광주시 직동"
+        );
+        documentRepository.bulkSave(addressDocuments);
+
+        String query = "광주광역시 동";
+        Sort sort = Sort.by(
+                Sort.Order.by(HIERARCHY_LEVEL),
+                Sort.Order.desc(SCORE)
+        );
+
+        //when
+        var searchHits = searchRepository.searchAddress(query, PageRequest.ofSize(addressDocuments.size()), sort);
+
+        //then
+        assertThat(extractDocuments(searchHits)).hasSize(1)
+                .extracting("fullAddress")
+                .containsExactlyInAnyOrder(
+                        "광주광역시 동구"
+                );
+    }
 
     private List<AddressDocument> extractDocuments(SearchPage<AddressDocument> hits) {
         if (hits.getSize() == 0){

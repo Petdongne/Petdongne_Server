@@ -2,8 +2,6 @@
 /src/main/generated/
 
 *.properties
-*.yaml
-*.yml
 
 HELP.md
 .gradle

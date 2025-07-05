@@ -3,49 +3,23 @@ package org.songeun.petdongne_server.address.application;
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository.AddressDocumentRepository;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexRepository;
+import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.testcontainers.elasticsearch.ElasticsearchContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@Testcontainers
-class AddressSearchServiceTest {
-
-/*    @Container
-    static ElasticsearchContainer elasticsearchContainer =
-            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.17.10")
-                    .withReuse(true);
-
-    @DynamicPropertySource
-    static void overrideProps(DynamicPropertyRegistry registry) {
-        registry.add("spring.elasticsearch.uris", elasticsearchContainer::getHttpHostAddress);
-    }*/
-
-    @Autowired
-    private AddressIndexRepository addressIndexRepository;
+class AddressSearchServiceTest extends ElasticsearchIntegrationTestSupport {
 
     @Autowired
     private AddressSearchService addressSearchService;
-
-    @Autowired
-    private AddressDocumentRepository addressDocumentRepository;
 
     @BeforeAll
     void beforeAll() {
@@ -56,7 +30,7 @@ class AddressSearchServiceTest {
 
     @AfterEach
     void tearDown() {
-        addressDocumentRepository.deleteAll();
+        documentRepository.deleteAll();
     }
 
     @Test
@@ -71,7 +45,7 @@ class AddressSearchServiceTest {
                 "인천광역시 남동구 논현1동",
                 "인천광역시 남동구 논현2동"
         );
-        addressDocumentRepository.bulkSave(addressDocuments);
+        documentRepository.bulkSave(addressDocuments);
 
         int requestPageNum = 0;
         PageRequest pageRequest = PageRequest.of(requestPageNum, 10);
