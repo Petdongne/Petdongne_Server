@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.infrastructure.elasticsearch.upload.csv.converter;
+package org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.converter;
 
 import com.opencsv.bean.AbstractBeanField;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressHierarchy;
