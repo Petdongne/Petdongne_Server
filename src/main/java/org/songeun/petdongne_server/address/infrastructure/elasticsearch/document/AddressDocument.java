@@ -1,10 +1,6 @@
 package org.songeun.petdongne_server.address.infrastructure.elasticsearch.document;
 
-import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvCustomBindByName;
 import lombok.*;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.converter.AddressHierarchyCsvConverter;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.converter.AddressTypeCsvConverter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
@@ -20,27 +16,21 @@ import org.springframework.data.elasticsearch.annotations.*;
 public class AddressDocument {
 
     @Id
-    @CsvBindByName(column = "코드")
     @Field(type = FieldType.Keyword, name = FieldConstants.ID)
     private String id;
 
-    @CsvBindByName(column = "시도명")
     @Field(type = FieldType.Keyword, name = FieldConstants.SIDO)
     private String sido;
 
-    @CsvBindByName(column = "시군구명")
     @Field(type = FieldType.Keyword, name = FieldConstants.SIGUNGU)
     private String sigungu;
 
-    @CsvBindByName(column = "읍면동명")
     @Field(type = FieldType.Keyword, name = FieldConstants.EUPMYEONDONG)
     private String eupmyeondong;
 
-    @CsvBindByName(column = "리명")
     @Field(type = FieldType.Keyword, name = FieldConstants.RE)
     private String re;
 
-    @CsvBindByName(column = "주소")
     @MultiField(
             mainField = @Field(
                     type = FieldType.Text,
@@ -58,14 +48,14 @@ public class AddressDocument {
             })
     private String fullAddress;
 
-    @CsvCustomBindByName(column = "계층", converter = AddressHierarchyCsvConverter.class)
     @Field(type = FieldType.Integer, name = FieldConstants.HIERARCHY_LEVEL)
     private AddressHierarchy hierarchyLevel;
 
-    @CsvCustomBindByName(column = "유형", converter = AddressTypeCsvConverter.class)
     @Field(type = FieldType.Keyword, name = FieldConstants.TYPE)
     private AddressType type;
 
+
+    // todo 개별 클래스로 분리
     public static class FieldConstants {
         public static final String ID = "id";
         public static final String SIDO = "sido";

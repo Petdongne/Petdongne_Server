@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.songeun.petdongne_server.global.common.ErrorStatus;
 import org.springframework.http.HttpStatus;
 
+// todo renaming
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum AddressErrorStatus implements ErrorStatus {
