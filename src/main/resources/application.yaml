@@ -10,7 +10,7 @@ app:
 feature:
   validation:
     elasticsearch:
-      enabled : false
+      enabled: false
 
 spring:
   application:
@@ -36,7 +36,7 @@ spring:
     hibernate:
       ddl-auto: update
       jdbc:
-        time_zone: Aisa/Seoul
+        time_zone: Asia/Seoul
 
     properties:
       hibernate:
