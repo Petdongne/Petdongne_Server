@@ -6,6 +6,12 @@ app:
     hostAndPort: ${ELASTICSEARCH_HOST_AND_PORT:localhost:9200}
     connectionTimeout: ${ELASTICSEARCH_CONNECTION_TIME_OUT:5}
     socketTimeout: ${ELASTICSEARCH_SOCKET_TIME_OUT:20}
+  crawling:
+    address:
+      post-list-base-url: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardList.do?bbsId=BBSMSTR_000000000052
+      user-agent: Mozilla/5.0
+      post-base-url: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do
+      output-file-save-path: ${ADDRESS_CRAWLING_DATA_FILE_PATH}
 
 feature:
   validation:
