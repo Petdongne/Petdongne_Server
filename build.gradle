@@ -42,6 +42,7 @@ dependencies {
 
     // 배치
     implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.batch.extensions:spring-batch-excel:0.1.1'
 
     // 크롤링
     implementation 'org.jsoup:jsoup:1.21.1'
@@ -56,6 +57,7 @@ dependencies {
     implementation 'com.opencsv:opencsv:5.11.1'
     implementation 'commons-io:commons-io:2.19.0'
     implementation 'org.apache.tika:tika-core:3.2.0'
+    implementation 'org.apache.poi:poi-ooxml:5.4.1'
 
     // API 문서화
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
