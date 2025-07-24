@@ -11,7 +11,6 @@ import org.springframework.data.elasticsearch.annotations.*;
 @Document(
         indexName = AddressIndexNameFactory.ADDRESS_INDEX_ALIAS,
         createIndex = false,
-        aliases = @Alias(value = "kor-address"),
         writeTypeHint = WriteTypeHint.FALSE
 )
 @Setting(settingPath = "/elasticsearch/address-setting.json")
