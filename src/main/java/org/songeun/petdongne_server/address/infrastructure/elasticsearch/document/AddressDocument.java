@@ -3,13 +3,12 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 import lombok.*;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.converter.AddressHierarchyCsvConverter;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.converter.AddressTypeCsvConverter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 @Document(
-        indexName = "kor-address-v1",
+        indexName = AddressIndexNameFactory.ADDRESS_INDEX_ALIAS,
         createIndex = false,
         aliases = @Alias(value = "kor-address"),
         writeTypeHint = WriteTypeHint.FALSE
