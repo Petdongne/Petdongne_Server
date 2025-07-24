@@ -54,7 +54,9 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-spatial:6.6.13.Final'
 
     // 파일
+    implementation 'com.opencsv:opencsv:5.11.1'
     implementation 'commons-io:commons-io:2.19.0'
+    implementation 'org.apache.tika:tika-core:3.2.0'
     implementation 'org.apache.poi:poi-ooxml:5.4.1'
 
     // API 문서화
