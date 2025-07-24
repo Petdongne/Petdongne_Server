@@ -1,6 +1,7 @@
 package org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.repository;
 
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 
 import java.util.List;
 
@@ -11,8 +12,10 @@ import java.util.List;
  */
 public interface AddressDocumentRepository {
 
-    public boolean bulkSave(List<AddressDocument> addresses);
+    boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexName);
 
-    public void deleteAll();
+    boolean bulkSave(List<AddressDocument> addresses);
+
+    void deleteAll();
 
 }
