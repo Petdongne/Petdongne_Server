@@ -2,12 +2,12 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
 
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_INVALID_FORMAT;
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_HIERARCHY_NOT_FOUND;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.*;
 
 @Getter
 @RequiredArgsConstructor
@@ -36,4 +36,40 @@ public enum AddressHierarchy {
                 .orElseThrow(() -> new BusinessException(ADDRESS_HIERARCHY_NOT_FOUND));
     }
 
+    public static AddressHierarchy determine(AddressParts parts) {
+        if (parts instanceof AdminDongAddressParts adminParts) {
+            return determineAddressHierarchy(adminParts);
+        }
+
+        if (parts instanceof LegalDongAddressParts legalParts) {
+            return determineAddressHierarchy(legalParts);
+        }
+
+        return null;
+    }
+
+    private static AddressHierarchy determineAddressHierarchy(LegalDongAddressParts legalParts) {
+        if (StringUtils.isNotBlank(legalParts.getSigungu())) {
+            if (StringUtils.isNotBlank(legalParts.getEupmyeondong())) {
+                if (StringUtils.isNotBlank(legalParts.getRe())) {
+                    return RE;
+                }
+                return EUPMYEONDONG;
+            }
+            return SIGUNGU;
+        }
+        return SIDO;
+    }
+
+    private static AddressHierarchy determineAddressHierarchy(AdminDongAddressParts adminParts) {
+        if (StringUtils.isNotBlank(adminParts.getSigungu())) {
+            if (StringUtils.isNotBlank(adminParts.getEupmyeondong())) {
+                return EUPMYEONDONG;
+            }
+            return SIGUNGU;
+        }
+        return SIDO;
+    }
+
 }
+

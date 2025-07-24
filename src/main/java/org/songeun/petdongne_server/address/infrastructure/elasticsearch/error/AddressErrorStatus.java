@@ -14,6 +14,10 @@ public enum AddressErrorStatus implements ErrorStatus {
     ADDRESS_HIERARCHY_NOT_FOUND(HttpStatus.NOT_FOUND, "ADDRESS_HIERARCHY_NOT_FOUND", "존재하지 않는 주소 계층입니다."),
 
     ADDRESS_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "ADDRESS_TYPE_NOT_FOUND", "존재하지 않는 주소 유형입니다."),
+
+    NOT_SUPPORTED_IN_LEGAL_ADDRESS(HttpStatus.BAD_REQUEST, "NOT_SUPPORTED_IN_LEGAL_ADDRESS", "법정동 주소에서 지원하지 않는 데이터 유형입니다."),
+    NOT_SUPPORTED_IN_ADMIN_ADDRESS(HttpStatus.BAD_REQUEST, "NOT_SUPPORTED_IN_ADMIN_ADDRESS", "행정동 주소에서 지원하지 않는 데이터 유형입니다."),
+
     SIDO_IS_REQUIRED(HttpStatus.BAD_REQUEST, "SIDO_IS_REQUIRED", "시도 레벨의 주소값은 필수입니다."),
     SIGUNGU_IS_REQUIRED_IF_EUPMYEONDONG_EXISTS(HttpStatus.BAD_REQUEST, "SIGUNGU_IS_REQUIRED_IF_EUPMYEONDONG_EXISTS",
             "읍면동 주소값이 존재한다면 시군구 주소값은 필수입니다."),
