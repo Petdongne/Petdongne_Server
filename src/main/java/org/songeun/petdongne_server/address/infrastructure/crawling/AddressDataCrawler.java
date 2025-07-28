@@ -59,10 +59,11 @@ public class AddressDataCrawler {
     private final AddressCrawlingProperties addressCrawlingProperties;
 
     /**
-     * 최신 주소 데이터의 식별자를 조회합니다.
+     * 최신 주소 데이터가 담긴 게시글을 찾습니다.
+     * @return 게시글 식별자
      */
-    public AddressPostIdentifierDto getLatestPostIdentifier() {
-        Element latestPost = findLatestAddressPostElement();
+    public AddressPostIdentifierDto fetchLatestPostIdentifier() {
+        Element latestPost = getLatestAddressPostElement();
         validateNotNull(latestPost, "최신 게시글 요소를 찾지 못했습니다.");
 
         String postUrl = latestPost.attr(HTML_HREF_ATTRIBUTE);
@@ -170,7 +171,7 @@ public class AddressDataCrawler {
     }
 
     @Nullable
-    private Element findLatestAddressPostElement() {
+    private Element getLatestAddressPostElement() {
         String listUrl = addressCrawlingProperties.getPostListBaseUrl();
 
         try {
@@ -183,9 +184,9 @@ public class AddressDataCrawler {
 
             Elements rows = tableBody.select(TABLE_ROW_SELECTOR);
 
-            // 최신순으로 정렬된 게시글에서 대상 게시글을 찾습니다.
+            // 최신순으로 정렬된 게시글에서 주소 게시글을 찾습니다.
             for (Element row : rows) {
-                if (isTargetAddressPost(row)) {
+                if (isAddressPost(row)) {
                     return row.selectFirst("td.l a");
                 }
             }
@@ -197,9 +198,9 @@ public class AddressDataCrawler {
     }
 
     /**
-     * 대상 주소 게시글인지 확인합니다.
+     * 주어진 게시글이 원하는 주소 게시글인지 확인합니다.
      */
-    private boolean isTargetAddressPost(Element row) {
+    private boolean isAddressPost(Element row) {
         Element titleLink = row.selectFirst("td.l a");
         if (titleLink == null) {
             return false;
