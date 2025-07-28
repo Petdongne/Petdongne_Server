@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument.FieldConstants;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class AddressSearchRepositoryImpl implements AddressSearchRepository {
 
