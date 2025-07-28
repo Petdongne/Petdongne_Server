@@ -28,6 +28,8 @@ public enum GlobalErrorStatus implements ErrorStatus {
     MAX_FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "MAX_FILE_SIZE_EXCEEDED","업로드 가능한 최대 파일 용량을 초과하였습니다."),
     INVALID_FILE_FORMAT(HttpStatus.BAD_REQUEST, "INVALID_FILE_FORMAT", "지원하지 않는 파일 형식입니다."),
     CSV_FILE_READ_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "CSV_FILE_READ_FAILED", "CSV 파일을 읽는데 실패했습니다."),
+    UNZIP_PROCESS_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "UNZIP_FAILED", "ZIP 파일 압축 해제 중 오류가 발생했습니다. 다시 시도해 주세요."),
+    COLLECT_CHILD_FILES_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "COLLECT_CHILD_FILES_FAILED", "디렉터리 내 파일을 수집하는 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요."),
     ;
 
     private final HttpStatus httpStatus;
