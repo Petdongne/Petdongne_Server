@@ -20,13 +20,13 @@ public class AddressCrawlingScheduler {
     public void crawlAddressDataIfRequired() {
         findNewContent()
                 .ifPresentOrElse(
-                        this::precessNewAddressData,
+                        this::processNewAddressData,
                         () -> log.info("최신 데이터로, 크롤링을 건너뜁니다.")
                 );
         log.info("주소 업데이트 스케줄링 작업 완료");
     }
 
-    private void precessNewAddressData(AddressPostIdentifierDto identifier) {
+    private void processNewAddressData(AddressPostIdentifierDto identifier) {
         log.info("새로운 주소 데이터 발견, 크롤링을 시작합니다.");
         addressCrawlingService.processAddressFile(identifier);
     }
