@@ -13,38 +13,38 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AddressUpdateSchedulerTest {
+class AddressCrawlingSchedulerTest {
 
     @Mock
     private AddressCrawlingService crawlingService;
 
     @InjectMocks
-    private AddressUpdateScheduler addressUpdateScheduler;
+    private AddressCrawlingScheduler addressCrawlingScheduler;
 
     @Test
-    @DisplayName("업데이트가 필요한 경우 주소 업데이트를 시작한다.")
-    void shouldTriggerAddressUpdateWhenPostIsNew(){
+    @DisplayName("크롤링되지 않은 최신 주소 게시글이 발견되면 처리한다.")
+    void shouldProcessAddressDataWhenNewContentFound(){
         //given
         given(crawlingService.getLatestAddressContent()).willReturn(mock(AddressPostIdentifierDto.class));
-        given(crawlingService.isAlreadyProcessed(any())).willReturn(false);
+        given(crawlingService.isAlreadyCrawled(any())).willReturn(false);
         doNothing().when(crawlingService).processAddressFile(any());
 
         //when
-        addressUpdateScheduler.checkAndTriggerUpdate();
+        addressCrawlingScheduler.crawlAddressDataIfRequired();
 
         //then
         verify(crawlingService, times(1)).processAddressFile(any());
     }
 
     @Test
-    @DisplayName("업데이트가 필요하지 않으면 주소 업데이트를 시작하지 않는다.")
-    void shouldNotTriggerAddressUpdateWhenPostAlreadyProcessed(){
+    @DisplayName("이미 크롤링 된 최신 게시글이이라면 재처리하지 않는다.")
+    void shouldNotProcessAddressDataWhenAlreadyCrawled(){
         //given
         given(crawlingService.getLatestAddressContent()).willReturn(mock(AddressPostIdentifierDto.class));
-        given(crawlingService.isAlreadyProcessed(any())).willReturn(true);
+        given(crawlingService.isAlreadyCrawled(any())).willReturn(true);
 
         //when
-        addressUpdateScheduler.checkAndTriggerUpdate();
+        addressCrawlingScheduler.crawlAddressDataIfRequired();
 
         //then
         verify(crawlingService, never()).processAddressFile(any());
