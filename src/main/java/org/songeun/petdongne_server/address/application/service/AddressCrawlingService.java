@@ -93,7 +93,7 @@ public class AddressCrawlingService {
         return (parent != null) ? parent.resolve(fileNameWithoutExtension) : Path.of(fileNameWithoutExtension);
     }
 
-    public AddressPostIdentifierDto getLatestAddressContent() {
+    public AddressPostIdentifierDto getLatestAddressPost() {
         return addressDataCrawler.fetchLatestPostIdentifier();
     }
 
