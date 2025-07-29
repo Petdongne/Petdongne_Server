@@ -12,30 +12,29 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AddressUpdateScheduler {
+public class AddressCrawlingScheduler {
 
     private final AddressCrawlingService addressCrawlingService;
 
     @Scheduled(cron = "0 0 2 * * *")
-    public void checkAndTriggerUpdate() {
-        findUpdateRequiredContent()
+    public void crawlAddressDataIfRequired() {
+        findNewContent()
                 .ifPresentOrElse(
-                        this::triggerAddressUpdate,
-                        () -> log.info("최신 데이터로, 업데이트를 건너뜁니다.")
+                        this::precessNewAddressData,
+                        () -> log.info("최신 데이터로, 크롤링을 건너뜁니다.")
                 );
         log.info("주소 업데이트 스케줄링 작업 완료");
     }
 
-    private void triggerAddressUpdate(AddressPostIdentifierDto identifier) {
-        log.info("새로운 주소 데이터 발견, 업데이트 프로세스를 시작합니다.");
+    private void precessNewAddressData(AddressPostIdentifierDto identifier) {
+        log.info("새로운 주소 데이터 발견, 크롤링을 시작합니다.");
         addressCrawlingService.processAddressFile(identifier);
-        log.info("주소 업데이트 프로세스가 비동기적으로 시작되었습니다.");
     }
 
-    private Optional<AddressPostIdentifierDto> findUpdateRequiredContent() {
+    private Optional<AddressPostIdentifierDto> findNewContent() {
         AddressPostIdentifierDto latest = addressCrawlingService.getLatestAddressContent();
 
-        return addressCrawlingService.isAlreadyProcessed(latest)
+        return addressCrawlingService.isAlreadyCrawled(latest)
                 ? Optional.empty()
                 : Optional.of(latest);
     }

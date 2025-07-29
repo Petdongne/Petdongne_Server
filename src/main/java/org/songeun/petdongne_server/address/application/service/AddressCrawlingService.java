@@ -96,7 +96,7 @@ public class AddressCrawlingService {
         return addressDataCrawler.fetchLatestPostIdentifier();
     }
 
-    public boolean isAlreadyProcessed(AddressPostIdentifierDto latestFoundPost) {
+    public boolean isAlreadyCrawled(AddressPostIdentifierDto latestFoundPost) {
         Optional<CrawledAddressPost> processed = crawledAddressPostRepository.findTopByOrderByNttIdDesc();
 
         // 처리된 이력이 없음
