@@ -48,6 +48,7 @@ public class AddressCrawlingService {
         Path newAddressZipFile = addressDataCrawler.downloadAddressZipFile(addressIdentifier);
         List<Path> addressFiles = unzipFile(newAddressZipFile);
         Map<AddressFileType, Path> matchedFiles = AddressFilePattern.getMatchedFilesOrThrow(addressFiles);
+        crawledAddressPostRepository.save(CrawledAddressPost.of(addressIdentifier.nttId()));
 
         publisher.publishEvent(new AddressCrawlingCompletedEvent(this, matchedFiles));
     }
