@@ -93,17 +93,19 @@ public class AddressDataCrawler {
     }
 
     /**
-     * 주소 데이터 ZIP 파일을 다운로드합니다.
+     * 주소 데이터가 담긴 zip 파일을 다운로드합니다.
      * 네트워크 오류 시 재시도합니다.
+     * @param addressPostDto zip 파일 게시글
+     * @return 다운로드 받은 경로
      */
     @Retryable(
             retryFor = {IOException.class, AddressDataCrawlingException.class},
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000, multiplier = 1.5)
     )
-    public Path downloadAddressZipFile(AddressPostIdentifierDto identifier) {
+    public Path downloadAddressZipFile(AddressPostIdentifierDto addressPostDto) {
         try {
-            String postUrl = buildPostUrl(identifier);
+            String postUrl = buildPostUrl(addressPostDto);
             Document postDocument = fetchDocument(postUrl);
             String zipDownloadUrl = extractZipDownloadUrl(postDocument);
 
