@@ -42,13 +42,13 @@ public class AddressCrawlingService {
      * 주어진 주소 데이터 식별자를 사용하여 주소 파일을 다운로드 받은 뒤,
      * 법정동 및 행정동 주소 파일만 선별하여 이벤트로 발행합니다.
      *
-     * @param addressIdentifier 주소 데이터 식별자
+     * @param addressPostDto 주소 파일 게시글 DTO
      */
-    public void processAddressFile(AddressPostIdentifierDto addressIdentifier) {
-        Path newAddressZipFile = addressDataCrawler.downloadAddressZipFile(addressIdentifier);
+    public void processAddressFile(AddressPostIdentifierDto addressPostDto) {
+        Path newAddressZipFile = addressDataCrawler.downloadAddressZipFile(addressPostDto);
         List<Path> addressFiles = unzipFile(newAddressZipFile);
         Map<AddressFileType, Path> matchedFiles = AddressFilePattern.getMatchedFilesOrThrow(addressFiles);
-        crawledAddressPostRepository.save(CrawledAddressPost.of(addressIdentifier.nttId()));
+        crawledAddressPostRepository.save(CrawledAddressPost.of(addressPostDto.nttId()));
 
         publisher.publishEvent(new AddressCrawlingCompletedEvent(this, matchedFiles));
     }
