@@ -44,7 +44,7 @@ public enum AddressFilePattern {
             putIfPatternMatch(file, pathMap);
         }
 
-        if (pathMap.isEmpty()) {
+        if (pathMap.isEmpty() || pathMap.size() != AddressFilePattern.values().length) {
             throw new AddressDataCrawlingException("정규식 패턴에 해당하는 주소 파일이 존재하지 않습니다.");
         }
 
