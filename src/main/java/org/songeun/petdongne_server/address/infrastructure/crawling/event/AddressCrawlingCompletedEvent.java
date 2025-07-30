@@ -4,7 +4,6 @@ import org.songeun.petdongne_server.address.infrastructure.crawling.AddressFileT
 import org.springframework.context.ApplicationEvent;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,7 +22,7 @@ public class AddressCrawlingCompletedEvent extends ApplicationEvent {
         return filePaths.get(AddressFileType.LEGAL_DONG_ADDRESS);
     }
 
-    public Path getadmindongFilePath() {
+    public Path getAdmindongFilePath() {
         return filePaths.get(AddressFileType.ADMIN_DONG_ADDRESS);
     }
 
