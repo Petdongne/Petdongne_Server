@@ -54,7 +54,7 @@ public class AddressCrawlingService {
     }
 
     private List<Path> unzipFile(Path zipFilePath) {
-        Path outputDir = makeOutputDirFrom(zipFilePath);
+        Path outputDir = getUnzippedDirectoryPath(zipFilePath);
         unzip(zipFilePath, outputDir);
 
         return getInnerFiles(outputDir);
@@ -84,7 +84,7 @@ public class AddressCrawlingService {
      * @param zipFilePath .zip 파일의 전체 경로
      * @return .zip 확장자가 제거된 디렉토리 경로
      */
-    private Path makeOutputDirFrom(Path zipFilePath) {
+    private Path getUnzippedDirectoryPath(Path zipFilePath) {
         Path parent = zipFilePath.getParent();
 
         String fileNameWithExtension = zipFilePath.getFileName().toString();
@@ -97,7 +97,7 @@ public class AddressCrawlingService {
         return addressDataCrawler.fetchLatestPostIdentifier();
     }
 
-    public boolean isAlreadyCrawled(AddressPostIdentifierDto latestFoundPost) {
+    public boolean matchesLatestCrawlingHistory(AddressPostIdentifierDto latestFoundPost) {
         Optional<CrawledAddressPost> processed = crawledAddressPostRepository.findTopByOrderByNttIdDesc();
 
         // 처리된 이력이 없음

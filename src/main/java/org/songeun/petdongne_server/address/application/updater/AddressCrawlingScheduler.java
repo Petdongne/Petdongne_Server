@@ -34,7 +34,7 @@ public class AddressCrawlingScheduler {
     private Optional<AddressPostIdentifierDto> findNewContent() {
         AddressPostIdentifierDto latest = addressCrawlingService.getLatestAddressPost();
 
-        return addressCrawlingService.isAlreadyCrawled(latest)
+        return addressCrawlingService.matchesLatestCrawlingHistory(latest)
                 ? Optional.empty()
                 : Optional.of(latest);
     }

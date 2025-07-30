@@ -26,7 +26,7 @@ class AddressCrawlingSchedulerTest {
     void shouldProcessAddressDataWhenNewContentFound(){
         //given
         given(crawlingService.getLatestAddressPost()).willReturn(mock(AddressPostIdentifierDto.class));
-        given(crawlingService.isAlreadyCrawled(any())).willReturn(false);
+        given(crawlingService.matchesLatestCrawlingHistory(any())).willReturn(false);
         doNothing().when(crawlingService).processAddressFile(any());
 
         //when
@@ -41,7 +41,7 @@ class AddressCrawlingSchedulerTest {
     void shouldNotProcessAddressDataWhenAlreadyCrawled(){
         //given
         given(crawlingService.getLatestAddressPost()).willReturn(mock(AddressPostIdentifierDto.class));
-        given(crawlingService.isAlreadyCrawled(any())).willReturn(true);
+        given(crawlingService.matchesLatestCrawlingHistory(any())).willReturn(true);
 
         //when
         addressCrawlingScheduler.crawlAddressDataIfRequired();
