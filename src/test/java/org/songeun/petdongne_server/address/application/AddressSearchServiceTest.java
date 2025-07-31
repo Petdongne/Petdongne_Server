@@ -23,7 +23,7 @@ class AddressSearchServiceTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
-        if (!addressIndexRepository.existIndex()) {
+        if (!addressIndexRepository.existIndexByAlias()) {
             addressIndexRepository.createIndex();
         }
     }

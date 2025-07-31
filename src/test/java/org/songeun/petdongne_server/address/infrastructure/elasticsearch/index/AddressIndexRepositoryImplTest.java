@@ -51,7 +51,7 @@ class AddressIndexRepositoryImplTest {
         given(indexOperations.exists()).willReturn(true);
 
         //when
-        boolean result = repository.existIndex();
+        boolean result = repository.existIndexByAlias();
 
         //then
         assertTrue(result);
@@ -64,7 +64,7 @@ class AddressIndexRepositoryImplTest {
         given(indexOperations.exists()).willReturn(false);
 
         //when
-        boolean result = repository.existIndex();
+        boolean result = repository.existIndexByAlias();
 
         //then
         assertFalse(result);
