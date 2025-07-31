@@ -2,13 +2,16 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
 
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.*;
 
+@Slf4j
 @Getter
 @RequiredArgsConstructor
 public enum AddressHierarchy {
