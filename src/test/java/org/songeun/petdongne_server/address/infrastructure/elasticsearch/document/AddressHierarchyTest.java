@@ -62,4 +62,17 @@ class AddressHierarchyTest {
                 .hasMessage(ADDRESS_HIERARCHY_NOT_FOUND.getMessage());
     }
 
+    @Test
+    @DisplayName("입력된 주소에서 가장 구체적인 단계로 주소 계층을 결정한다.")
+    void shouldReturnAddressHierarchyFromAddress(){
+        //given
+        AdminDongAddressParts address = AdminDongAddressParts.create("인천시", "남동구", "논현동");
+
+        //when
+        AddressHierarchy hierarchy = AddressHierarchy.determine(address);
+
+        //then
+        assertThat(hierarchy).isEqualTo(AddressHierarchy.EUPMYEONDONG);
+    }
+
 }
