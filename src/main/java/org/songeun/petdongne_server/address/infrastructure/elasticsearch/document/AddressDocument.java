@@ -2,7 +2,6 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import lombok.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexNameFactory;
-import org.songeun.petdongne_server.global.util.HashGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
@@ -60,16 +59,11 @@ public class AddressDocument {
     @Field(type = FieldType.Keyword, name = FieldConstants.TYPE)
     private AddressType type;
 
-    public static AddressDocument createAdminAddressDocument(
-            String code,
-            AdminDongAddressParts addressParts
+    public static AddressDocument create(
+            String id, String code, AddressParts addressParts,
+            String fullAddress, AddressHierarchy hierarchy, AddressType type
     ) {
-        AddressHierarchy hierarchy = AddressHierarchy.determine(addressParts);
-
-        AddressType adminType = AddressType.ADMIN_DONG_ADDRESS;
-        String fullAddress = adminType.createFullAddress(addressParts);
-
-        String id = HashGenerator.generate(fullAddress);
+        String re = (addressParts instanceof LegalDongAddressParts legal) ? legal.getRe() : null;
 
         return AddressDocument.builder()
                 .id(id)
@@ -77,33 +71,10 @@ public class AddressDocument {
                 .sido(addressParts.getSido())
                 .sigungu(addressParts.getSigungu())
                 .eupmyeondong(addressParts.getEupmyeondong())
-                .re(null) // 행정동 - '리' 주소 지원 X
+                .re(re)
                 .fullAddress(fullAddress)
                 .hierarchyLevel(hierarchy)
-                .type(adminType)
-                .build();
-    }
-
-    public static AddressDocument createLegalAddressDocument(
-            String code,
-            LegalDongAddressParts addressParts
-    ) {
-        AddressHierarchy hierarchy = AddressHierarchy.determine(addressParts);
-
-        AddressType legalType = AddressType.LEGAL_DONG_ADDRESS;
-        String fullAddress = legalType.createFullAddress(addressParts);
-
-        String id = HashGenerator.generate(fullAddress);
-
-        return AddressDocument.builder()
-                .id(id)
-                .code(code)
-                .sido(addressParts.getSido())
-                .sigungu(addressParts.getSigungu())
-                .eupmyeondong(addressParts.getEupmyeondong())
-                .re(addressParts.getRe())
-                .hierarchyLevel(hierarchy)
-                .type(legalType)
+                .type(type)
                 .build();
     }
 

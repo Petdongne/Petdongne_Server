@@ -1,14 +1,19 @@
 package org.songeun.petdongne_server.address.infrastructure.batch.legalDong;
 
+import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.factory.AddressDocumentFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
+@RequiredArgsConstructor
 public class LegalDongAddressItemProcessor implements ItemProcessor<LegalDongAddressRow, AddressDocument> {
+
+    private final AddressDocumentFactory addressDocumentFactory;
 
     @Override
     public AddressDocument process(LegalDongAddressRow item) throws Exception {
@@ -24,9 +29,7 @@ public class LegalDongAddressItemProcessor implements ItemProcessor<LegalDongAdd
         }
 
         LegalDongAddressParts addressParts = LegalDongAddressParts.create(sido, sigungu, eupmyeondong, re);
-        return AddressDocument.createLegalAddressDocument(
-                code, addressParts
-        );
+        return addressDocumentFactory.create(code, addressParts);
     }
 
 }
