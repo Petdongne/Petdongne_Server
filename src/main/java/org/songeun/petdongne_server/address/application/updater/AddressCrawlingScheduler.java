@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.address.application.service.AddressCrawlingService;
 import org.songeun.petdongne_server.address.infrastructure.crawling.AddressPostIdentifierDto;
+import org.songeun.petdongne_server.address.infrastructure.crawling.AddressCrawlingResult;
+import org.songeun.petdongne_server.global.common.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +17,23 @@ import java.util.Optional;
 public class AddressCrawlingScheduler {
 
     private final AddressCrawlingService addressCrawlingService;
+    private final TaskExecutor taskExecutor;
 
     @Scheduled(cron = "0 0 2 * * *")
     public void crawlAddressDataIfRequired() {
+        taskExecutor.executeWithNotification(
+                this::processNewContent,
+                AddressCrawlingResult.SUCCESS.getMessage(),
+                AddressCrawlingResult.FAILURE.getMessage()
+        );
+    }
+
+    private void processNewContent() {
         findNewContent()
                 .ifPresentOrElse(
                         this::processNewAddressData,
                         () -> log.info("최신 데이터로, 크롤링을 건너뜁니다.")
                 );
-        log.info("주소 업데이트 스케줄링 작업 완료");
     }
 
     private void processNewAddressData(AddressPostIdentifierDto identifier) {
