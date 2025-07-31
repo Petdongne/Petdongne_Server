@@ -15,7 +15,7 @@ public class LegacyDataNotUsedPolicy implements DeletedDataPolicy {
      * @return 삭제된 데이터라면 true를 반환합니다. 아니라면 false를 반환합니다.
      */
     @Override
-    public boolean isDataValid(LocalDate deletedDate, LocalDate currentDate) {
+    public boolean isValidData(LocalDate deletedDate, LocalDate currentDate) {
         // 말소일자가 없으면 유효한 데이터
         if (deletedDate == null) {
             return true;
@@ -26,7 +26,7 @@ public class LegacyDataNotUsedPolicy implements DeletedDataPolicy {
             return true;
         }
 
-        // 말소일자가 현재일자 이전이면 무효
+        // 말소일자가 현재일자 이전이거나 같으면 무효
         return false;
     }
 
