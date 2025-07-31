@@ -37,15 +37,14 @@ public enum AddressHierarchy {
     }
 
     public static AddressHierarchy determine(AddressParts parts) {
-        if (parts instanceof AdminDongAddressParts adminParts) {
-            return determineAddressHierarchy(adminParts);
-        }
-
-        if (parts instanceof LegalDongAddressParts legalParts) {
-            return determineAddressHierarchy(legalParts);
-        }
-
-        return null;
+        return switch (parts) {
+            case AdminDongAddressParts adminParts -> determineAddressHierarchy(adminParts);
+            case LegalDongAddressParts legalParts -> determineAddressHierarchy(legalParts);
+            case null, default -> {
+                log.error("주소 계층을 판별할 수 없는 형식입니다: Unknown type {}", parts);
+                throw new BusinessException(AddressErrorStatus.ADDRESS_HIERARCHY_UNSUPPORTED_TYPE);
+            }
+        };
     }
 
     private static AddressHierarchy determineAddressHierarchy(LegalDongAddressParts legalParts) {
