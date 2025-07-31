@@ -22,36 +22,27 @@ public class LegalDongAddressRowMapper implements RowMapper<LegalDongAddressRow>
         String code = rs.getProperties().getProperty("법정동코드");
         String sido = rs.getProperties().getProperty("시도명");
         String creationDateStr = rs.getProperties().getProperty("생성일자");
+        LocalDate creationDate = parseLocalDateFormat(creationDateStr);
 
         // nullable 필드들
-        String nullableSigungu = rs.getProperties().getProperty("시군구명");
-        String nullableEupmyeondong = rs.getProperties().getProperty("읍면동명");
-        String nullableRe = rs.getProperties().getProperty("동리명");
-        String nullableDeletedDateStr = rs.getProperties().getProperty("말소일자");
+        String nullableSigungu = extractNullableField(rs, "시군구명");
+        String nullableEupmyeondong = extractNullableField(rs, "읍면동명");
+        String nullableRe = extractNullableField(rs, "동리명");
+        String nullableDeletedDateStr = extractNullableField(rs, "말소일자");
+        LocalDate nullableDeletedDate = nullableDeletedDateStr != null
+                ? parseLocalDateFormat(nullableDeletedDateStr) : null;
 
-        LocalDate creationDate = parseLocalDateFormat(creationDateStr);
-        LocalDate nullableDeletedDate = parseLocalDateFormatOrNull(nullableDeletedDateStr);
+        return LegalDongAddressRow.create(code, sido, nullableSigungu, nullableEupmyeondong,
+                nullableRe, creationDate, nullableDeletedDate, deletedDataPolicy);
+    }
 
-        return LegalDongAddressRow.builder()
-                .code(code)
-                .sido((sido))
-                .sigungu(nullableSigungu)
-                .eupmyeondong(nullableEupmyeondong)
-                .re(nullableRe)
-                .creationDate(creationDate)
-                .deletedDate(nullableDeletedDate)
-                .deletedDataPolicy(deletedDataPolicy)
-                .build();
+    private String extractNullableField(RowSet rs, String fieldName) {
+        String value = rs.getProperties().getProperty(fieldName);
+        return StringUtils.hasText(value) ? value : null;
     }
 
     private LocalDate parseLocalDateFormat(String dateStr) {
         return LocalDate.parse(dateStr, DATE_FORMATTER);
-    }
-
-    private LocalDate parseLocalDateFormatOrNull(String nullableDateStr) {
-        return StringUtils.hasText(nullableDateStr)
-                ? parseLocalDateFormat(nullableDateStr)
-                : null;
     }
 
 }
