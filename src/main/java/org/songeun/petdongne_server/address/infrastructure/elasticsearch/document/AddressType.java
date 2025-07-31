@@ -3,11 +3,9 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.*;
 
@@ -27,12 +25,16 @@ public enum AddressType {
                 .orElseThrow(() -> new BusinessException(ADDRESS_TYPE_NOT_FOUND));
     }
 
-    public String join(List<String> addressParts) {
-        String joined = String.join(" ", addressParts);
+    public static AddressType determine(AddressParts addressParts) {
+        if (addressParts instanceof LegalDongAddressParts) {
+            return LEGAL_DONG_ADDRESS;
+        }
 
-        return StringUtils.normalizeSpace(joined);
+        if (addressParts instanceof AdminDongAddressParts){
+            return ADMIN_DONG_ADDRESS;
+        }
+
+        throw new BusinessException(ADDRESS_TYPE_NOT_FOUND);
     }
-
-    abstract public String createFullAddress(AddressParts addressParts);
 
 }
