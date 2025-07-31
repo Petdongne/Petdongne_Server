@@ -30,8 +30,8 @@ public class AddressIndexRepositoryImpl implements AddressIndexRepository {
     }
 
     @Override
-    public boolean setAlias(IndexCoordinates indexCoordinates) {
-        IndexOperations indexOperations = operations.indexOps(indexCoordinates);
+    public boolean setAlias(IndexCoordinates targetCoords) {
+        IndexOperations indexOperations = operations.indexOps(targetCoords);
         IndexCoordinates aliasCoords = operations.getIndexCoordinatesFor(AddressDocument.class);
         AliasActions aliasActions = createAliasActions(indexOperations, aliasCoords);
 
