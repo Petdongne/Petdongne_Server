@@ -30,15 +30,9 @@ public class AdminDongAddressRowMapper implements RowMapper<AdminDongAddressRow>
         LocalDate creationDate = parseLocalDateFormat(creationDateStr);
         LocalDate nullableDeletedDate = parseLocalDateFormatOrNull(nullableDeletedDateStr);
 
-        return AdminDongAddressRow.builder()
-                .code(code)
-                .sido(sido)
-                .sigungu(nullableSigungu)
-                .eupmyeondong(nullableEupmyeondong)
-                .creationDate(creationDate)
-                .deletedDate(nullableDeletedDate)
-                .deletedDataPolicy(deletedDataPolicy)
-                .build();
+        return AdminDongAddressRow.create(code, sido, nullableSigungu, nullableEupmyeondong,
+                creationDate, nullableDeletedDate, deletedDataPolicy);
+
     }
 
     private LocalDate parseLocalDateFormat(String str) {
