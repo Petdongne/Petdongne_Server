@@ -3,6 +3,7 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -16,6 +17,10 @@ public abstract class AddressParts {
 
     private String eupmyeondong;
 
-    abstract List<String> getPartsByOrder();
+    protected abstract List<String> getPartsByOrder();
+
+    public String concatenateParts(String separator){
+        return StringUtils.join(getPartsByOrder(), separator);
+    }
 
 }

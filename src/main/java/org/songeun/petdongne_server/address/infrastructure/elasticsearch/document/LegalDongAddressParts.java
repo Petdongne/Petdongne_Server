@@ -34,7 +34,7 @@ public class LegalDongAddressParts extends AddressParts {
     }
 
     @Override
-    List<String> getPartsByOrder() {
+    protected List<String> getPartsByOrder() {
         return List.of(
                 getSido(),
                 getSigungu(),

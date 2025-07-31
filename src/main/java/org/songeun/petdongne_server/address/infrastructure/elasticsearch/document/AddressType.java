@@ -15,28 +15,8 @@ import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.
 @Getter
 public enum AddressType {
 
-    LEGAL_DONG_ADDRESS("법정동") {
-
-        @Override
-        public String createFullAddress(AddressParts addressParts) {
-            if (addressParts instanceof LegalDongAddressParts legalParts) {
-                return join(legalParts.getPartsByOrder());
-            }
-
-            throw new BusinessException(NOT_SUPPORTED_IN_LEGAL_ADDRESS);
-        }
-    },
-
-    ADMIN_DONG_ADDRESS("행정동") {
-
-        @Override
-        public String createFullAddress(AddressParts addressParts) {
-            if (addressParts instanceof AdminDongAddressParts adminParts) {
-                return join(adminParts.getPartsByOrder());
-            }
-            throw new BusinessException(NOT_SUPPORTED_IN_ADMIN_ADDRESS);
-        }
-    };
+    LEGAL_DONG_ADDRESS("법정동"),
+    ADMIN_DONG_ADDRESS("행정동");
 
     private final String koreanName;
 

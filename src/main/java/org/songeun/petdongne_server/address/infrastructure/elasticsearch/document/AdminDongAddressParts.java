@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 @Getter
-public class AdminDongAddressParts extends AddressParts{
+public class AdminDongAddressParts extends AddressParts {
 
     protected AdminDongAddressParts(String sido, String sigungu, String eupmyeondong) {
         super(sido, sigungu, eupmyeondong);
@@ -27,7 +27,7 @@ public class AdminDongAddressParts extends AddressParts{
     }
 
     @Override
-    List<String> getPartsByOrder() {
+    protected List<String> getPartsByOrder() {
         return List.of(
                 getSido(),
                 getSigungu(),
