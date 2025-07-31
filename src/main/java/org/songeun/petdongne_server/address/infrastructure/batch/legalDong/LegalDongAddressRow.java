@@ -1,14 +1,13 @@
 package org.songeun.petdongne_server.address.infrastructure.batch.legalDong;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 
 import java.time.LocalDate;
 
-@Builder
-@ToString
+@Builder(access = AccessLevel.PRIVATE)
 @Getter
 public class LegalDongAddressRow {
 
@@ -30,6 +29,28 @@ public class LegalDongAddressRow {
 
     public boolean isValid(LocalDate currentDate) {
         return deletedDataPolicy.isValidData(deletedDate, currentDate);
+    }
+
+    public static LegalDongAddressRow create(
+            String code,
+            String sido,
+            String sigungu,
+            String eupmyeondong,
+            String re,
+            LocalDate creationDate,
+            LocalDate deletedDate,
+            DeletedDataPolicy deletedDataPolicy
+    ){
+        return LegalDongAddressRow.builder()
+                .code(code)
+                .sido((sido))
+                .sigungu(sigungu)
+                .eupmyeondong(eupmyeondong)
+                .re(re)
+                .creationDate(creationDate)
+                .deletedDate(deletedDate)
+                .deletedDataPolicy(deletedDataPolicy)
+                .build();
     }
 
 }
