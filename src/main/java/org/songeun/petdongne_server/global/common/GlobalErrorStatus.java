@@ -30,7 +30,11 @@ public enum GlobalErrorStatus implements ErrorStatus {
     CSV_FILE_READ_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "CSV_FILE_READ_FAILED", "CSV 파일을 읽는데 실패했습니다."),
     UNZIP_PROCESS_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "UNZIP_FAILED", "ZIP 파일 압축 해제 중 오류가 발생했습니다. 다시 시도해 주세요."),
     COLLECT_CHILD_FILES_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "COLLECT_CHILD_FILES_FAILED", "디렉터리 내 파일을 수집하는 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요."),
-    ;
+
+    /**
+     * notificatoin
+     */
+    FAIL_SEND_DISCORD_MESSAGE(HttpStatus.INTERNAL_SERVER_ERROR, "FAIL_SEND_DISCORD_MESSAGE", "디스코드 알림 전송에 실패했습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
