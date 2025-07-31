@@ -4,6 +4,6 @@ import java.time.LocalDate;
 
 public interface DeletedDataPolicy {
 
-    boolean isDataValid(LocalDate deletedDate, LocalDate currentDate);
+    boolean isValidData(LocalDate deletedDate, LocalDate currentDate);
 
 }

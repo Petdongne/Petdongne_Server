@@ -24,8 +24,8 @@ public class AdminDongAddressRow {
 
     private final DeletedDataPolicy deletedDataPolicy;
 
-    public boolean isValidData(LocalDate currentDate) {
-        return deletedDataPolicy.isDataValid(deletedDate, currentDate);
+    public boolean isValid(LocalDate currentDate) {
+        return deletedDataPolicy.isValidData(deletedDate, currentDate);
     }
 
 }

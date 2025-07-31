@@ -24,7 +24,7 @@ public class LegalDongAddressItemProcessor implements ItemProcessor<LegalDongAdd
         String re = item.getRe();
 
         // 말소된 데이터는 처리하지 않음
-        if (!item.isFollowDeletedDataPolicy(LocalDate.now())) {
+        if (!item.isValid(LocalDate.now())) {
             return null;
         }
 

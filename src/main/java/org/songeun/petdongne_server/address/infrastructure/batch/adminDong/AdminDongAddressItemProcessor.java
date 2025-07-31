@@ -23,7 +23,7 @@ public class AdminDongAddressItemProcessor implements ItemProcessor<AdminDongAdd
         String eupmyeondong = item.getEupmyeondong();
 
         // 말소된 데이터는 처리하지 않음
-        if (!item.isValidData(LocalDate.now())) {
+        if (!item.isValid(LocalDate.now())) {
             return null;
         }
 

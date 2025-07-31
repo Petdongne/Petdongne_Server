@@ -28,8 +28,8 @@ public class LegalDongAddressRow {
 
     private final DeletedDataPolicy deletedDataPolicy;
 
-    public boolean isFollowDeletedDataPolicy(LocalDate currentDate) {
-        return deletedDataPolicy.isDataValid(deletedDate, currentDate);
+    public boolean isValid(LocalDate currentDate) {
+        return deletedDataPolicy.isValidData(deletedDate, currentDate);
     }
 
 }
