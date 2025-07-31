@@ -21,17 +21,17 @@ public enum AddressHierarchy {
     private final Integer level;
     private final String description;
 
-    public static AddressHierarchy fromLevel(String code) {
+    public static AddressHierarchy fromLevel(String level) {
         try {
-            return fromLevel(Integer.parseInt(code));
+            return fromLevel(Integer.parseInt(level));
         } catch (NumberFormatException e) {
             throw new BusinessException(ADDRESS_HIERARCHY_INVALID_FORMAT);
         }
     }
 
-    public static AddressHierarchy fromLevel(Integer code) {
+    public static AddressHierarchy fromLevel(Integer level) {
         return Arrays.stream(AddressHierarchy.values())
-                .filter(hierarchy -> hierarchy.getLevel().equals(code))
+                .filter(hierarchy -> hierarchy.getLevel().equals(level))
                 .findAny()
                 .orElseThrow(() -> new BusinessException(ADDRESS_HIERARCHY_NOT_FOUND));
     }
