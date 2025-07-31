@@ -12,6 +12,9 @@ app:
       user-agent: Mozilla/5.0
       post-base-url: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do
       output-file-save-path: ${ADDRESS_CRAWLING_DATA_FILE_PATH}
+  notification:
+    discord-webhook-url: https://discordapp.com/api/webhooks/1300162395435569174/PPJqTL3SQwWls-tuzOZRb9PqkWzYwYFSjTgCSNwpMapI55Sjj782aHnZLZbYQTF6H5Jd
+
 
 feature:
   validation:

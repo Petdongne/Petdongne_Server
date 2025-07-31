@@ -32,7 +32,7 @@ class AddressFilePatternTest {
     }
     
     @Test
-    @DisplayName("법정동, 행정동 주소 파일 중 하나라도 없으면 예외를 던진다.")
+    @DisplayName("법정동, 행정동 주소 파일이 하나라도 매칭되지 않으면 예외를 던진다.")
     void shouldThrowExceptionWhenAnyRequiredFileIsMissing(){
         //given
         Path legalDongAddressFile = Path.of("KIKcd_B.20250714.xlsx");
