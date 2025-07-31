@@ -3,10 +3,12 @@ package org.songeun.petdongne_server.address.application;
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexNameFactory;
 import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
@@ -24,7 +26,10 @@ class AddressSearchServiceTest extends ElasticsearchIntegrationTestSupport {
     @BeforeAll
     void beforeAll() {
         if (!addressIndexRepository.existIndexByAlias()) {
-            addressIndexRepository.createIndex();
+            String addressIndexName = AddressIndexNameFactory.createAddressIndexName();
+            IndexCoordinates indexCoordinates = IndexCoordinates.of(addressIndexName);
+            addressIndexRepository.createIndex(indexCoordinates);
+            addressIndexRepository.setAlias(indexCoordinates);
         }
     }
 

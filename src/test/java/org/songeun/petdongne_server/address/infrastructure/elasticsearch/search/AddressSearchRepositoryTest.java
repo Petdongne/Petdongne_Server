@@ -2,11 +2,13 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.search
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexNameFactory;
 import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchPage;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
@@ -23,8 +25,11 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
-        if (!addressIndexRepository.existIndex()) {
-            addressIndexRepository.createIndex();
+        if (!addressIndexRepository.existIndexByAlias()) {
+            String addressIndexName = AddressIndexNameFactory.createAddressIndexName();
+            IndexCoordinates indexCoordinates = IndexCoordinates.of(addressIndexName);
+            addressIndexRepository.createIndex(indexCoordinates);
+            addressIndexRepository.setAlias(indexCoordinates);
         }
     }
 
