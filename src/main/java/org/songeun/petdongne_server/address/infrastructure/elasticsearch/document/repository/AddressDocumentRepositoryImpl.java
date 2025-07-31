@@ -2,6 +2,8 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +13,16 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class AddressDocumentRepositoryImpl implements AddressDocumentRepository {
 
-    private final ElasticsearchAddressRepository addressRepository;
+    private final ElasticsearchOperations operations;
+    private final ElasticsearchAddressRepository elasticsearchDocumentRepository;
+
+    @Override
+    public boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates) {
+        Iterable<AddressDocument> saved = operations.save(addressDocuments, indexCoordinates);
+        long savedCount = StreamSupport.stream(saved.spliterator(), false).count();
+
+        return savedCount == addressDocuments.size();
+    }
 
     @Override
     public boolean saveAll(List<AddressDocument> addresses) {
@@ -23,7 +34,7 @@ public class AddressDocumentRepositoryImpl implements AddressDocumentRepository 
 
     @Override
     public void deleteAll(){
-        addressRepository.deleteAll();
+        elasticsearchDocumentRepository.deleteAll();
     }
 
 }
