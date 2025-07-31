@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface AddressDocumentRepository {
 
-    boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexName);
+    boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates);
 
     boolean saveAll(List<AddressDocument> addresses);
 
