@@ -34,7 +34,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("검색어가 포함된 주소를 주어진 정렬 순서대로 반환한다.")
+    @DisplayName("검색어가 포함된 주소를 주어진 정렬 순서대로 반환한다.") // 검색 결과를..
     void shouldReturnAddressesInHierarchicalOrder() {
         //given
         var addressDocuments = createAddressDocuments(
@@ -43,7 +43,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경상남도 진주시 일반성면",
                 "경상남도 진주시 일반성면 창촌리"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "경상남도";
         Sort sort = Sort.by(
@@ -75,7 +75,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경상남도 진주시 일반성면",
                 "경상남도 진주시 일반성면 창촌리"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "경";
         Sort sort = Sort.by(
@@ -111,7 +111,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "서울특별시 종로구 신교동",
                 "서울특별시 용산구 동자동"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "서울";
         Sort sort = Sort.by(
@@ -146,7 +146,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "인천광역시 남동구 논현동",
                 "서울특별시 강남구 논현동"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "논현동 인천";
         Sort sort = Sort.by(
@@ -176,7 +176,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경상남도 진주시 일반성면",
                 "경상남도 진주시 일반성면 창촌리"
         );
-        documentRepository.bulkSave(addressDocs);
+        documentRepository.saveAll(addressDocs);
 
         String query = "경남 진주시 일반성면";
         Sort sort = Sort.by(
@@ -206,7 +206,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경기도 수원시 장안구 상광교동",
                 "경기도 수원시 장안구 하광교동"
         );
-        documentRepository.bulkSave(addressDocs);
+        documentRepository.saveAll(addressDocs);
 
         String query = "광교";
         Sort sort = Sort.by(
@@ -238,7 +238,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경기도 광주시 삼동",
                 "경기도 광주시 직동"
         );
-        documentRepository.bulkSave(addressDocs);
+        documentRepository.saveAll(addressDocs);
 
         String query = "광주시";
         Sort sort = Sort.by(
@@ -274,7 +274,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경기도 광주시 삼동",
                 "경기도 광주시 직동"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "광주광역시";
         Sort sort = Sort.by(
@@ -307,7 +307,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
                 "경기도 광주시 삼동",
                 "경기도 광주시 직동"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         String query = "광주광역시 동";
         Sort sort = Sort.by(

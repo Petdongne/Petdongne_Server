@@ -14,8 +14,8 @@ public class AddressDocumentRepositoryImpl implements AddressDocumentRepository 
     private final ElasticsearchAddressRepository addressRepository;
 
     @Override
-    public boolean bulkSave(List<AddressDocument> addresses) {
-        Iterable<AddressDocument> saved = addressRepository.saveAll(addresses);
+    public boolean saveAll(List<AddressDocument> addresses) {
+        Iterable<AddressDocument> saved = elasticsearchDocumentRepository.saveAll(addresses);
         long savedCount = StreamSupport.stream(saved.spliterator(), false).count();
 
         return savedCount == addresses.size();

@@ -37,7 +37,7 @@ class AddressDocumentRepositoryImplTest {
                 .willReturn(responseDocuments);
 
         //when
-        boolean result = addressDocumentRepository.bulkSave(requestDocuments);
+        boolean result = addressDocumentRepository.saveAll(requestDocuments);
 
         //then
         verify(esAddressRepository, Mockito.times(1)).saveAll(ArgumentMatchers.any());
@@ -57,7 +57,7 @@ class AddressDocumentRepositoryImplTest {
                 .willReturn(responseDocuments);
 
         //when
-        boolean result = addressDocumentRepository.bulkSave(requestDocuments);
+        boolean result = addressDocumentRepository.saveAll(requestDocuments);
 
         //then
         verify(esAddressRepository, Mockito.times(1)).saveAll(ArgumentMatchers.any());

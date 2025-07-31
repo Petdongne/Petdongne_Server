@@ -45,7 +45,7 @@ class AddressSearchServiceTest extends ElasticsearchIntegrationTestSupport {
                 "인천광역시 남동구 논현1동",
                 "인천광역시 남동구 논현2동"
         );
-        documentRepository.bulkSave(addressDocuments);
+        documentRepository.saveAll(addressDocuments);
 
         int requestPageNum = 0;
         PageRequest pageRequest = PageRequest.of(requestPageNum, 10);

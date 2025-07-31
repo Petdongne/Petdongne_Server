@@ -14,7 +14,7 @@ public interface AddressDocumentRepository {
 
     boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexName);
 
-    boolean bulkSave(List<AddressDocument> addresses);
+    boolean saveAll(List<AddressDocument> addresses);
 
     void deleteAll();
 
