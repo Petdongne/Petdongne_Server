@@ -8,8 +8,6 @@ public interface AddressIndexRepository {
 
     boolean createIndex(IndexCoordinates indexCoordinates);
 
-    boolean createIndex(); // 삭제 예정
-
     boolean deleteIndex(IndexCoordinates indexCoords);
 
     boolean setAlias(IndexCoordinates targetCoords);
