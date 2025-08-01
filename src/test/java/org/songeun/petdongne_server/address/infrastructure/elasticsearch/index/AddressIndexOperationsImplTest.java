@@ -2,7 +2,6 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.index;
 
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
-import org.songeun.petdongne_server.address.support.LocalElasticsearchIntegrationTestSupport;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 
 import java.util.UUID;
