@@ -12,9 +12,9 @@ import java.util.List;
  */
 public interface AddressDocumentRepository {
 
-    boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates);
+    long saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates);
 
-    boolean saveAll(List<AddressDocument> addresses);
+    long saveAll(List<AddressDocument> addresses);
 
     void deleteAll();
 

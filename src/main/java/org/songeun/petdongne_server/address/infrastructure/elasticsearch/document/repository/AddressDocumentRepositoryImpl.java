@@ -17,19 +17,17 @@ public class AddressDocumentRepositoryImpl implements AddressDocumentRepository 
     private final ElasticsearchAddressRepository elasticsearchDocumentRepository;
 
     @Override
-    public boolean saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates) {
+    public long saveAll(List<AddressDocument> addressDocuments, IndexCoordinates indexCoordinates) {
         Iterable<AddressDocument> saved = operations.save(addressDocuments, indexCoordinates);
-        long savedCount = StreamSupport.stream(saved.spliterator(), false).count();
 
-        return savedCount == addressDocuments.size();
+        return StreamSupport.stream(saved.spliterator(), false).count();
     }
 
     @Override
-    public boolean saveAll(List<AddressDocument> addresses) {
+    public long saveAll(List<AddressDocument> addresses) {
         Iterable<AddressDocument> saved = elasticsearchDocumentRepository.saveAll(addresses);
-        long savedCount = StreamSupport.stream(saved.spliterator(), false).count();
 
-        return savedCount == addresses.size();
+        return StreamSupport.stream(saved.spliterator(), false).count();
     }
 
     @Override
