@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Component;
 
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.DUPLICATED_ADDRESS_INDEX_NAME;
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.FAIL_CREATE_INDEX;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_INDEX_NAME_DUPLICATED;
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.INDEX_CREATION_FAILED;
 
 @StepScope
 @Component
@@ -38,13 +38,13 @@ public class CreateNewAddressIndexTasklet implements Tasklet {
         IndexCoordinates newIndexCoords = IndexCoordinates.of(newIndexName);
         if (addressIndexRepository.existIndex(newIndexCoords)) {
             log.error("인덱스 이름 중복 - {}는 중복된 이름입니다.", newIndexName);
-            throw new BatchProcessingException(DUPLICATED_ADDRESS_INDEX_NAME);
+            throw new BatchProcessingException(ADDRESS_INDEX_NAME_DUPLICATED);
         }
 
         boolean created = addressIndexRepository.createIndex(newIndexCoords);
         if (!created) {
             log.error("{} 인덱스 생성 실패", newIndexName);
-            throw new BatchProcessingException(FAIL_CREATE_INDEX);
+            throw new BatchProcessingException(INDEX_CREATION_FAILED);
         }
 
         return RepeatStatus.FINISHED;

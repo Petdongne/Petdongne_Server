@@ -25,6 +25,9 @@ public enum AddressErrorStatus implements ErrorStatus {
     MID_ADDRESS_IS_REQUIRED_IF_RE_EXISTS(HttpStatus.BAD_REQUEST, "MID_ADDRESS_IS_REQUIRED_IF_RE_EXISTS",
             "리 주소값이 존재한다면 시군구 및 읍면동 주소값은 필수입니다.");
 
+    ADDRESS_INDEX_NAME_DUPLICATED(HttpStatus.CONFLICT, "ADDRESS_INDEX_DUPLICATED_NAME", "중복된 주소 인덱스 이름입니다. 인덱스 이름은 고유해야 합니다."),
+    INDEX_CREATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "INDEX_CREATION_FAILED", "인덱스 생성에 실패하였습니다."),
+
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;
