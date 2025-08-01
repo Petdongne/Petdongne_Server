@@ -1,6 +1,7 @@
 package org.songeun.petdongne_server.global.elasticsearch;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.elasticsearch.ResourceNotFoundException;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.index.AliasAction;
@@ -9,6 +10,7 @@ import org.springframework.data.elasticsearch.core.index.AliasActions;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nullable;
 import java.util.Set;
 
 @Component
@@ -25,11 +27,16 @@ public class ElasticsearchAliasOperationsSupport {
         return indexOperations.alias(aliasActions);
     }
 
+    @Nullable
     public Set<String> findAliasTargetIndexNames(Class<?> clazz) {
         IndexCoordinates aliasCoords = operations.getIndexCoordinatesFor(clazz);
         IndexOperations indexOperations = operations.indexOps(aliasCoords);
 
-        return indexOperations.getAliases(aliasCoords.getIndexName()).keySet();
+        try {
+            return indexOperations.getAliases(aliasCoords.getIndexName()).keySet();
+        } catch (ResourceNotFoundException e) {
+            return null;
+        }
     }
 
     public boolean existAlias(Class<?> clazz) {
