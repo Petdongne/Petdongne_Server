@@ -27,6 +27,10 @@ public enum AddressErrorStatus implements ErrorStatus {
 
     ADDRESS_INDEX_NAME_DUPLICATED(HttpStatus.CONFLICT, "ADDRESS_INDEX_NAME_DUPLICATED", "중복된 주소 인덱스 이름입니다. 인덱스 이름은 고유해야 합니다."),
     INDEX_CREATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "INDEX_CREATION_FAILED", "인덱스 생성에 실패하였습니다."),
+    ALIAS_TARGET_NUM_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, "ALIAS_TARGET_NUM_INVALID", "별명(alias)은 하나의 인덱스만 가리켜야 합니다. 현재 두 개 이상이 매핑되어 있습니다."),
+
+    ADDRESS_DOCUMENT_CREATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "ADDRESS_DOCUMENT_CREATION_FAILED", "address document 생성에 실패했습니다.");
+    ;
 
     private final HttpStatus httpStatus;
     private final String code;
