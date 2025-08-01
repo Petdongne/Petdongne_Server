@@ -25,14 +25,14 @@ public class ElasticsearchAliasOperationsSupport {
         return indexOperations.alias(aliasActions);
     }
 
-    public Set<String> getIndexNamesByAlias(Class<?> clazz) {
+    public Set<String> findAliasTargetIndexNames(Class<?> clazz) {
         IndexCoordinates aliasCoords = operations.getIndexCoordinatesFor(clazz);
         IndexOperations indexOperations = operations.indexOps(aliasCoords);
 
         return indexOperations.getAliases(aliasCoords.getIndexName()).keySet();
     }
 
-    public boolean existIndexByAlias(Class<?> clazz) {
+    public boolean existAlias(Class<?> clazz) {
         IndexCoordinates aliasCoords = operations.getIndexCoordinatesFor(clazz);
 
         return operations.indexOps(aliasCoords).exists();

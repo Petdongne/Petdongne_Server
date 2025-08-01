@@ -29,13 +29,13 @@ public class AddressIndexOperationsImpl implements AddressIndexOperations {
     }
 
     @Override
-    public Set<String> getIndexNamesByAlias() { // getAliasTargetIndexNames.,,,
-        return aliasOperationsSupport.getIndexNamesByAlias(clazz);
+    public Set<String> findAliasTargetIndexNames() {
+        return aliasOperationsSupport.findAliasTargetIndexNames(clazz);
     }
 
     @Override
-    public boolean existIndexByAlias() {
-        return aliasOperationsSupport.existIndexByAlias(clazz); // existsAlias
+    public boolean existAlias() {
+        return aliasOperationsSupport.existAlias(clazz);
     }
 
     @Override

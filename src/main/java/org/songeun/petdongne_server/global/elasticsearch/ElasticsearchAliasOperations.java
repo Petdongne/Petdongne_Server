@@ -8,8 +8,8 @@ public interface ElasticsearchAliasOperations {
 
     boolean setAlias(IndexCoordinates targetCoords);
 
-    Set<String> getIndexNamesByAlias();
+    Set<String> findAliasTargetIndexNames();
 
-    boolean existIndexByAlias();
+    boolean existAlias();
 
 }
