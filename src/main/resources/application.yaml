@@ -13,7 +13,7 @@ app:
       post-base-url: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do
       output-file-save-path: ${ADDRESS_CRAWLING_DATA_FILE_PATH}
   notification:
-    discord-webhook-url: https://discordapp.com/api/webhooks/1300162395435569174/PPJqTL3SQwWls-tuzOZRb9PqkWzYwYFSjTgCSNwpMapI55Sjj782aHnZLZbYQTF6H5Jd
+    discord-webhook-url: ${DISCORD_WEBHOOK_URL}
 
 
 feature:
@@ -35,7 +35,7 @@ spring:
       password: ${DB_PASSWORD}
       driver-class-name: org.postgresql.Driver
     batch:
-      jdbc-url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongneBatch}
+      jdbc-url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${BATCH_DB_NAME:petDongneBatch}
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       driver-class-name: org.postgresql.Driver
