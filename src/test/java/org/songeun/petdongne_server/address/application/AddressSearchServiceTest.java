@@ -25,11 +25,11 @@ class AddressSearchServiceTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
-        if (!addressIndexRepository.existIndexByAlias()) {
+        if (!indexOperations.existAlias()) {
             String addressIndexName = AddressIndexNameFactory.createAddressIndexName();
             IndexCoordinates indexCoordinates = IndexCoordinates.of(addressIndexName);
-            addressIndexRepository.createIndex(indexCoordinates);
-            addressIndexRepository.setAlias(indexCoordinates);
+            indexOperations.createIndex(indexCoordinates);
+            indexOperations.setAlias(indexCoordinates);
         }
     }
 
