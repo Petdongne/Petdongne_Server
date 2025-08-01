@@ -1,6 +1,7 @@
 package org.songeun.petdongne_server.address.infrastructure.elasticsearch.index;
 
 import org.junit.jupiter.api.*;
+import org.songeun.petdongne_server.address.support.ElasticsearchIntegrationTestSupport;
 import org.songeun.petdongne_server.address.support.LocalElasticsearchIntegrationTestSupport;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSupport {
+class AddressIndexOperationsImplTest extends ElasticsearchIntegrationTestSupport {
 
     @BeforeAll
     void beforeAll() {
@@ -28,11 +29,11 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
         IndexCoordinates indexCoordinates = createIndexCoords();
 
         //when
-        boolean result = addressIndexRepository.createIndex(indexCoordinates);
+        boolean result = indexOperations.createIndex(indexCoordinates);
 
         //then
         assertThat(result).isTrue();
-        assertThat(addressIndexRepository.existIndex(indexCoordinates)).isTrue();
+        assertThat(indexOperations.existIndex(indexCoordinates)).isTrue();
     }
 
     @Test
@@ -40,11 +41,11 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     void shouldReturnTrueWhenAliasExists() {
         //given
         IndexCoordinates indexCoordinates = createIndexCoords();
-        addressIndexRepository.createIndex(indexCoordinates);
-        addressIndexRepository.setAlias(indexCoordinates);
+        indexOperations.createIndex(indexCoordinates);
+        indexOperations.setAlias(indexCoordinates);
 
         //when
-        boolean result = addressIndexRepository.existAlias();
+        boolean result = indexOperations.existAlias();
 
         //then
         assertThat(result).isTrue();
@@ -56,7 +57,7 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
         //given
 
         //when
-        boolean result = addressIndexRepository.existAlias();
+        boolean result = indexOperations.existAlias();
 
         //then
         assertThat(result).isFalse();
@@ -67,15 +68,15 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     void shouldSetAliasToGivenIndex() {
         //given
         IndexCoordinates indexCoordinates = createIndexCoords();
-        addressIndexRepository.createIndex(indexCoordinates);
+        indexOperations.createIndex(indexCoordinates);
 
         //when
-        boolean result = addressIndexRepository.setAlias(indexCoordinates);
+        boolean result = indexOperations.setAlias(indexCoordinates);
 
         //then
         assertThat(result).isTrue();
-        assertThat(addressIndexRepository.existAlias()).isTrue();
-        assertThat(addressIndexRepository.findAliasTargetIndexNames()).contains(indexCoordinates.getIndexName());
+        assertThat(indexOperations.existAlias()).isTrue();
+        assertThat(indexOperations.findAliasTargetIndexNames()).contains(indexCoordinates.getIndexName());
     }
 
     @Test
@@ -83,11 +84,11 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     void shouldReturnAliasTargetIndexNames() {
         //given
         IndexCoordinates indexCoordinates = createIndexCoords();
-        addressIndexRepository.createIndex(indexCoordinates);
-        addressIndexRepository.setAlias(indexCoordinates);
+        indexOperations.createIndex(indexCoordinates);
+        indexOperations.setAlias(indexCoordinates);
 
         //when
-        var indexNames = addressIndexRepository.findAliasTargetIndexNames();
+        var indexNames = indexOperations.findAliasTargetIndexNames();
 
         //then
         assertThat(indexNames).isNotEmpty();
@@ -99,14 +100,14 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     void shouldDeleteIndexSuccessfully() {
         //given
         IndexCoordinates indexCoordinates = createIndexCoords();
-        addressIndexRepository.createIndex(indexCoordinates);
+        indexOperations.createIndex(indexCoordinates);
 
         //when
-        boolean result = addressIndexRepository.deleteIndex(indexCoordinates);
+        boolean result = indexOperations.deleteIndex(indexCoordinates);
 
         //then
         assertThat(result).isTrue();
-        assertThat(addressIndexRepository.existIndex(indexCoordinates)).isFalse();
+        assertThat(indexOperations.existIndex(indexCoordinates)).isFalse();
     }
 
     @Test
@@ -114,10 +115,10 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     void shouldReturnTrueWhenSpecificIndexExists() {
         //given
         IndexCoordinates indexCoordinates = createIndexCoords();
-        addressIndexRepository.createIndex(indexCoordinates);
+        indexOperations.createIndex(indexCoordinates);
 
         //when
-        boolean result = addressIndexRepository.existIndex(indexCoordinates);
+        boolean result = indexOperations.existIndex(indexCoordinates);
 
         //then
         assertThat(result).isTrue();
@@ -130,7 +131,7 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
         IndexCoordinates indexCoordinates = createIndexCoords();
 
         //when
-        boolean result = addressIndexRepository.existIndex(indexCoordinates);
+        boolean result = indexOperations.existIndex(indexCoordinates);
 
         //then
         assertThat(result).isFalse();
@@ -143,12 +144,12 @@ class AddressIndexOperationsImplTest extends LocalElasticsearchIntegrationTestSu
     }
 
     private void cleanupExistingIndexes() {
-        var indexNames = addressIndexRepository.findAliasTargetIndexNames();
+        var indexNames = indexOperations.findAliasTargetIndexNames();
         if (indexNames != null) {
             for (String indexName : indexNames) {
                 System.out.println("Deleting index: " + indexName);
                 IndexCoordinates indexCoordinates = IndexCoordinates.of(indexName);
-                addressIndexRepository.deleteIndex(indexCoordinates);
+                indexOperations.deleteIndex(indexCoordinates);
             }
         }
 
