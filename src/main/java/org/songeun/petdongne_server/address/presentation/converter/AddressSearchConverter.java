@@ -14,8 +14,7 @@ public class AddressSearchConverter {
                         addressDocument.getSigungu(),
                         addressDocument.getEupmyeondong(),
                         addressDocument.getRe(),
-                        addressDocument.getFullAddress(),
-                        addressDocument.getHierarchyLevel().getLevel()
+                        addressDocument.getFullAddress()
                 )
         );
 

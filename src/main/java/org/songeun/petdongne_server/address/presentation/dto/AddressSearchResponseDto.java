@@ -8,8 +8,7 @@ public record AddressSearchResponseDto(
         String sigungu,
         String eupmyeondong,
         String re,
-        String fullAddress,
-        Integer hierarchyLevel
+        String fullAddress
 ) {
 
     public static AddressSearchResponseDto of(
@@ -17,8 +16,7 @@ public record AddressSearchResponseDto(
             String sigungu,
             String eupmyeondong,
             String re,
-            String fullAddress,
-            Integer hierarchyLevel
+            String fullAddress
     ) {
         return AddressSearchResponseDto.builder()
                 .sido(sido)
@@ -26,7 +24,6 @@ public record AddressSearchResponseDto(
                 .eupmyeondong(eupmyeondong)
                 .re(re)
                 .fullAddress(fullAddress)
-                .hierarchyLevel(hierarchyLevel)
                 .build();
     }
 
