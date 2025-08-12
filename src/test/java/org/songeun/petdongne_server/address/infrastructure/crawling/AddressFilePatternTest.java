@@ -2,7 +2,9 @@ package org.songeun.petdongne_server.address.infrastructure.crawling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.address.infrastructure.crawling.exception.AddressDataCrawlingException;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.AddressFilePattern;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.AddressFileType;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.exception.AddressDataCrawlingException;
 
 import java.nio.file.Path;
 import java.util.List;

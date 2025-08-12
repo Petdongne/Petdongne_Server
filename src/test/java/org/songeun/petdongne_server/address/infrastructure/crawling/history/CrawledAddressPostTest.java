@@ -2,6 +2,7 @@ package org.songeun.petdongne_server.address.infrastructure.crawling.history;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.history.CrawledAddressPost;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

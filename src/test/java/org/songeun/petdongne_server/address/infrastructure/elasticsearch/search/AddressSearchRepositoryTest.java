@@ -35,7 +35,7 @@ class AddressSearchRepositoryTest extends ElasticsearchIntegrationTestSupport {
 
     @AfterEach
     void tearDown() {
-        documentRepository.deleteAll();
+//        documentRepository.deleteAll();
     }
 
     @Test

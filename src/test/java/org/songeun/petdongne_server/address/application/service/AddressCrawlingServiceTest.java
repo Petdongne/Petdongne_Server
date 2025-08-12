@@ -8,12 +8,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.songeun.petdongne_server.address.infrastructure.crawling.AddressDataCrawler;
-import org.songeun.petdongne_server.address.infrastructure.crawling.AddressPostIdentifierDto;
-import org.songeun.petdongne_server.address.infrastructure.crawling.event.AddressCrawlingCompletedEvent;
-import org.songeun.petdongne_server.address.infrastructure.crawling.exception.AddressDataCrawlingException;
-import org.songeun.petdongne_server.address.infrastructure.crawling.history.CrawledAddressPost;
-import org.songeun.petdongne_server.address.infrastructure.crawling.history.CrawledAddressPostRepository;
+import org.songeun.petdongne_server.compare.application.service.AddressCrawlingService;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.AddressDataCrawler;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.AddressPostIdentifierDto;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.event.AddressSyncJobRequestDto;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.exception.AddressDataCrawlingException;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.history.CrawledAddressPost;
+import org.songeun.petdongne_server.compare.infrastructure.crawling.history.CrawledAddressPostRepository;
 import org.songeun.petdongne_server.testSupport.FileUtils;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -114,7 +115,7 @@ class AddressCrawlingServiceTest {
                 .willReturn(downloadedPath);
 
         // when
-        addressCrawlingService.processAddressFile(postDto);
+        addressCrawlingService.fetchAddressFile(postDto);
 
         // then
         verify(crawledAddressPostRepository, times(1))
@@ -124,11 +125,11 @@ class AddressCrawlingServiceTest {
     }
 
     private void assertCrawlingCompletedEventPublished(Path legalDongAddressFile, Path adminDongAddressFile) {
-        ArgumentCaptor<AddressCrawlingCompletedEvent> captor = ArgumentCaptor.forClass(AddressCrawlingCompletedEvent.class);
+        ArgumentCaptor<AddressSyncJobRequestDto> captor = ArgumentCaptor.forClass(AddressSyncJobRequestDto.class);
         verify(eventPublisher, times(1))
                 .publishEvent(captor.capture());
 
-        AddressCrawlingCompletedEvent event = captor.getValue();
+        AddressSyncJobRequestDto event = captor.getValue();
         assertThat(event).isNotNull();
         assertThat(event.getLegaldongFilePath().getFileName()).isEqualTo(legalDongAddressFile.getFileName());
         assertThat(event.getAdmindongFilePath().getFileName()).isEqualTo(adminDongAddressFile.getFileName());
@@ -142,7 +143,7 @@ class AddressCrawlingServiceTest {
                 .willThrow(new AddressDataCrawlingException("다운로드 실패"));
 
         // when & then
-        assertThatThrownBy(() -> addressCrawlingService.processAddressFile(createPostWith(1L)))
+        assertThatThrownBy(() -> addressCrawlingService.fetchAddressFile(createPostWith(1L)))
                 .isInstanceOf(AddressDataCrawlingException.class)
                 .hasMessage("다운로드 실패");
 
@@ -161,7 +162,7 @@ class AddressCrawlingServiceTest {
                 .willReturn(downloadedPath);
 
         // when & then
-        assertThatThrownBy(() -> addressCrawlingService.processAddressFile(postDto))
+        assertThatThrownBy(() -> addressCrawlingService.fetchAddressFile(postDto))
                 .isInstanceOf(AddressDataCrawlingException.class);
 
         // 실패 시 이벤트 발행하지 않음

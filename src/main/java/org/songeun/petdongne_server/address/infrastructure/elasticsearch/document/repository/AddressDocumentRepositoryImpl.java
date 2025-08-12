@@ -31,8 +31,8 @@ public class AddressDocumentRepositoryImpl implements AddressDocumentRepository 
     }
 
     @Override
-    public void deleteAll(){
-        elasticsearchDocumentRepository.deleteAll();
+    public void deleteAll(IndexCoordinates indexCoordinates) {
+
     }
 
 }

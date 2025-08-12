@@ -16,6 +16,6 @@ public interface AddressDocumentRepository {
 
     long saveAll(List<AddressDocument> addresses);
 
-    void deleteAll();
+    void deleteAll(IndexCoordinates indexCoordinates);
 
 }

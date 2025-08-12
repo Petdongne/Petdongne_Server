@@ -6,6 +6,9 @@ import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressHierarchy.*;
 
 @Getter
 public class LegalDongAddressParts extends AddressParts {
@@ -22,13 +25,13 @@ public class LegalDongAddressParts extends AddressParts {
             throw new BusinessException(AddressErrorStatus.SIDO_IS_REQUIRED);
         }
 
-        if (StringUtils.hasText(eupmyeondong) && !StringUtils.hasText(sigungu)) {
+/*        if (StringUtils.hasText(eupmyeondong) && !StringUtils.hasText(sigungu)) {
             throw new BusinessException(AddressErrorStatus.SIGUNGU_IS_REQUIRED_IF_EUPMYEONDONG_EXISTS);
-        }
+        }*/
 
-        if (StringUtils.hasText(re) && (!StringUtils.hasText(sigungu) || !StringUtils.hasText(eupmyeondong))) {
+/*        if (StringUtils.hasText(re) && (!StringUtils.hasText(sigungu) || !StringUtils.hasText(eupmyeondong))) {
             throw new BusinessException(AddressErrorStatus.MID_ADDRESS_IS_REQUIRED_IF_RE_EXISTS);
-        }
+        }*/
 
         return new LegalDongAddressParts(sido, sigungu, eupmyeondong, re);
     }
@@ -37,10 +40,15 @@ public class LegalDongAddressParts extends AddressParts {
     protected List<String> getPartsByOrder() {
         return List.of(
                 getSido(),
-                getSigungu(),
-                getEupmyeondong(),
-                getRe()
+                getSigungu() == null ? "" : getSigungu(),
+                getEupmyeondong() == null ? "" : getEupmyeondong(),
+                getRe()  == null ? "" : getRe()
         );
+    }
+
+    @Override
+    public AddressType toAddressType() {
+        return AddressType.LEGAL_DONG_ADDRESS;
     }
 
 }

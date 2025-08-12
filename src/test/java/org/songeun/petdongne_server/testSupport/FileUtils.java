@@ -35,7 +35,7 @@ public class FileUtils {
         }
     }
 
-    public static void createExcelFile(Path filePath, List<List<String>> rows) throws Exception {
+    public static void writeExcelFile(Path filePath, List<List<String>> rows) throws Exception {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Sheet1");
 
@@ -52,6 +52,13 @@ public class FileUtils {
                 workbook.write(os);
             }
         }
+    }
+
+    public static Path createFile(List<List<String>> rows, String fileName, Path fileDirPath) throws Exception {
+        Path filePath = fileDirPath.resolve(fileName);
+        writeExcelFile(filePath, rows);
+
+        return filePath;
     }
 
 }

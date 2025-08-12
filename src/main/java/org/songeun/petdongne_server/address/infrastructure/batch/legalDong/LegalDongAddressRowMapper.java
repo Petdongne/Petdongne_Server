@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+// todo fieldName 분리, 공통 부모로 올리기(dateFormatter)
 @RequiredArgsConstructor
 public class LegalDongAddressRowMapper implements RowMapper<LegalDongAddressRow> {
 

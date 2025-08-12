@@ -33,8 +33,7 @@ import java.nio.file.Path;
 @RequiredArgsConstructor
 public class AddressIndexingJobConfig {
 
-    private final JobRepository jobRepository;
-
+/*    private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
     // 인덱스 관련
@@ -56,7 +55,6 @@ public class AddressIndexingJobConfig {
     public Job addressIndexingJob() {
         return new JobBuilder("addressIndexingJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(createNewAddressIndexStep())
                 .start(createNewAddressIndexStep())
                 .next(indexingAdminDongAddressStep())
                 .next(indexingLegalDongAddressStep())
@@ -125,6 +123,6 @@ public class AddressIndexingJobConfig {
         poiItemReader.setRowMapper(legalDongAddressRowMapper);
 
         return poiItemReader;
-    }
+    }*/
 
 }

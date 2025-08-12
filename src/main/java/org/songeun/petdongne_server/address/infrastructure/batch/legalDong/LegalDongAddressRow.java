@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Set;
 
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
@@ -27,7 +29,8 @@ public class LegalDongAddressRow {
 
     private final DeletedDataPolicy deletedDataPolicy;
 
-    public boolean isValid(LocalDate currentDate) {
+
+    public boolean isExpired(LocalDate currentDate) {
         return deletedDataPolicy.isValidData(deletedDate, currentDate);
     }
 

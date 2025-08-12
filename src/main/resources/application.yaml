@@ -55,7 +55,8 @@ spring:
         default_batch_fetch_size: 1000
         validator:
           apply_to_ddl: true
-
+        hbm2ddl:
+          schema_filter_provider: org.songeun.petdongne_server.global.config.HibernateCustomSchemaFilterProvider
   data:
     redis:
       host: localhost
@@ -81,13 +82,26 @@ springdoc:
 # 로깅 설정
 logging:
   level:
+#    com.zaxxer.hikari: DEBUG
     org:
+      springframework:
+        jdbc:
+          core: debug
+        orm: debug
+#        transaction: trace
+#        transaction.interceptor: TRACE
+#        transaction.support: TRACE
+#        jdbc: trace
+#        jdbc.datasource: trace
+#        jdbc.datasource.DataSourceTransactionManager: trace
+#        batch: trace
       hibernate:
         SQL: debug
         orm.jdbc.bind: trace
       elasticsearch.client: trace
-      springframework.data.elasticsearch.core: DEBUG
-      org.apache.http: DEBUG
+    root: info
+#      springframework.data.elasticsearch.core: DEBUG
+
 
 ---
 spring:
@@ -102,21 +116,30 @@ spring:
       on-profile: test
   datasource:
     service:
-      jdbc-url: jdbc:h2:mem:~/petDongne
-      username: test
-      password:
-      driver-class-name: org.h2.Driver
+#      jdbc-url: jdbc:h2:mem:~/petDongne
+#      username: test
+#      password:
+#      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/petDongneTest
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
     batch:
-      jdbc-url: jdbc:h2:mem:~/petDongneBatch
-      username: test
-      password:
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/petDongneTest
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+#      jdbc-url: jdbc:h2:mem:~/petDongneBatch
+#      username: test
+#      password:
+#      driver-class-name: org.h2.Driver
   jpa:
-    database: h2
+    database: postgresql
     open-in-view: false
     hibernate:
       ddl-auto: create-drop
-  data:
+      show-sql: true
+
     redis:
       host: localhost
       port: 6378
