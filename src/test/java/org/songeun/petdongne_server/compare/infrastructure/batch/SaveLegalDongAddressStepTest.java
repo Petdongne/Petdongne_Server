@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 import org.songeun.petdongne_server.testSupport.FileUtils;
 import org.springframework.batch.core.JobParameters;
@@ -48,7 +49,7 @@ class SaveLegalDongAddressStepTest extends AddressUpdateJobTestSupport {
     @DisplayName("법정동 주소 파일 내용을 객체로 매핑한다.")
     void shouldMappingLegalDongAddressFileToAddress() throws Exception {
         //given
-        var legalDongFixture = AddressFixtureFactory.uniqueLegalDong();
+        var legalDongFixture = AddressFileFixtureFactory.uniqueLegalDong();
         var legalDongRows = legalDongFixture.getRows();
         var legalDongFile = FileUtils.createFile(legalDongRows, "legalDong", tempDir);
 
@@ -119,7 +120,7 @@ class SaveLegalDongAddressStepTest extends AddressUpdateJobTestSupport {
                 .toJobParameters();
 
         StepExecution stepExecution = MetaDataInstanceFactory.createStepExecution(jobParameters);
-        List<Address> toWriteAddressees = AddressFixtureFactory.uniqueLegalDong().toAddresses();
+        List<Address> toWriteAddressees = AddressFileFixtureFactory.uniqueLegalDong().toAddresses();
 
         //when
         StepScopeTestUtils.doInStepScope(stepExecution, () -> {

@@ -18,63 +18,24 @@ import org.springframework.data.elasticsearch.annotations.*;
 public class AddressDocument {
 
     @Id
-    @Field(type = FieldType.Keyword, name = FieldConstants.ID)
-    private String id;
-
     @Field(type = FieldType.Keyword, name = FieldConstants.CODE)
     private String code;
 
-    @Field(type = FieldType.Keyword, name = FieldConstants.SIDO)
-    private String sido;
-
-    @Field(type = FieldType.Keyword, name = FieldConstants.SIGUNGU)
-    private String sigungu;
-
-    @Field(type = FieldType.Keyword, name = FieldConstants.EUPMYEONDONG)
-    private String eupmyeondong;
-
-    @Field(type = FieldType.Keyword, name = FieldConstants.RE)
-    private String re;
-
-    @MultiField(
-            mainField = @Field(
-                    type = FieldType.Text,
-                    name = FieldConstants.FULL_ADDRESS,
-                    analyzer = "address_ngram_analyzer"),
-            otherFields = {
-                    @InnerField(
-                            suffix = FieldConstants.FULL_ADDRESS_PER_CHAR_SUFFIX,
-                            type = FieldType.Text,
-                            analyzer = "address_per_char_analyzer"),
-                    @InnerField(
-                            suffix = FieldConstants.FULL_ADDRESS_FIRST_CHAR_SUFFIX,
-                            type = FieldType.Text,
-                            analyzer = "address_first_char_analyzer")
-            })
+    @Field(type = FieldType.Text,
+            name = FieldConstants.FULL_ADDRESS,
+            analyzer = "address_ngram_analyzer")
     private String fullAddress;
-
-    @Field(type = FieldType.Integer, name = FieldConstants.HIERARCHY_LEVEL)
-    private AddressHierarchy hierarchyLevel;
 
     @Field(type = FieldType.Keyword, name = FieldConstants.TYPE)
     private AddressType type;
 
     public static AddressDocument create(
-            String id, String code, AddressParts addressParts,
-            String fullAddress, AddressHierarchy hierarchy, AddressType type
+            String code, AddressParts addressParts
     ) {
-        String re = (addressParts instanceof LegalDongAddressParts legal) ? legal.getRe() : null;
-
         return AddressDocument.builder()
-                .id(id)
                 .code(code)
-                .sido(addressParts.getSido())
-                .sigungu(addressParts.getSigungu())
-                .eupmyeondong(addressParts.getEupmyeondong())
-                .re(re)
-                .fullAddress(fullAddress)
-                .hierarchyLevel(hierarchy)
-                .type(type)
+                .fullAddress(addressParts.toFullAddress())
+                .type(addressParts.toAddressType())
                 .build();
     }
 

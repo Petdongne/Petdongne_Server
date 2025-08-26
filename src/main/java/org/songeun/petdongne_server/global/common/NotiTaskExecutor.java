@@ -13,13 +13,13 @@ public class NotiTaskExecutor {
     private final NotificationService notificationService;
 
     public void executeWithNotification(ThrowingRunnable task, String successMessage, String failureMessage) {
-/*        try {
+        try {
             task.run();
-            notificationService.sendExceptionNotification(successMessage);
+//            notificationService.sendExceptionNotification(successMessage);
         } catch (Exception e) {
             log.error("작업 수행 중 문제 발생: {}", e.getMessage());
-            notificationService.sendExceptionNotification(failureMessage);
-        }*/
+//            notificationService.sendExceptionNotification(failureMessage);
+        }
     }
 
 }

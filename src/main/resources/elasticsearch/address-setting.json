@@ -10,7 +10,6 @@
 
       "address_ngram_analyzer": {
         "type": "custom",
-        "char_filter": ["sido_synonym_char_filter"],
         "tokenizer": "address_ngram_tokenizer"
       },
 
@@ -59,7 +58,7 @@
 
       "address_ngram_tokenizer" : {
         "type": "ngram",
-        "min_gram": 2,
+        "min_gram": 1,
         "max_gram": 3,
         "token_chars": [
           "letter",

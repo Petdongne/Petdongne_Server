@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.songeun.petdongne_server.compare.infrastructure.batch.AddressFixtureFactory.*;
-import static org.songeun.petdongne_server.compare.infrastructure.batch.AddressFixtureFactory.unique;
+import static org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory.*;
+import static org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory.unique;
 
 public class AddressUpdateJobTest extends AddressUpdateJobTestSupport {
 

@@ -25,21 +25,19 @@ public interface AddressSearchJpaRepository extends JpaRepository<Address, Long>
     )
     Slice<Address> findByAddressInitials(@Param("searchText") String searchText, Pageable pageable);
 
-    @Query(value = """
-        SELECT *, similarity(full_address, :fullSearchText) AS similarity_score
-        FROM address
-        WHERE full_address ILIKE ALL(
-            SELECT CONCAT('%', keyword, '%')
-            FROM UNNEST(CAST(:keywords AS TEXT[])) AS keyword
-        )
-        ORDER BY similarity_score DESC, id ASC
-        """,
+    @Query(
+            value = """
+            SELECT *, similarity(full_address, :fullSearchText) AS similarity_score
+            FROM address
+            WHERE :andConditions
+            ORDER BY similarity_score DESC, id ASC
+            """,
             nativeQuery = true
     )
-    Slice<Address> findByFullAddress(
+    Slice<Address> searchByKeywords(
             @Param("fullSearchText") String fullSearchText,
-            @Param("keywords") String[] keywords,
-            PageRequest of
+            @Param("andConditions") String andConditions,
+            Pageable pageable
     );
 
 }

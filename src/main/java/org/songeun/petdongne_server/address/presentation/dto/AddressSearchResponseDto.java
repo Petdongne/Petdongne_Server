@@ -4,25 +4,16 @@ import lombok.Builder;
 
 @Builder
 public record AddressSearchResponseDto(
-        String sido,
-        String sigungu,
-        String eupmyeondong,
-        String re,
+        String id,
         String fullAddress
 ) {
 
     public static AddressSearchResponseDto of(
-            String sido,
-            String sigungu,
-            String eupmyeondong,
-            String re,
+            String id,
             String fullAddress
     ) {
         return AddressSearchResponseDto.builder()
-                .sido(sido)
-                .sigungu(sigungu)
-                .eupmyeondong(eupmyeondong)
-                .re(re)
+                .id(id)
                 .fullAddress(fullAddress)
                 .build();
     }

@@ -34,7 +34,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus.ADDRESS_INDEX_NAME_DUPLICATED;
-import static org.songeun.petdongne_server.compare.infrastructure.batch.AddressFixtureFactory.*;
+import static org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory.*;
 
 @Slf4j
 @SpringBatchTest

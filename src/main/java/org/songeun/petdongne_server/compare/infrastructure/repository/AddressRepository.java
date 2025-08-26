@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -18,8 +19,9 @@ import java.util.List;
 public class AddressRepository {
 
     private final AddressSearchJpaRepository searchJpaRepository;
-    private final AddressInsertRepository addressInsertRepository;
-    private final AddressDeleteRepository addressDeleteRepository;
+    private final AddressSearchRepository searchRepository;
+    private final AddressInsertRepository insertRepository;
+    private final AddressDeleteRepository deleteRepository;
 
     public List<Address> search(String query, Pageable pageable) {
         /**
@@ -31,22 +33,20 @@ public class AddressRepository {
         return null;
     }
 
-    public Slice<Address> findByAddressInitialsContaining(String query, PageRequest pageRequest) {
-        return searchJpaRepository.findByAddressInitials(query, pageRequest);
+    public Slice<AddressSearchResponse> searchForAddressInitials(String searchText, PageRequest pageRequest) {
+        return searchRepository.searchForAddressInitials(searchText, pageRequest);
     }
 
-    public Slice<Address> findByAddressContainingKeywords(List<String> query, PageRequest pageRequest) {
-        String fullSearchText = String.join(" ", query);
-
-        return searchJpaRepository.findByFullAddress(fullSearchText, query.toArray(new String[0]), pageRequest);
+    public Slice<AddressSearchResponse> searchForAddress(List<String> query, PageRequest pageRequest) {
+        return searchRepository.searchForAddress(query, pageRequest);
     }
 
     public void batchInsert(List<Address> list) {
-        addressInsertRepository.batchInsert(list);
+        insertRepository.batchInsert(list);
     }
 
     public void deleteAll() {
-        addressDeleteRepository.deleteAll();
+        deleteRepository.deleteAll();
     }
 
 }

@@ -1,8 +1,10 @@
 package org.songeun.petdongne_server.address.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.songeun.petdongne_server.address.infrastructure.batch.AddressBatchJobLauncher;
 import org.songeun.petdongne_server.compare.application.service.AddressCrawlingScheduler;
 import org.songeun.petdongne_server.compare.infrastructure.batch.job.AddressSyncJobLauncher;
+import org.springframework.batch.core.JobExecutionException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulerTriggerController {
 
     private final AddressCrawlingScheduler scheduler;
-    private final AddressSyncJobLauncher jobLauncher;
+    private final AddressBatchJobLauncher jobLauncher;
 
     @PostMapping("/crawl-address")
     public ResponseEntity<String> triggerCrawling() {
@@ -22,10 +24,12 @@ public class SchedulerTriggerController {
         return ResponseEntity.ok("Triggered manually.");
     }
 
-/*    @PostMapping("/address/rdb")
+    @PostMapping("/address/rdb")
     public ResponseEntity<String> saveAddress() throws JobExecutionException {
-        jobLauncher.launch();
+
+        jobLauncher.launchAddressIndexingJob();
+
         return ResponseEntity.ok("Triggered manually.");
-    }*/
+    }
 
 }

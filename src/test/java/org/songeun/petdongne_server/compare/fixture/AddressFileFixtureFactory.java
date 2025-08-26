@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.compare.infrastructure.batch;
+package org.songeun.petdongne_server.compare.fixture;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
  * 테스트 용도의 행정동, 법정동 주소 데이터를 생성합니다.
  */
 @Slf4j
-public class AddressFixtureFactory {
+public class AddressFileFixtureFactory {
 
     private static final List<String> LEGAL_DONG_HEADER = List.of("법정동코드", "시도명", "시군구명", "읍면동명", "동리명", "생성일자", "말소일자");
     private static final List<String> ADMIN_DONG_HEADER = List.of("행정동코드", "시도명", "시군구명", "읍면동명", "생성일자", "말소일자");

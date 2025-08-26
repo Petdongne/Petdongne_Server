@@ -18,7 +18,8 @@ class CreateTableStepTest extends AddressUpdateJobTestSupport {
                 .toJobParameters();
 
         //when
-        JobExecution jobExecution = jobLauncherTestUtils.launchStep("createNewAddressTableStep", jobParameters);
+        JobExecution jobExecution = jobLauncherTestUtils.launchStep(
+                "createNewAddressTableStep", jobParameters);
 
         //then
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();
@@ -37,7 +38,8 @@ class CreateTableStepTest extends AddressUpdateJobTestSupport {
                 .toJobParameters();
 
         //when
-        JobExecution jobExecution = jobLauncherTestUtils.launchStep("createNewAddressTableStep", jobParameters);
+        JobExecution jobExecution = jobLauncherTestUtils.launchStep(
+                "createNewAddressTableStep", jobParameters);
 
         //then
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();

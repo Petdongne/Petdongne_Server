@@ -86,7 +86,7 @@ logging:
     org:
       springframework:
         jdbc:
-          core: debug
+#          core: debug
         orm: debug
 #        transaction: trace
 #        transaction.interceptor: TRACE
@@ -95,10 +95,10 @@ logging:
 #        jdbc.datasource: trace
 #        jdbc.datasource.DataSourceTransactionManager: trace
 #        batch: trace
-      hibernate:
-        SQL: debug
-        orm.jdbc.bind: trace
-      elasticsearch.client: trace
+#      hibernate:
+#        SQL: debug
+#        orm.jdbc.bind: debug
+#      elasticsearch.client: debug
     root: info
 #      springframework.data.elasticsearch.core: DEBUG
 

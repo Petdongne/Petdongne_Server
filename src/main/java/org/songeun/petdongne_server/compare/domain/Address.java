@@ -14,6 +14,8 @@ import org.songeun.petdongne_server.compare.domain.converter.AddressTypeConverte
 @Getter
 @Table(name = AddressTableMetaData.VIEW_NAME)
 @Immutable
+@ToString
+@Setter // 성능 테스트 후 제거
 public class Address {
 
     @Id

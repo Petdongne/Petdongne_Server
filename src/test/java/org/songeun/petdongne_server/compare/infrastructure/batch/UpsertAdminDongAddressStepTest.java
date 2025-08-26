@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AdminDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 import org.songeun.petdongne_server.testSupport.FileUtils;
@@ -54,7 +55,7 @@ class UpsertAdminDongAddressStepTest extends AddressUpdateJobTestSupport{
     @DisplayName("행정동 주소 파일 내용을 객체로 매핑한다.")
     void shouldMappingAdminDongAddressFileToObjects() throws Exception {
         //given
-        var adminDongFixture = AddressFixtureFactory.uniqueAdminDong();
+        var adminDongFixture = AddressFileFixtureFactory.uniqueAdminDong();
         var rows = adminDongFixture.getRows();
         Path adminDongFile = FileUtils.createFile(rows, "adminDong", tempDir);
 
@@ -119,7 +120,7 @@ class UpsertAdminDongAddressStepTest extends AddressUpdateJobTestSupport{
     void shouldNotSaveDuplicatedAddress() throws Exception {
         //given
         String createdTableName = createAddressTable(testAddressTableName());
-        AddressFixtureFactory.AddressFixtures sameAddressData = AddressFixtureFactory.duplicated();
+        AddressFileFixtureFactory.AddressFixtures sameAddressData = AddressFileFixtureFactory.duplicated();
 
         JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
                 .addString("newTableName", createdTableName)
@@ -138,7 +139,7 @@ class UpsertAdminDongAddressStepTest extends AddressUpdateJobTestSupport{
         assertAdminAddressNotSaved(sameAddressData.getAdminAddresses(), createdTableName);
     }
 
-    private void assertAdminAddressNotSaved(AddressFixtureFactory.AdminDongAddressFixture adminDongAddressFixture, String addressTable) {
+    private void assertAdminAddressNotSaved(AddressFileFixtureFactory.AdminDongAddressFixture adminDongAddressFixture, String addressTable) {
         List<String> ids = adminDongAddressFixture.getIdList();
         String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
 
@@ -152,7 +153,7 @@ class UpsertAdminDongAddressStepTest extends AddressUpdateJobTestSupport{
         assertThat(count).isEqualTo(0);
     }
 
-    private void saveLegalDongAddresses(AddressFixtureFactory.LegalDongAddressFixture legalDongAddressFixture, JobParameters jobParameters) throws Exception {
+    private void saveLegalDongAddresses(AddressFileFixtureFactory.LegalDongAddressFixture legalDongAddressFixture, JobParameters jobParameters) throws Exception {
         StepExecution stepExecution = MetaDataInstanceFactory.createStepExecution(jobParameters);
         List<Address> toWriteAddressees = legalDongAddressFixture.toAddresses();
 

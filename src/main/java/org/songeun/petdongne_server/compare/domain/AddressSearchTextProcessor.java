@@ -1,6 +1,7 @@
 package org.songeun.petdongne_server.compare.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.songeun.petdongne_server.global.util.StringRegexUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -18,22 +19,21 @@ public class AddressSearchTextProcessor {
             return ProcessedSearchText.ofEmpty();
         }
 
-        String cleanedText = text.replaceAll("[^가-힣0-9\\s]", "").trim();
+        String cleanedText = StringRegexUtils.cleanToKorNumSpace(text).trim();
         if (cleanedText.isEmpty()) {
             return ProcessedSearchText.ofEmpty();
         }
 
         if (cleanedText.length() == 1) {
-            return ProcessedSearchText.createForSingle(cleanedText);
+            return ProcessedSearchText.createForSingleChar(cleanedText);
         }
 
-        String[] keywordsArr = cleanedText.split("\\s+");
+        String[] keywordsArr = StringRegexUtils.splitByWhitespace(cleanedText);
         List<String> keywordsList = Arrays.stream(keywordsArr)
-                .distinct()
                 .map(regionSynonymResolver::resolve)
                 .toList();
 
-        return ProcessedSearchText.createForMulti(keywordsList);
+        return ProcessedSearchText.createForMultiTokens(keywordsList);
     }
 
 }

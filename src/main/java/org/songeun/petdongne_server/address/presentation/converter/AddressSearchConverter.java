@@ -13,21 +13,12 @@ public class AddressSearchConverter {
     public static PagedResult<AddressSearchResponseDto> convert(final Page<AddressDocument> addressDocuments) {
         Page<AddressSearchResponseDto> responseDtoPage = addressDocuments.map(
                 addressDocument -> AddressSearchResponseDto.of(
-                        addressDocument.getSido(),
-                        addressDocument.getSigungu(),
-                        addressDocument.getEupmyeondong(),
-                        addressDocument.getRe(),
+                        "sibal",
                         addressDocument.getFullAddress()
                 )
         );
 
         return PagedResult.from(responseDtoPage);
-    }
-
-    public static SlicedResult<AddressSearchResponseDto> convert(final Slice<Address> addressChunk) {
-        addressChunk.map(address -> AddressSearchResponseDto.of(
-
-        ))
     }
 
 }
