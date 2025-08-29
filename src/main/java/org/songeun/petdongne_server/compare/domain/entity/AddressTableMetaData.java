@@ -3,21 +3,21 @@ package org.songeun.petdongne_server.compare.domain.entity;
 public class AddressTableMetaData {
 
     // 테이블 이름
-    protected static final String VIEW_NAME = "address";
+    static final String TABLE_NAME = "address";
 
     // 컬럼 이름
-    protected static final String ID = "id";
-    protected static final String CODE = "code";
-    protected static final String FULL_ADDRESS = "full_address";
-    protected static final String ADDRESS_INITIALS = "address_initials";
-    protected static final String TYPE = "type";
+    static final String ID = "id";
+    static final String CODE = "code";
+    static final String FULL_ADDRESS = "full_address";
+    static final String ADDRESS_INITIALS = "address_initials";
+    static final String TYPE = "type";
 
     // 인덱스 이름
     static final String FULL_ADDRESS_GIN_INDEX = "gin_full_address_idx";
     static final String ADDRESS_INITIALS_GIN_INDEX = "gin_address_initials_idx";
 
     public static String viewName() {
-        return VIEW_NAME;
+        return TABLE_NAME;
     }
 
     public static String idColumnName() {

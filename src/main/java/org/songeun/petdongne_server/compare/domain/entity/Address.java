@@ -13,7 +13,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = AddressTableMetaData.VIEW_NAME)
+@Table(name = AddressTableMetaData.TABLE_NAME)
 @Immutable
 @ToString
 public class Address extends BaseEntity {
