@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 import org.songeun.petdongne_server.testSupport.FileUtils;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.songeun.petdongne_server.compare.domain.AddressTableMetaData.*;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData.*;
 
 class SaveLegalDongAddressStepTest extends AddressUpdateJobTestSupport {
 

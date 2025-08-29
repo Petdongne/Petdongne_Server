@@ -4,10 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
 import org.songeun.petdongne_server.compare.application.service.AddressSearchService;
-import org.songeun.petdongne_server.compare.domain.Address;
-import org.songeun.petdongne_server.compare.domain.AddressTableMetaData;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.songeun.petdongne_server.compare.infrastructure.repository.AddressRepository;
 import org.songeun.petdongne_server.compare.infrastructure.repository.AddressSearchResponse;
 import org.songeun.petdongne_server.compare.infrastructure.schema.AddressSchemaManager;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType.*;
 import static org.songeun.petdongne_server.compare.fixture.AddressFixtureFactory.*;
 
 // todo postgre 상속

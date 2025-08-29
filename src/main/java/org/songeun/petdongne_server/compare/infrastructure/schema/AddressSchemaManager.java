@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.compare.infrastructure.schema;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.compare.domain.AddressTableMetaData;
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDdlSqlGenerator;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDqlSqlGenerator;
 import org.springframework.jdbc.core.JdbcTemplate;

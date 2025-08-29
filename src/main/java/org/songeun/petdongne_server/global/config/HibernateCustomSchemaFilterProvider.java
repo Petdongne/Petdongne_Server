@@ -5,7 +5,7 @@ import org.hibernate.boot.model.relational.Sequence;
 import org.hibernate.mapping.Table;
 import org.hibernate.tool.schema.spi.SchemaFilter;
 import org.hibernate.tool.schema.spi.SchemaFilterProvider;
-import org.songeun.petdongne_server.compare.domain.AddressTableMetaData;
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 
 import static org.songeun.petdongne_server.global.config.HibernateCustomSchemaFilterProvider.AddressExcludeSchemaFilter.ADDRESS_EXCLUDE_SCHEMA_FILTER;
 

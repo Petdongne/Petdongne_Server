@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import static org.songeun.petdongne_server.compare.domain.AddressTableMetaData.*;
-import static org.songeun.petdongne_server.compare.domain.AddressTableMetaData.addressInitialsColumnName;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData.*;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData.addressInitialsColumnName;
 
 @Configuration
 @RequiredArgsConstructor

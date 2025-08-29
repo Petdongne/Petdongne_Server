@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AdminDongAddressParts;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

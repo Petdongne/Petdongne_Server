@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AdminDongAddressParts;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;

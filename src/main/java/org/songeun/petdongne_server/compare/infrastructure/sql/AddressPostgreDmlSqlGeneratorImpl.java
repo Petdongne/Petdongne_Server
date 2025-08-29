@@ -1,7 +1,6 @@
 package org.songeun.petdongne_server.compare.infrastructure.sql;
 
-import org.hibernate.validator.internal.constraintvalidators.hv.CodePointLengthValidator;
-import org.songeun.petdongne_server.compare.domain.AddressTableMetaData;
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.springframework.stereotype.Component;
 
 @Component

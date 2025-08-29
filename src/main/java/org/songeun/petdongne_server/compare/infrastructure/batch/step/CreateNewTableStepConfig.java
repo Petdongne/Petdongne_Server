@@ -2,8 +2,8 @@ package org.songeun.petdongne_server.compare.infrastructure.batch.step;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.compare.exception.AddressBatchErrorStatus;
-import org.songeun.petdongne_server.compare.exception.NewAddressBatchException;
+import org.songeun.petdongne_server.compare.infrastructure.batch.exception.AddressBatchErrorStatus;
+import org.songeun.petdongne_server.compare.infrastructure.batch.exception.NewAddressBatchException;
 import org.songeun.petdongne_server.compare.infrastructure.schema.AddressSchemaManager;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;

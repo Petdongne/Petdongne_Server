@@ -1,5 +1,6 @@
 package org.songeun.petdongne_server.compare.domain;
 
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

@@ -1,16 +1,16 @@
-package org.songeun.petdongne_server.compare.domain;
+package org.songeun.petdongne_server.compare.domain.entity;
 
 public class AddressTableMetaData {
 
     // 테이블 이름
-    static final String VIEW_NAME = "address";
+    protected static final String VIEW_NAME = "address";
 
     // 컬럼 이름
-    static final String ID = "id";
-    static final String CODE = "code";
-    static final String FULL_ADDRESS = "full_address";
-    static final String ADDRESS_INITIALS = "address_initials";
-    static final String TYPE = "type";
+    protected static final String ID = "id";
+    protected static final String CODE = "code";
+    protected static final String FULL_ADDRESS = "full_address";
+    protected static final String ADDRESS_INITIALS = "address_initials";
+    protected static final String TYPE = "type";
 
     // 인덱스 이름
     static final String FULL_ADDRESS_GIN_INDEX = "gin_full_address_idx";

@@ -1,6 +1,5 @@
 package org.songeun.petdongne_server.compare.presentation;
 
-import org.songeun.petdongne_server.compare.domain.Address;
 import org.songeun.petdongne_server.compare.infrastructure.repository.AddressSearchResponse;
 import org.songeun.petdongne_server.compare.presentation.dto.AddressSearchResponseDto;
 import org.songeun.petdongne_server.global.common.SlicedResult;

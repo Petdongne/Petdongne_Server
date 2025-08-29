@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.compare.infrastructure.batch;
 
 import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.AfterEach;
-import org.songeun.petdongne_server.compare.domain.AddressTableMetaData;
+import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.songeun.petdongne_server.compare.infrastructure.schema.AddressSchemaManager;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.batch.core.*;

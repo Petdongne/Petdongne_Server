@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.compare.domain;
+package org.songeun.petdongne_server.compare.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

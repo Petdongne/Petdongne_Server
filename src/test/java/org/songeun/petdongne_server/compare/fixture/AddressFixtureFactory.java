@@ -1,7 +1,6 @@
 package org.songeun.petdongne_server.compare.fixture;
 
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 
 import java.util.List;
 

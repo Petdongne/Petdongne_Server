@@ -3,7 +3,6 @@ package org.songeun.petdongne_server.compare.presentation.controller;
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.compare.application.service.AddressSearchService;
-import org.songeun.petdongne_server.compare.domain.Address;
 import org.songeun.petdongne_server.compare.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.compare.infrastructure.repository.AddressSearchResponse;
 import org.songeun.petdongne_server.compare.presentation.AddressToDtoConverter;

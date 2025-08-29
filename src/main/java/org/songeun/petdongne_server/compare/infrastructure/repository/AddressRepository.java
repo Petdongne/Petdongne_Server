@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.compare.infrastructure.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional

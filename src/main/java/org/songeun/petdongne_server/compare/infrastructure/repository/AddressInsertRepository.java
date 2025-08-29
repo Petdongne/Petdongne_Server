@@ -1,7 +1,7 @@
 package org.songeun.petdongne_server.compare.infrastructure.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.compare.domain.Address;
+import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.infrastructure.schema.AddressSchemaManager;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.songeun.petdongne_server.compare.domain.AddressTableMetaData.*;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData.*;
 
 @Repository
 @RequiredArgsConstructor
