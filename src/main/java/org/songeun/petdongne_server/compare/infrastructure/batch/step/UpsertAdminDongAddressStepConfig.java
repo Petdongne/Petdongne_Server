@@ -1,9 +1,9 @@
 package org.songeun.petdongne_server.compare.infrastructure.batch.step;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRow;
-import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRowMapper;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRow;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRowMapper;
+import org.songeun.petdongne_server.compare.domain.entity.AdminDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.springframework.batch.core.Step;
@@ -73,6 +73,7 @@ public class UpsertAdminDongAddressStepConfig {
             }
 
             String code = item.getCode();
+            LocalDate creationDate = item.getCreationDate();
             String sido = item.getSido();
             String sigungu = item.getSigungu();
             String eupmyeondong = item.getEupmyeondong();

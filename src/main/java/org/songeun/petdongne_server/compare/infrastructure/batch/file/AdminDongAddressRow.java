@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.infrastructure.batch.legalDong;
+package org.songeun.petdongne_server.compare.infrastructure.batch.file;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -6,12 +6,10 @@ import lombok.Getter;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
 
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Set;
 
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-public class LegalDongAddressRow {
+public class AdminDongAddressRow {
 
     private final String code;
 
@@ -21,35 +19,30 @@ public class LegalDongAddressRow {
 
     private final String eupmyeondong;
 
-    private final String re;
-
     private final LocalDate creationDate;
 
     private final LocalDate deletedDate;
 
     private final DeletedDataPolicy deletedDataPolicy;
 
-
-    public boolean isExpired(LocalDate currentDate) {
+    public boolean isValid(LocalDate currentDate) {
         return deletedDataPolicy.isValidData(deletedDate, currentDate);
     }
 
-    public static LegalDongAddressRow create(
+    public static AdminDongAddressRow create(
             String code,
             String sido,
             String sigungu,
             String eupmyeondong,
-            String re,
             LocalDate creationDate,
             LocalDate deletedDate,
             DeletedDataPolicy deletedDataPolicy
-    ){
-        return LegalDongAddressRow.builder()
+    ) {
+        return AdminDongAddressRow.builder()
                 .code(code)
-                .sido((sido))
+                .sido(sido)
                 .sigungu(sigungu)
                 .eupmyeondong(eupmyeondong)
-                .re(re)
                 .creationDate(creationDate)
                 .deletedDate(deletedDate)
                 .deletedDataPolicy(deletedDataPolicy)

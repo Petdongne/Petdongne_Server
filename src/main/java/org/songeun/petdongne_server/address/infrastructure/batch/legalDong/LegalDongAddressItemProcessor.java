@@ -2,8 +2,9 @@ package org.songeun.petdongne_server.address.infrastructure.batch.legalDong;
 
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.entity.LegalDongAddressParts;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.factory.AddressDocumentFactory;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.LegalDongAddressRow;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.infrastructure.batch.adminDong;
+package org.songeun.petdongne_server.compare.infrastructure.batch.file;
 
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;

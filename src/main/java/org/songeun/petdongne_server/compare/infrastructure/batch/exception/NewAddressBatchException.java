@@ -1,6 +1,5 @@
-package org.songeun.petdongne_server.compare.exception;
+package org.songeun.petdongne_server.compare.infrastructure.batch.exception;
 
-import org.songeun.petdongne_server.global.common.ErrorStatus;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 public class NewAddressBatchException extends BusinessException {

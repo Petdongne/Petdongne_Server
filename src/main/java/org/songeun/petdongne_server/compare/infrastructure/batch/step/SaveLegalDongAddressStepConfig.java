@@ -1,9 +1,9 @@
 package org.songeun.petdongne_server.compare.infrastructure.batch.step;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRow;
-import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRowMapper;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.LegalDongAddressParts;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.LegalDongAddressRow;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.LegalDongAddressRowMapper;
+import org.songeun.petdongne_server.compare.domain.entity.LegalDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.springframework.batch.core.Step;
