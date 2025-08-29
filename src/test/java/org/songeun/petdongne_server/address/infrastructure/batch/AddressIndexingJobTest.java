@@ -291,8 +291,8 @@ class AddressIndexingJobTest{
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();
 
         assertThat(stepExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
-        assertThat(stepExecution.getReadCount()).isEqualTo(adminDongData.contentCount());
-        assertThat(stepExecution.getWriteCount()).isEqualTo(adminDongData.contentCount());
+        assertThat(stepExecution.getReadCount()).isEqualTo(adminDongData.rowCount());
+        assertThat(stepExecution.getWriteCount()).isEqualTo(adminDongData.rowCount());
     }
 
     @Test
@@ -315,7 +315,7 @@ class AddressIndexingJobTest{
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();
 
         assertThat(stepExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
-        assertThat(stepExecution.getReadCount()).isEqualTo(adminDongData.contentCount());
+        assertThat(stepExecution.getReadCount()).isEqualTo(adminDongData.rowCount());
         assertThat(stepExecution.getWriteCount()).isEqualTo(0);
     }
 
@@ -340,8 +340,8 @@ class AddressIndexingJobTest{
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();
 
         assertThat(stepExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
-        assertThat(stepExecution.getReadCount()).isEqualTo(legalDongData.contentCount());
-        assertThat(stepExecution.getWriteCount()).isEqualTo(legalDongData.contentCount());
+        assertThat(stepExecution.getReadCount()).isEqualTo(legalDongData.rowCount());
+        assertThat(stepExecution.getWriteCount()).isEqualTo(legalDongData.rowCount());
     }
 
     @Test
@@ -364,7 +364,7 @@ class AddressIndexingJobTest{
         StepExecution stepExecution = jobExecution.getStepExecutions().iterator().next();
 
         assertThat(stepExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
-        assertThat(stepExecution.getReadCount()).isEqualTo(legalDongData.contentCount());
+        assertThat(stepExecution.getReadCount()).isEqualTo(legalDongData.rowCount());
         assertThat(stepExecution.getWriteCount()).isEqualTo(0);
     }
 

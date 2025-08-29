@@ -6,6 +6,7 @@ import org.hibernate.annotations.Immutable;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressParts;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
 import org.songeun.petdongne_server.compare.domain.converter.AddressTypeConverter;
+import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,8 +16,7 @@ import org.songeun.petdongne_server.compare.domain.converter.AddressTypeConverte
 @Table(name = AddressTableMetaData.VIEW_NAME)
 @Immutable
 @ToString
-@Setter // 성능 테스트 후 제거
-public class Address {
+public class Address extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -50,11 +50,13 @@ public class Address {
     }
 
     public static Address create(
+            String code,
             String fullAddress,
             String addressInitials,
             AddressType type
     ) {
         return Address.builder()
+                .code(code)
                 .fullAddress(fullAddress)
                 .addressInitials(addressInitials)
                 .type(type)
