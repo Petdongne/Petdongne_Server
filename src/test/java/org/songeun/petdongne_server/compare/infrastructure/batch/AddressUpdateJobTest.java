@@ -24,9 +24,6 @@ import static org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFac
 
 public class AddressUpdateJobTest extends AddressUpdateJobTestSupport {
 
-    @Autowired
-    private AddressTableNameCreator tableNameCreator;
-
     @TempDir
     private Path tempDir;
 
@@ -49,7 +46,7 @@ public class AddressUpdateJobTest extends AddressUpdateJobTestSupport {
                 "4777036039", "경상북도 영덕군 영해면 대동리", "경용처유", ADMIN_DONG_ADDRESS, LocalDate.now().plusDays(3));
         Path legalDongFilePath = setupLegalDongTestData(baseTestData.getLegalAddresses(), beforeUpdateLegalAddress, afterUpdateLegalAddress);
 
-        String tempTableName = tableNameCreator.createNewTableName();
+        String tempTableName = "temp"; // todo 법정동, 행정동 테이블 이름 생성 및 전달
         JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
                 .addString("legalDongAddressFilePath", legalDongFilePath.toString())
                 .addString("adminDongAddressFilePath", adminDongFilePath.toString())
@@ -129,7 +126,7 @@ public class AddressUpdateJobTest extends AddressUpdateJobTestSupport {
         Path legalDongFilePath = FileUtils.createFile(legalDongAddressFixture.getRows(), "legalDong", tempDir);
         Path adminDongFilePath = FileUtils.createFile(adminDongAddressFixture.getRows(), "adminDong", tempDir);
 
-        String newTableName = tableNameCreator.createNewTableName();
+        String newTableName = "temp"; //// todo 법정동, 행정동 테이블 이름 생성 및 전달
         JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
                 .addString("legalDongAddressFilePath", legalDongFilePath.toString())
                 .addString("adminDongAddressFilePath", adminDongFilePath.toString())
