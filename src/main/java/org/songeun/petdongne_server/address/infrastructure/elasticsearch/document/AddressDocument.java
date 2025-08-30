@@ -2,6 +2,8 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import lombok.*;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.index.AddressIndexNameFactory;
+import org.songeun.petdongne_server.compare.domain.AddressParts;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 

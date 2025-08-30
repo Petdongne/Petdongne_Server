@@ -1,8 +1,9 @@
-package org.songeun.petdongne_server.address.infrastructure.elasticsearch.document;
+package org.songeun.petdongne_server.compare.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.springframework.util.StringUtils;
 
 import java.util.List;

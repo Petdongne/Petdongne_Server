@@ -1,15 +1,15 @@
-package org.songeun.petdongne_server.compare.domain.entity;
+package org.songeun.petdongne_server.compare.domain;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Getter
-@Embeddable
 public class LegalDongAddressParts extends AddressParts {
 
     private String re;
@@ -18,11 +18,6 @@ public class LegalDongAddressParts extends AddressParts {
         super(sido, sigungu, eupmyeondong);
         this.re = re;
     }
-
-    public LegalDongAddressParts() {
-
-    }
-
 
     public static LegalDongAddressParts create(String sido, String sigungu, String eupmyeondong, String re) {
         if (!StringUtils.hasText(sido)) {

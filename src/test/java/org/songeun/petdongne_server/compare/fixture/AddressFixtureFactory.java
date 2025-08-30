@@ -4,8 +4,8 @@ import org.songeun.petdongne_server.compare.domain.entity.Address;
 
 import java.util.List;
 
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType.ADMIN_DONG_ADDRESS;
-import static org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType.LEGAL_DONG_ADDRESS;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressType.ADMIN_DONG_ADDRESS;
+import static org.songeun.petdongne_server.compare.domain.entity.AddressType.LEGAL_DONG_ADDRESS;
 
 public class AddressFixtureFactory {
 

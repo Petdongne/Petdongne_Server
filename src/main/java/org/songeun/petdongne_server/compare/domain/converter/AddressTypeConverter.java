@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.compare.domain.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 
 @Converter
 public class AddressTypeConverter implements AttributeConverter<AddressType, String> {

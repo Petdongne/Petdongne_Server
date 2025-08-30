@@ -1,12 +1,9 @@
-package org.songeun.petdongne_server.compare.domain.entity;
+package org.songeun.petdongne_server.compare.domain;
 
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.util.StringUtils;
 
@@ -14,15 +11,10 @@ import java.util.List;
 
 @Slf4j
 @Getter
-@Embeddable
 public class AdminDongAddressParts extends AddressParts {
 
     protected AdminDongAddressParts(String sido, String sigungu, String eupmyeondong) {
         super(sido, sigungu, eupmyeondong);
-    }
-
-    public AdminDongAddressParts() {
-        super();
     }
 
     public static AdminDongAddressParts create(String sido, String sigungu, String eupmyeondong) {

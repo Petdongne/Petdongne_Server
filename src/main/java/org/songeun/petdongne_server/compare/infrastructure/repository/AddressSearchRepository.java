@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.compare.infrastructure.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.tools.StringUtils;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.songeun.petdongne_server.compare.domain.entity.AddressTableMetaData;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;

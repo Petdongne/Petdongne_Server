@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.compare.exception;
+package org.songeun.petdongne_server.compare.infrastructure.batch.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

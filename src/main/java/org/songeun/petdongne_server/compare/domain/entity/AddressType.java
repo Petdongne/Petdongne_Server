@@ -1,8 +1,11 @@
-package org.songeun.petdongne_server.address.infrastructure.elasticsearch.document;
+package org.songeun.petdongne_server.compare.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.songeun.petdongne_server.compare.domain.AddressParts;
+import org.songeun.petdongne_server.compare.domain.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.LegalDongAddressParts;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;

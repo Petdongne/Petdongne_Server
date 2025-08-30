@@ -1,17 +1,17 @@
 package org.songeun.petdongne_server.address.infrastructure.batch.config;
 
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRow;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.batch.index.CreateNewAddressIndexTasklet;
 import org.songeun.petdongne_server.address.infrastructure.batch.index.IndexingErrorListener;
 import org.songeun.petdongne_server.address.infrastructure.batch.index.SwitchAddressAliasTargetTasklet;
-import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRow;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.LegalDongAddressRow;
 import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressItemProcessor;
 import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressItemWriter;
 import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressItemProcessor;
 import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressItemWriter;
-import org.songeun.petdongne_server.address.infrastructure.batch.adminDong.AdminDongAddressRowMapper;
-import org.songeun.petdongne_server.address.infrastructure.batch.legalDong.LegalDongAddressRowMapper;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRowMapper;
+import org.songeun.petdongne_server.compare.infrastructure.batch.file.LegalDongAddressRowMapper;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

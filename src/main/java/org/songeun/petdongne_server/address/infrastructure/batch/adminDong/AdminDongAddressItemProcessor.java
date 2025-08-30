@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.address.infrastructure.batch.adminDong;
 
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressDocument;
-import org.songeun.petdongne_server.compare.domain.entity.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.AdminDongAddressParts;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.factory.AddressDocumentFactory;
 import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRow;
 import org.springframework.batch.item.ItemProcessor;

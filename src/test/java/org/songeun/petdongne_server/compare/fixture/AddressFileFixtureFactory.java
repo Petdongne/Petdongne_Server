@@ -3,8 +3,8 @@ package org.songeun.petdongne_server.compare.fixture;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.compare.domain.entity.AdminDongAddressParts;
-import org.songeun.petdongne_server.compare.domain.entity.LegalDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.LegalDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.testSupport.FileUtils;
 

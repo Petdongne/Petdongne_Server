@@ -3,7 +3,7 @@ package org.songeun.petdongne_server.compare.infrastructure.batch.step;
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRow;
 import org.songeun.petdongne_server.compare.infrastructure.batch.file.AdminDongAddressRowMapper;
-import org.songeun.petdongne_server.compare.domain.entity.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.AdminDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.springframework.batch.core.Step;

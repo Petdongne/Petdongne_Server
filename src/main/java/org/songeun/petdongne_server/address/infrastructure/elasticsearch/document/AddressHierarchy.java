@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.address.infrastructure.elasticsearch.error.AddressErrorStatus;
+import org.songeun.petdongne_server.compare.domain.AddressParts;
+import org.songeun.petdongne_server.compare.domain.AdminDongAddressParts;
+import org.songeun.petdongne_server.compare.domain.LegalDongAddressParts;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;

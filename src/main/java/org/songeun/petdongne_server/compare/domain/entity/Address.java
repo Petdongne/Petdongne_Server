@@ -2,6 +2,7 @@ package org.songeun.petdongne_server.compare.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.songeun.petdongne_server.compare.domain.AddressParts;
 import org.songeun.petdongne_server.compare.domain.converter.AddressTypeConverter;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 

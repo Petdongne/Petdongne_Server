@@ -2,6 +2,7 @@ package org.songeun.petdongne_server.address.infrastructure.elasticsearch.docume
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.songeun.petdongne_server.compare.domain.entity.AddressType;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import static org.assertj.core.api.Assertions.*;
