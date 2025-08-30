@@ -2,19 +2,16 @@ package org.songeun.petdongne_server.compare.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Immutable;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressParts;
-import org.songeun.petdongne_server.address.infrastructure.elasticsearch.document.AddressType;
 import org.songeun.petdongne_server.compare.domain.converter.AddressTypeConverter;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
+// todo gin index, extension check
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-@Table(name = AddressTableMetaData.TABLE_NAME)
-@Immutable
+@Table(name = AddressTableMetaData.TABLE_NAME) // UnifiedAddress
 @ToString
 public class Address extends BaseEntity {
 
