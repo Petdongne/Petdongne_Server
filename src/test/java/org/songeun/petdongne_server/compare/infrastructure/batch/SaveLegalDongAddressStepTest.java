@@ -8,7 +8,6 @@ import org.songeun.petdongne_server.compare.domain.entity.LegalDongAddressParts;
 import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
-import org.songeun.petdongne_server.testSupport.FileUtils;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.extensions.excel.poi.PoiItemReader;
@@ -50,20 +49,19 @@ class SaveLegalDongAddressStepTest extends AddressUpdateJobTestSupport {
     void shouldMappingLegalDongAddressFileToAddress() throws Exception {
         //given
         var legalDongFixture = AddressFileFixtureFactory.uniqueLegalDong();
-        var legalDongRows = legalDongFixture.getRows();
-        var legalDongFile = FileUtils.createFile(legalDongRows, "legalDong", tempDir);
+        var legalDongFile = legalDongFixture.toExcelFile("legalDong", tempDir);
 
         var jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
                 .addString("legalDongAddressFilePath", legalDongFile.toString())
                 .toJobParameters();
 
         //when
-        List<LegalDongAddressRow> addressRows = executeItemReader(jobParameters, legalDongAddressFileReader);
+        List<LegalDongAddressRow> mappedRows = executeItemReader(jobParameters, legalDongAddressFileReader);
 
         //then
-        List<List<String>> rowsFromFixture = legalDongRows.subList(1, legalDongRows.size()); // 헤더 제외
-        for (int i = 0; i < rowsFromFixture.size(); i++) {
-            assertRowEquals(rowsFromFixture.get(i), addressRows.get(i));
+        List<List<String>> originRows = legalDongFixture.getRows();
+        for (int i = 0; i < originRows.size(); i++) {
+            assertRowEquals(originRows.get(i), mappedRows.get(i));
         }
     }
 

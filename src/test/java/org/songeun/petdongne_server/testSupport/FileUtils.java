@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -54,9 +55,23 @@ public class FileUtils {
         }
     }
 
+    // todo 제거
     public static Path createFile(List<List<String>> rows, String fileName, Path fileDirPath) throws Exception {
         Path filePath = fileDirPath.resolve(fileName);
         writeExcelFile(filePath, rows);
+
+        return filePath;
+    }
+
+    public static Path createFile(
+            List<String> header,
+            List<List<String>> rowsWithoutHeader,
+            String fileName,
+            Path fileDirPath
+    ) throws Exception {
+        Path filePath = fileDirPath.resolve(fileName);
+        List<List<String>> rowsWithHeader = Stream.concat(Stream.of(header), rowsWithoutHeader.stream()).toList();
+        writeExcelFile(filePath, rowsWithHeader);
 
         return filePath;
     }

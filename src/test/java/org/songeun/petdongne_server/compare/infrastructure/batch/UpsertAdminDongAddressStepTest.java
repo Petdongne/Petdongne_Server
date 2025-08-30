@@ -9,7 +9,6 @@ import org.songeun.petdongne_server.compare.domain.entity.Address;
 import org.songeun.petdongne_server.compare.fixture.AddressFileFixtureFactory;
 import org.songeun.petdongne_server.compare.infrastructure.sql.AddressDmlSqlGenerator;
 import org.songeun.petdongne_server.global.batch.policy.DeletedDataPolicy;
-import org.songeun.petdongne_server.testSupport.FileUtils;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.extensions.excel.poi.PoiItemReader;
@@ -56,20 +55,19 @@ class UpsertAdminDongAddressStepTest extends AddressUpdateJobTestSupport{
     void shouldMappingAdminDongAddressFileToObjects() throws Exception {
         //given
         var adminDongFixture = AddressFileFixtureFactory.uniqueAdminDong();
-        var rows = adminDongFixture.getRows();
-        Path adminDongFile = FileUtils.createFile(rows, "adminDong", tempDir);
+        Path adminDongFile = adminDongFixture.toExcelFile("adminDong", tempDir);
 
         JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
                 .addString("adminDongAddressFilePath", adminDongFile.toString())
                 .toJobParameters();
 
         //when
-        List<AdminDongAddressRow> addressRows = executeItemReader(jobParameters, adminDongAddressFileReader);
+        List<AdminDongAddressRow> mappedRows = executeItemReader(jobParameters, adminDongAddressFileReader);
 
         // then
-        List<List<String>> dataRows = rows.subList(1, rows.size()); // 헤더 제외
-        for (int i = 0; i < dataRows.size(); i++) {
-            assertRowEquals(dataRows.get(i), addressRows.get(i));
+        List<List<String>> originRows = adminDongFixture.getRows();
+        for (int i = 0; i < originRows.size(); i++) {
+            assertRowEquals(originRows.get(i), mappedRows.get(i));
         }
     }
 
