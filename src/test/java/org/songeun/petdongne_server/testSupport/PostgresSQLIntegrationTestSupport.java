@@ -10,7 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class PostgresSQLIntegrationTestSupport extends IntegrationTestSupport {
 
     @Container
-    static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
+    static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgis/postgis:16-3.4-alpine")
             .withDatabaseName("testdb")
             .withUsername("testuser")
             .withPassword("testpass")
