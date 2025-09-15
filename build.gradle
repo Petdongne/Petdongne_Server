@@ -96,7 +96,7 @@ jacocoTestCoverageVerification{
         rule {
             enabled = true
             excludes = commonExcludes
-            element = 'CLASS'
+            element = 'BUNDLE'
 
             limit {
                 counter = 'LINE'
