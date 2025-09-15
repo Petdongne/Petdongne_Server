@@ -1,5 +1,7 @@
 package org.songeun.petdongne_server.testSupport;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -7,8 +9,10 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+@SpringBootTest
+@ActiveProfiles("test")
 @Testcontainers
-public class PostgresSQLIntegrationTestSupport extends IntegrationTestSupport {
+public class PostgresSQLIntegrationTestSupport {
 
     static DockerImageName postgis = DockerImageName.parse("postgis/postgis:16-3.4-alpine")
             .asCompatibleSubstituteFor("postgres");
