@@ -22,6 +22,9 @@ public class PostgresSQLIntegrationTestSupport extends IntegrationTestSupport {
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
+        if (!postgres.isRunning()) {
+            postgres.start();
+        }
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
