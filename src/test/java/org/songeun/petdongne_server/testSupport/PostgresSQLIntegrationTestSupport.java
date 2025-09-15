@@ -5,33 +5,30 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Testcontainers
-public class PostgresSQLIntegrationTestSupport {
+public abstract class PostgresSQLIntegrationTestSupport {
 
     static DockerImageName postgis = DockerImageName.parse("postgis/postgis:16-3.4-alpine")
             .asCompatibleSubstituteFor("postgres");
 
-    @Container
-    static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(postgis)
+    static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(postgis)
             .withDatabaseName("testdb")
             .withUsername("testuser")
             .withPassword("testpass")
             .withInitScript("init-postgres.sql");
 
+    static {
+        POSTGRE_SQL_CONTAINER.start();
+    }
+
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        if (!postgres.isRunning()) {
-            postgres.start();
-        }
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
     }
 
