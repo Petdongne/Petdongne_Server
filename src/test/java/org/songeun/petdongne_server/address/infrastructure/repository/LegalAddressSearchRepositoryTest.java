@@ -1,0 +1,134 @@
+package org.songeun.petdongne_server.address.infrastructure.repository;
+
+import org.junit.jupiter.api.*;
+import org.songeun.petdongne_server.address.domain.LegalAddress;
+import org.songeun.petdongne_server.address.fixture.LegalAddressFixture;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
+import org.songeun.petdongne_server.global.search.OrderedTokens;
+import org.songeun.petdongne_server.global.search.Token;
+import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport {
+
+    @Autowired
+    private LegalAddressSearchRepository searchRepository;
+
+    @Autowired
+    private LegalAddressCoreRepository coreRepository;
+
+    private final List<LegalAddress> fixture = LegalAddressFixture.createMapoguLegalAddress();
+
+    @BeforeAll
+    void beforeAll() {
+        coreRepository.saveAll(fixture);
+    }
+
+    @AfterAll
+    void afterAll() {
+        coreRepository.deleteAll(fixture);
+    }
+
+    @Test
+    @DisplayName("주어진 토큰을 모두 포함하는 법정동 주소를 검색한 후 유사도 순으로 반환한다.")
+    void shouldSearchAddressesContainingAllTokens(){
+        //given
+        OrderedTokens tokens = OrderedTokens.create(new String[]{"서울특별시", "마포구"});
+        int pageNumber = 0;
+        int pageSize = 10;
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+
+        //when
+        Slice<LegalAddressSearchQueryResponseDto> result = searchRepository.searchFullAddress(tokens, pageRequest);
+
+        //then
+        assertThat(result.getNumberOfElements()).isEqualTo(pageSize);
+        assertThat(result.hasNext()).isTrue();
+        assertThat(result).extracting(LegalAddressSearchQueryResponseDto::getFullAddress)
+                .containsExactly(
+                        "서울특별시 마포구",
+                        "서울특별시 마포구 마포동",
+                        "서울특별시 마포구 서교동",
+                        "서울특별시 마포구 중동",
+                        "서울특별시 마포구 서강동",
+                        "서울특별시 마포구 아현동",
+                        "서울특별시 마포구 공덕동",
+                        "서울특별시 마포구 도화동",
+                        "서울특별시 마포구 용강동",
+                        "서울특별시 마포구 토정동"
+                );
+    }
+
+    @Test
+    @DisplayName("주어진 토큰이 null일 때 빈 검색 결과를 반환한다.")
+    void shouldReturnEmptyResultWhenOrderedTokensNull(){
+        //given
+        OrderedTokens tokens = null;
+        int pageNumber = 0;
+        int pageSize = 10;
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+
+        //when
+        Slice<LegalAddressSearchQueryResponseDto> result = searchRepository.searchFullAddress(tokens, pageRequest);
+
+        //then
+        assertThat(result.getNumberOfElements()).isEqualTo(0);
+        assertThat(result.hasNext()).isFalse();
+    }
+
+    @Test
+    @DisplayName("주어진 토큰으로 시작하는 법정동 주소를 검색한 후 유사도 순으로 반환한다.")
+    void shouldSearchAddressesStartingWithToken(){
+        //given
+        Token token = Token.create("마");
+        int pageNumber = 0;
+        int pageSize = 10;
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+
+        //when
+        Slice<LegalAddressSearchQueryResponseDto> result = searchRepository.searchAddressInitials(token, pageRequest);
+
+        //then
+        assertThat(result.getNumberOfElements()).isEqualTo(pageSize);
+        assertThat(result.hasNext()).isTrue();
+        assertThat(result).extracting(LegalAddressSearchQueryResponseDto::getFullAddress)
+                .containsExactly(
+                        "서울특별시 마포구",
+                        "서울특별시 마포구 마포동",
+                        "서울특별시 마포구 서교동",
+                        "서울특별시 마포구 중동",
+                        "서울특별시 마포구 서강동",
+                        "서울특별시 마포구 아현동",
+                        "서울특별시 마포구 공덕동",
+                        "서울특별시 마포구 도화동",
+                        "서울특별시 마포구 용강동",
+                        "서울특별시 마포구 토정동"
+                );
+    }
+
+    @Test
+    @DisplayName("주어진 토큰이 null일 때 빈 검색 결과를 반환한다.")
+    void shouldReturnEmptyResultWhenTokenNull(){
+        //given
+        Token token = null;
+        int pageNumber = 0;
+        int pageSize = 10;
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+
+        //when
+        Slice<LegalAddressSearchQueryResponseDto> result = searchRepository.searchAddressInitials(token, pageRequest);
+
+        //then
+        assertThat(result.getNumberOfElements()).isEqualTo(0);
+        assertThat(result.hasNext()).isFalse();
+    }
+
+}
