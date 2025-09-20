@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum ResidentialComplexErrorStatus implements ErrorStatus {
 
     TRANSACTION_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "TRANSACTION_TYPE_NOT_FOUND", "존재하지 않는 거래 유형입니다."),
-    ;
+    RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "RESIDENTIAL_COMPLEX_TYPE_NOT_FOUND", "존재하지 않는 주거 단지 유형입니다."),;
 
     private final HttpStatus httpStatus;
     private final String code;
