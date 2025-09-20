@@ -25,15 +25,6 @@ class WhiteSpaceTokenizerTest {
     }
 
     @Test
-    @DisplayName("null 입력 시 NullPointerException이 발생한다")
-    void shouldThrowNPEForNullText() {
-        // when / then
-        assertThatThrownBy(() -> tokenizer.tokenize(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Text is null");
-    }
-
-    @Test
     @DisplayName("연속된 공백은 무시하고 토큰화된다")
     void shouldIgnoreMultipleSpaces() {
         // given

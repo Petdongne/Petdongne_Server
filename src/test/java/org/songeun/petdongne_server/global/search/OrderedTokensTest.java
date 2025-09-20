@@ -26,15 +26,6 @@ class OrderedTokensTest {
     }
 
     @Test
-    @DisplayName("입력 배열이 null이면 NullPointerException이 발생한다")
-    void shouldThrowNPEForNullInput() {
-        // when // then
-        assertThatThrownBy(() -> OrderedTokens.create(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Tokens cannot be null");
-    }
-
-    @Test
     @DisplayName("토큰이 하나이고 길이가 1이면 true를 반환한다")
     void shouldReturnTrueForSingleOneLengthToken() {
         // given

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.residentialComplex.domain.error.ResidentialComplexErrorStatus;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 
@@ -29,48 +30,14 @@ public class Area extends BaseEntity {
     @JoinColumn(name = "residential_complex_id")
     private ResidentialComplex residentialComplex;
 
-    public static Area of(Double areaInSquareMeters, ResidentialComplex residentialComplex){
-        ensureNotNull(areaInSquareMeters, NotNullField.AREA_IN_SQUARE_METERS);
-        ensureNotNull(residentialComplex, NotNullField.RESIDENTIAL_COMPLEX);
-
-        ensureAreaInMeterIsPositive(areaInSquareMeters);
-
-        return Area.builder()
-                .areaInSquareMeters(areaInSquareMeters)
-                .residentialComplex(residentialComplex).build();
-    }
-
     public LocalDate getResidentialComplexApprovalDate(){
         return residentialComplex.approvalDate();
-    }
-
-    private static <T> void ensureNotNull(T value, NotNullField notNullField) {
-        if (value == null) {
-            throw new BusinessException(notNullField.errorStatus);
-        }
-    }
-
-    private static void ensureAreaInMeterIsPositive(Double areaInSquareMeters) {
-        if (areaInSquareMeters <= 0){
-            throw new BusinessException(AREA_VALUE_MUST_BE_POSITIVE);
-        }
     }
 
     @Builder
     private Area(Double areaInSquareMeters, ResidentialComplex residentialComplex) {
         this.areaInSquareMeters = areaInSquareMeters;
         this.residentialComplex = residentialComplex;
-    }
-
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    private enum NotNullField{
-        AREA_IN_SQUARE_METERS("주거 면적 value (단위: 제곱 미터)", AREA_VALUE_REQUIRED),
-        RESIDENTIAL_COMPLEX("주거 단지", RESIDENTIAL_COMPLEX_REQUIRED),
-
-        ;
-
-        private final String description;
-        private final ResidentialComplexErrorStatus errorStatus;
     }
 
 }
