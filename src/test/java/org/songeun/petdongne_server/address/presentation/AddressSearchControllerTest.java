@@ -8,14 +8,12 @@ import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -43,7 +41,7 @@ class AddressSearchControllerTest {
         int size = 10;
         AddressSearchRequestDto requestDto = AddressSearchRequestDto.of(searchText, page, size);
 
-        given(addressSearchService.search(requestDto))
+        given(addressSearchService.searchByText(requestDto))
                 .willReturn(new SliceImpl<>(List.of()) {
         });
 

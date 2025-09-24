@@ -38,7 +38,7 @@ public class AddressSearchController {
             @Max(value = 100, message = "최대 요청 가능 수는 100입니다.")
             int size
     ) {
-        Slice<LegalAddressSearchQueryResponseDto> searched = searchService.search(AddressSearchRequestDto.of(query, page, size));
+        Slice<LegalAddressSearchQueryResponseDto> searched = searchService.searchByText(AddressSearchRequestDto.of(query, page, size));
 
         return ApiResponse.ok(AddressDtoConverter.convert(searched));
     }
