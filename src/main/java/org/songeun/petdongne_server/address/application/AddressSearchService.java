@@ -23,7 +23,8 @@ public class AddressSearchService {
     private final SynonymResolver regionSynonymResolver;
     private final WhiteSpaceTokenizer whiteSpaceTokenizer;
 
-    public Slice<LegalAddressSearchQueryResponseDto> search(AddressSearchRequestDto requestDto) {
+    // todo: request dto 풀어주기
+    public Slice<LegalAddressSearchQueryResponseDto> searchByText(AddressSearchRequestDto requestDto) {
         if (requestDto == null) {
             throw new BusinessException(GlobalErrorStatus.NULL_OBJECT_NOT_ALLOWED);
         }
