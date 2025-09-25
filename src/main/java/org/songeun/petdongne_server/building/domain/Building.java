@@ -31,7 +31,7 @@ public class Building {
 
     private int basementFloorCount;
 
-    private String pnu; // 법정동코드, 산여부, 지번, 본번 으로 풀어쓸까봐요~
+    private String pnu;
 
     private String roadAddressCode;
 
