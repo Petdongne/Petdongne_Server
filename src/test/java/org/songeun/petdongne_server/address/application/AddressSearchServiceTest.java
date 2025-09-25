@@ -9,7 +9,6 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
-import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -56,7 +55,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         AddressSearchRequestDto request = AddressSearchRequestDto.of(searchText, 0, 10);
 
         //when
-        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.search(request);
+        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.searchByText(request);
 
         //then
         assertThat(result.getNumberOfElements()).isEqualTo(3);
@@ -76,7 +75,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         AddressSearchRequestDto request = AddressSearchRequestDto.of(searchText, 0, 10);
 
         // when
-        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.search(request);
+        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.searchByText(request);
 
         //then
         assertThat(result.getNumberOfElements()).isEqualTo(3);
@@ -98,7 +97,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         AddressSearchRequestDto request = AddressSearchRequestDto.of(searchText, page, size);
 
         // when
-        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.search(request);
+        Slice<LegalAddressSearchQueryResponseDto> result = addressSearchService.searchByText(request);
 
         //then
         ArgumentCaptor<OrderedTokens> captor = ArgumentCaptor.forClass(OrderedTokens.class);
@@ -118,7 +117,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         AddressSearchRequestDto request = AddressSearchRequestDto.of(searchText, page, size);
 
         // when & then
-        assertThatThrownBy(() -> addressSearchService.search(request))
+        assertThatThrownBy(() -> addressSearchService.searchByText(request))
                 .isInstanceOf(BusinessException.class);
     }
 
