@@ -11,6 +11,7 @@ import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 
 @Transactional
-class BuildingSearchServiceTest extends IntegrationTestSupport {
+class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
     @Autowired
     private BuildingSearchService buildingSearchService;

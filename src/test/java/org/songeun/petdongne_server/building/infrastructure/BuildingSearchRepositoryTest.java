@@ -8,6 +8,7 @@ import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.building.infrastructure.repository.BuildingSearchRepository;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
 
 @Transactional
-class BuildingSearchRepositoryTest extends IntegrationTestSupport {
+class BuildingSearchRepositoryTest extends PostgresSQLIntegrationTestSupport {
 
     @Autowired
     private BuildingSearchRepository searchRepository;
