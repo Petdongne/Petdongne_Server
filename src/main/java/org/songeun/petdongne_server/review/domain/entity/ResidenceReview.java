@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.songeun.petdongne_server.residentialComplex.domain.entity.ResidentialComplex;
+import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.user.domain.entity.User;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
@@ -35,19 +35,19 @@ public class ResidenceReview extends BaseEntity {
     private Integer lastOccupiedYear;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "residential_complex_id")
-    private ResidentialComplex residentialComplex;
+    @JoinColumn(name = "building_id")
+    private Building building;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, ResidentialComplex residentialComplex, User user) {
+    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, Building building, User user) {
         this.rating = rating;
         this.reviewText = reviewText;
         this.lastOccupiedYear = lastOccupiedYear;
-        this.residentialComplex = residentialComplex;
+        this.building = building;
         this.user = user;
     }
 

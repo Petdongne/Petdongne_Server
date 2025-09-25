@@ -6,8 +6,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.global.exception.BusinessException;
-import org.songeun.petdongne_server.residentialComplex.domain.entity.ResidentialComplex;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
@@ -27,9 +27,9 @@ public class SurveyOptionStat extends BaseEntity {
     @NotNull
     private Integer selectedCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "residential_complex_id")
-    private ResidentialComplex residentialComplex;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    private Building building;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_option_id")
@@ -41,9 +41,9 @@ public class SurveyOptionStat extends BaseEntity {
 
 
     @Builder
-    private SurveyOptionStat(Integer selectedCount, ResidentialComplex residentialComplex, SurveyOption surveyOption) {
+    private SurveyOptionStat(Integer selectedCount, Building building, SurveyOption surveyOption) {
         this.selectedCount = selectedCount == null ? 0 : selectedCount;
-        this.residentialComplex = residentialComplex;
+        this.building = building;
         this.surveyOption = surveyOption;
     }
 
