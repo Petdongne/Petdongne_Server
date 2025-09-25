@@ -47,8 +47,10 @@ public class Building {
     @Column(columnDefinition = "geometry(Point, 4326)")
     private Point<G2D> centerPoint;
 
+    @Column(columnDefinition = "double precision")
     private Double longitude;
 
+    @Column(columnDefinition = "double precision")
     private Double latitude;
 
     @Type(JsonBinaryType.class)
