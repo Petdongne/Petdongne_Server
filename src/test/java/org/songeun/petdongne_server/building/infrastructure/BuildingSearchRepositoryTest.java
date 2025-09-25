@@ -32,10 +32,10 @@ class BuildingSearchRepositoryTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("주어진 경계 내에 포함된 빌딩을 찾는다")
     void shouldReturnBuildingWithinBoundary() {
         //given
-        Double minLon = 127.0172249;
-        Double minLat = 37.4905425;
-        Double maxLon = 127.0386825;
-        Double maxLat = 37.5024595;
+        Double minLon = 126.0172249;
+        Double minLat = 36.4905425;
+        Double maxLon = 126.0386825;
+        Double maxLat = 36.5024595;
 
         List<Building> saved = fixtureFactory.makeAndSaveBuildingsWithin(minLon, minLat);
 
