@@ -57,4 +57,28 @@ public class AddressSearchService {
         }
     }
 
+    /**
+     * 주어진 범위 내 지역 정보를 반환합니다. 줌 레벨에 따라 반환하는 지역의 레벨이 달라집니다.
+     * @param minLat 최소 경도
+     * @param minLon 최소 위도
+     * @param maxLat 최대 경도
+     * @param maxLon 최대 위도
+     * @param level 카카오 지도 줌 레벨
+     * @return 지역(법정동 주소) 정보
+     */
+    public List<AddressBoundsSearchResponseDto> searchWithinBounds(
+             Double minLon,Double minLat, Double maxLon, Double maxLat, Integer level) {
+        Assert.notNull(maxLat, "maxLat must not be null");
+        Assert.notNull(maxLon, "maxLon must not be null");
+        Assert.notNull(minLat, "minLat must not be null");
+        Assert.notNull(minLon, "minLon must not be null");
+
+        RegionAddressLevel regionAddressLevel = zoomLevel.toRegionAddressLevel(level);
+
+        List<LegalAddressBoundsSearchQueryResponseDto> addressesInBounds = searchRepository
+                .findAddressWithinBounds(minLon, minLat, maxLon, maxLat, regionAddressLevel);
+
+        return AddressDtoMapper.toBoundSearchResponseDtos(addressesInBounds);
+    }
+
 }
