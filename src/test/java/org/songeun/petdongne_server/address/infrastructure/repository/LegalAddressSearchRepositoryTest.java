@@ -1,5 +1,6 @@
 package org.songeun.petdongne_server.address.infrastructure.repository;
 
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.domain.LegalAddress;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
@@ -9,6 +10,7 @@ import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearc
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.songeun.petdongne_server.global.search.Token;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
