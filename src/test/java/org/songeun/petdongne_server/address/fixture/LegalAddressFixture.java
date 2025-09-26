@@ -10,7 +10,6 @@ import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 public class LegalAddressFixture {
@@ -40,14 +39,21 @@ public class LegalAddressFixture {
                 new String[]{"28000020", "인천광역시 강화군 강화동", "인강강"}
         );
 
-        return IntStream.range(0, rawAddresses.size())
+        int size = rawAddresses.size();
+        RegionAddressLevel[] addressLevels = RegionAddressLevel.values();
+        int length = addressLevels.length;
+
+        return IntStream.range(0, size)
                 .mapToObj(i -> {
                     double offset = i * 0.001;
                     String[] r = rawAddresses.get(i);
+                    RegionAddressLevel level = addressLevels[i % length];
+
                     return createLegalAddress(
                             r[0], r[1], r[2],
                             latitude + offset,
-                            longitude + offset
+                            longitude + offset,
+                            level
                     );
                 })
                 .toList();
@@ -79,21 +85,28 @@ public class LegalAddressFixture {
                 new String[]{"12340020", "서울특별시 마포구 당인동", "서마당"}
         );
 
-        return IntStream.range(0, rawAddresses.size())
+        int size = rawAddresses.size();
+        RegionAddressLevel[] addressLevels = RegionAddressLevel.values();
+        int length = addressLevels.length;
+
+        return IntStream.range(0, size)
                 .mapToObj(i -> {
                     double offset = i * 0.001;
                     String[] r = rawAddresses.get(i);
+                    RegionAddressLevel level = addressLevels[i % length];
+
                     return createLegalAddress(
                             r[0], r[1], r[2],
                             latitude + offset,
-                            longitude + offset
+                            longitude + offset,
+                            level
                     );
                 })
                 .toList();
     }
 
     public static LegalAddress createLegalAddress(String code, String fullAddress, String addressInitials,
-                                                  Double latitude, Double longitude) {
+                                                  Double latitude, Double longitude, RegionAddressLevel addressLevel) {
         try {
             Constructor<LegalAddress> constructor = LegalAddress.class.getDeclaredConstructor();
             constructor.setAccessible(true);
@@ -125,7 +138,6 @@ public class LegalAddressFixture {
             pointField.set(obj, point);
 
             // level 필드
-            RegionAddressLevel addressLevel = RegionAddressLevel.EMD;
             Field regionAddressLevel = LegalAddress.class.getDeclaredField("regionAddressLevel");
             regionAddressLevel.setAccessible(true);
             regionAddressLevel.set(obj, addressLevel);
