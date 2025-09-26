@@ -2,8 +2,8 @@ package org.songeun.petdongne_server.address.presentation;
 
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
-import org.songeun.petdongne_server.address.application.AddressSearchRequestDto;
-import org.songeun.petdongne_server.address.application.AddressSearchService;
+import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
+import org.songeun.petdongne_server.address.application.service.AddressSearchService;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.springframework.data.domain.Slice;

@@ -2,8 +2,8 @@ package org.songeun.petdongne_server.address.presentation;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.address.application.AddressSearchRequestDto;
-import org.songeun.petdongne_server.address.application.AddressSearchService;
+import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
+import org.songeun.petdongne_server.address.application.service.AddressSearchService;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
