@@ -21,4 +21,9 @@ public interface LegalAddressSearchRepository {
 
     Slice<LegalAddressSearchQueryResponseDto> searchFullAddress(OrderedTokens tokens, PageRequest pageRequest);
 
+    List<LegalAddressBoundsSearchQueryResponseDto> findAddressWithinBounds(
+            Double minLon, Double minLat,
+            Double maxLon, Double maxLat,
+            RegionAddressLevel regionAddressLevel);
+
 }
