@@ -35,6 +35,10 @@ public class LegalAddress extends BaseEntity {
     @Column(columnDefinition = "geometry(Point, 4326)")
     private Point<G2D> centerPoint;
 
+    private Double latitude;
+
+    private Double longitude;
+
     @Enumerated(EnumType.STRING)
     private RegionAddressLevel regionAddressLevel;
 
