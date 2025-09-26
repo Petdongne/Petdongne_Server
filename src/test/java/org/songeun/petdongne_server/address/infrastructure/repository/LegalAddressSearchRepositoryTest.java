@@ -25,7 +25,7 @@ class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport
     @Autowired
     private LegalAddressCoreRepository coreRepository;
 
-    private final List<LegalAddress> fixture = LegalAddressFixture.createMapoguLegalAddress();
+    private final List<LegalAddress> fixture = LegalAddressFixture.createMapoguLegalAddress(37.541, 126.986);
 
     @BeforeAll
     void beforeAll() {

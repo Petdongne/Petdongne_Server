@@ -35,7 +35,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @Autowired
     private LegalAddressCoreRepository coreRepository;
 
-    private final List<LegalAddress> fixture = LegalAddressFixture.createIncheonAddress();
+    private final List<LegalAddress> fixture = LegalAddressFixture.createIncheonAddress(37.1326117, 125.2422193);
 
     @BeforeAll
     void beforeAll() {
