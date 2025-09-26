@@ -2,8 +2,8 @@ package org.songeun.petdongne_server.address.presentation;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.address.application.AddressSearchRequestDto;
-import org.songeun.petdongne_server.address.application.AddressSearchService;
+import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
+import org.songeun.petdongne_server.address.application.service.AddressSearchService;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,6 +32,8 @@ class AddressSearchControllerTest {
     @MockitoBean
     private AddressSearchService addressSearchService;
 
+    public static final String REGION_SEARCH_API_URI = "/api/v1/addresses/search";
+
     @Test
     @DisplayName("검색 결과가 없으면 200 OK와 함께 빈 리스트를 반환한다.")
     void shouldReturnEmptyListWhenNoSearchResult() throws Exception {
@@ -47,7 +49,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("query", searchText)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))
@@ -70,7 +72,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))
                 )
@@ -92,7 +94,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("query", searchText)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))
@@ -116,7 +118,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("query", searchText)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))
@@ -140,7 +142,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("query", searchText)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))
@@ -164,7 +166,7 @@ class AddressSearchControllerTest {
 
         //when //then
         mockMvc.perform(
-                        get("/api/v1/addresses/search")
+                        get(REGION_SEARCH_API_URI)
                                 .param("query", searchText)
                                 .param("page", String.valueOf(page))
                                 .param("size", String.valueOf(size))

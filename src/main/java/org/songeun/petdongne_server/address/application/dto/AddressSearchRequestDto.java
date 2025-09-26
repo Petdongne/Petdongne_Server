@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.address.application;
+package org.songeun.petdongne_server.address.application.dto;
 
 import lombok.Builder;
 

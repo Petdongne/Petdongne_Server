@@ -1,8 +1,11 @@
 package org.songeun.petdongne_server.address.infrastructure.repository;
 
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.*;
 import org.songeun.petdongne_server.address.domain.LegalAddress;
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.fixture.LegalAddressFixture;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.songeun.petdongne_server.global.search.Token;
@@ -25,7 +28,10 @@ class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport
     @Autowired
     private LegalAddressCoreRepository coreRepository;
 
-    private final List<LegalAddress> fixture = LegalAddressFixture.createMapoguLegalAddress();
+    public static final double LATITUDE = 37.541;
+    public static final double LONGITUDE = 126.986;
+
+    private final List<LegalAddress> fixture = LegalAddressFixture.createMapoguLegalAddress(LATITUDE, LONGITUDE);
 
     @BeforeAll
     void beforeAll() {
@@ -129,6 +135,36 @@ class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport
         //then
         assertThat(result.getNumberOfElements()).isEqualTo(0);
         assertThat(result.hasNext()).isFalse();
+    }
+
+    @Test
+    @DisplayName("경계 내에 존재하는 특정 단계의 법정동 주소를 찾는다")
+    void test(){
+        //given
+        Double minLon = LONGITUDE;
+        Double minLat = LATITUDE;
+        Double maxLon = LONGITUDE + 0.1;
+        Double maxLat = LATITUDE + 0.1;
+        RegionAddressLevel addressLevel = RegionAddressLevel.EMD;
+
+        //when
+        List<LegalAddressBoundsSearchQueryResponseDto> result = searchRepository.findAddressWithinBounds(
+                minLon, minLat, maxLon, maxLat, addressLevel);
+
+        //then
+        List<LegalAddress> filteredFixture = fixture.stream()
+                .filter(legalAddress -> legalAddress.getRegionAddressLevel().equals(RegionAddressLevel.EMD))
+                .toList();
+
+        assertThat(result).hasSize(filteredFixture.size());
+        assertThat(result).extracting("fullAddress", "latitude", "longitude", "regionLevel")
+                            .containsExactlyInAnyOrderElementsOf(
+                                    filteredFixture.stream()
+                                            .map(address -> Tuple.tuple(
+                                                    address.getFullAddress(), address.getLatitude(),
+                                                    address.getLongitude(), address.getRegionAddressLevel()))
+                                            .toList()
+                            );
     }
 
 }
