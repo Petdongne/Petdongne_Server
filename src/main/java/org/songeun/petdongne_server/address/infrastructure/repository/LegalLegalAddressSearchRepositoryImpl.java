@@ -7,6 +7,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
+import org.songeun.petdongne_server.address.infrastructure.dto.QLegalAddressBoundsSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.QLegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.search.Token;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
@@ -22,6 +25,7 @@ import java.util.List;
 
 import static org.songeun.petdongne_server.address.domain.QLegalAddress.legalAddress;
 
+// todo 이름 수정 ㅎ
 @Repository
 @Transactional(readOnly = true)
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -103,6 +107,21 @@ public class LegalLegalAddressSearchRepositoryImpl implements LegalAddressSearch
         }
 
         return new SliceImpl<>(fetched, pageRequest, hasNextPage);
+    }
+
+    @Override
+    public List<LegalAddressBoundsSearchQueryResponseDto> findAddressWithinBounds(
+            Double minLon, Double minLat, Double maxLon, Double maxLat, RegionAddressLevel regionAddressLevel) {
+        return queryFactory.select(new QLegalAddressBoundsSearchQueryResponseDto(
+                        legalAddress.fullAddress, legalAddress.longitude,
+                        legalAddress.latitude, legalAddress.regionAddressLevel
+                ))
+                .from(legalAddress)
+                .where(
+                        legalAddress.longitude.between(minLon, maxLon),
+                        legalAddress.latitude.between(minLat, maxLat),
+                        legalAddress.regionAddressLevel.eq(regionAddressLevel))
+                .fetch();
     }
 
 }

@@ -1,10 +1,14 @@
 package org.songeun.petdongne_server.address.infrastructure.repository;
 
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.search.Token;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+
+import java.util.List;
 
 public interface LegalAddressSearchRepository {
 
