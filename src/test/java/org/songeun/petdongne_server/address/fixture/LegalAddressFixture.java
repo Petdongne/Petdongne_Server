@@ -127,6 +127,16 @@ public class LegalAddressFixture {
             initialsField.setAccessible(true);
             initialsField.set(obj, addressInitials);
 
+            // latitude 필드
+            Field latitudeField = LegalAddress.class.getDeclaredField("latitude");
+            latitudeField.setAccessible(true);
+            latitudeField.set(obj, latitude);
+
+            // longitude 필드
+            Field longitudeField = LegalAddress.class.getDeclaredField("longitude");
+            longitudeField.setAccessible(true);
+            longitudeField.set(obj, longitude);
+
             // point 필드
             Point<G2D> point = DSL.point(
                     CoordinateReferenceSystems.WGS84,
