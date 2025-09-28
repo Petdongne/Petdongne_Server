@@ -31,6 +31,10 @@ class MapSearchServiceTest extends IntegrationTestSupport {
 
     @MockitoBean
     private AddressSearchService addressSearchService;
+
+    @MockitoBean
+    private BuildingSearchService buildingSearchService;
+
     @Mock
     private ZoomLevel zoomLevel;
 
@@ -82,6 +86,91 @@ class MapSearchServiceTest extends IntegrationTestSupport {
         then(zoomLevel)
                 .should(times(1))
                 .isSupportedInCluster();
+    }
+
+    @Test
+    @DisplayName("지도 줌 레벨이 클러스터 조회를 지원하지 않으면 예외를 던진다")
+    void shouldThrowExceptionWhenZoomLevelIsNotSupported() {
+        //given
+        Double minLon = 126.9784;
+        Double minLat = 37.5665;
+        Double maxLon = 127.0284;
+        Double maxLat = 37.6165;
+        given(zoomLevel.isSupportedInCluster()).willReturn(false);
+
+        //when & then
+        assertThatThrownBy(() -> mapSearchService.searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+                .isInstanceOf(BusinessException.class);
+    }
+
+    @Test
+    @DisplayName("경계 내부 건물 상세 정보를 반환한다")
+    void shouldReturnDetailsWithinBounds() {
+        // given
+        Double minLon = 126.9784;
+        Double minLat = 37.5665;
+        Double maxLon = 127.0284;
+        Double maxLat = 37.6165;
+        given(zoomLevel.isSupportedInDetail()).willReturn(true);
+
+        List<BuildingBoundSearchQueryResponseDto> expectedResponse = List.of(
+                BuildingBoundSearchQueryResponseDto.builder()
+                        .id(1L)
+                        .name("서울타워")
+                        .longitude(126.9784)
+                        .latitude(37.5665)
+                        .build(),
+                BuildingBoundSearchQueryResponseDto.builder()
+                        .id(2L)
+                        .name("롯데월드타워")
+                        .longitude(127.1028)
+                        .latitude(37.5125)
+                        .build()
+        );
+
+        given(buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+                .willReturn(expectedResponse);
+
+        // when
+        List<BuildingBoundSearchQueryResponseDto> result = mapSearchService
+                .searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+
+        // then
+        assertThat(result).hasSize(2);
+        assertThat(result)
+                .extracting("id", "name", "longitude", "latitude")
+                .containsExactlyInAnyOrder(
+                        tuple(1L, "서울타워", 126.9784, 37.5665),
+                        tuple(2L, "롯데월드타워", 127.1028, 37.5125)
+                );
+
+        // verify
+        then(buildingSearchService)
+                .should(times(1))
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+        then(zoomLevel)
+                .should(times(1))
+                .isSupportedInDetail();
+    }
+
+    @Test
+    @DisplayName("지도 줌 레벨이 상세 조회를 지원하지 않으면 예외를 던진다")
+    void shouldThrowExceptionWhenZoomLevelIsNotSupportedInDetail() {
+        // given
+        Double minLon = 126.9784;
+        Double minLat = 37.5665;
+        Double maxLon = 127.0284;
+        Double maxLat = 37.6165;
+        given(zoomLevel.isSupportedInDetail()).willReturn(false);
+
+        // when & then
+        assertThatThrownBy(() -> mapSearchService.searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+                .isInstanceOf(BusinessException.class);
+
+        // verify
+        then(zoomLevel)
+                .should(times(1))
+                .isSupportedInDetail();
     }
 
 }
