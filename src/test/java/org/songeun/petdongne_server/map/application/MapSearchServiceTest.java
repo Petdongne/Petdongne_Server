@@ -2,15 +2,12 @@ package org.songeun.petdongne_server.map.application;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
-import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.exception.BusinessException;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;

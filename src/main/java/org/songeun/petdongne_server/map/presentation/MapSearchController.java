@@ -33,7 +33,7 @@ public class MapSearchController {
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+                minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
 
         return ApiResponse.ok(searched);
     }
@@ -46,8 +46,8 @@ public class MapSearchController {
             @RequestParam @Min(value = -90) @Max(value = 90) Double maxLat,
             @RequestParam @Min(1) @Max(14) Integer level
     ){
-        List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+        List<BuildingBoundSearchQueryResponseDto> searched = searchService.searchDetailsWithinBounds(
+                minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
 
         return ApiResponse.ok(searched);
     }

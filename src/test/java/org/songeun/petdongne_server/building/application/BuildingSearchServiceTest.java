@@ -1,7 +1,5 @@
 package org.songeun.petdongne_server.building.application;
 
-import jakarta.persistence.EntityManagerFactory;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,14 +8,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
-import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.map.domain.KakaoZoomTier;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -44,7 +40,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
         //when
         List<BuildingBoundSearchQueryResponseDto> result = buildingSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.DETAIL);
 
         //then
         assertThat(result).hasSize(saved.size());
@@ -70,7 +66,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
         //when
         List<BuildingBoundSearchQueryResponseDto> result = buildingSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.DETAIL);
 
         //then
         assertThat(result).hasSize(saved.size());
@@ -88,7 +84,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("유효하지 않은 검색 경계값으로 요청 시 예외를 던진다 (null, 범위 초과, 순서 오류)")
     void shouldThrowExceptionForInvalidBounds(Double minLon, Double minLat, Double maxLon, Double maxLat){
         //when & then
-        assertThatThrownBy(() -> buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL))
+        assertThatThrownBy(() -> buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.DETAIL))
                 .isInstanceOfAny(IllegalArgumentException.class);
     }
 

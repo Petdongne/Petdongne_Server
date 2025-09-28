@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 @AllArgsConstructor
-public enum KakaoZoomLevel implements ZoomLevel {
+public enum KakaoZoomTier implements ZoomLevel {
 
     DETAIL(Set.of(1, 2, 3, 4), RegionAddressLevel.EMD),
     LOCAL(Set.of(5, 6), RegionAddressLevel.EMD),
@@ -33,8 +33,8 @@ public enum KakaoZoomLevel implements ZoomLevel {
         return this == DETAIL;
     }
 
-    public static KakaoZoomLevel from(final int zoomLevel) {
-        return Arrays.stream(KakaoZoomLevel.values())
+    public static KakaoZoomTier from(final int zoomLevel) {
+        return Arrays.stream(KakaoZoomTier.values())
                 .filter(level -> level.zoomLevels.contains(zoomLevel))
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(MapErrorStatus.ZOOM_LEVEL_OUT_OF_BOUNDS));

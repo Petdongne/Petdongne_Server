@@ -2,7 +2,6 @@ package org.songeun.petdongne_server.address.application;
 
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
-import org.mockito.BDDMockito;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
@@ -14,13 +13,11 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
-import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.map.domain.KakaoZoomTier;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import java.util.List;
@@ -140,7 +137,7 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double minLat = LATITUDE;
         Double maxLon = LONGITUDE + 0.1;
         Double maxLat = LATITUDE + 0.1;
-        KakaoZoomLevel overview = KakaoZoomLevel.OVERVIEW;
+        KakaoZoomTier overview = KakaoZoomTier.OVERVIEW;
 
         // when
         List<AddressBoundsSearchResponseDto> result = addressSearchService

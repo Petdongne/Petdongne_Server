@@ -6,7 +6,6 @@ import org.songeun.petdongne_server.address.application.service.AddressSearchSer
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.exception.BusinessException;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.map.domain.MapErrorStatus;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.stereotype.Service;

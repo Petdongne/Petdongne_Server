@@ -9,7 +9,7 @@ import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchR
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.songeun.petdongne_server.map.application.MapSearchService;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
+import org.songeun.petdongne_server.map.domain.KakaoZoomTier;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -84,7 +84,7 @@ class MapSearchControllerTest {
                 .andExpect(jsonPath("$.data[0].latitude").value(37.5))
                 .andExpect(jsonPath("$.data[0].regionLevel").value("시도"));
 
-        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
     }
 
     @Test
@@ -113,7 +113,7 @@ class MapSearchControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isEmpty());
 
-        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
     }
 
     @ParameterizedTest(name = "{index} => minLon:{0}, minLat:{1}, maxLon:{2}, maxLat:{3}, level:{4}")
@@ -280,7 +280,7 @@ class MapSearchControllerTest {
                 .andExpect(jsonPath("$.data[0].longitude").value(127.5))
                 .andExpect(jsonPath("$.data[0].latitude").value(37.5));
 
-        verify(searchService).searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+        verify(searchService).searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
     }
 
     @Test
