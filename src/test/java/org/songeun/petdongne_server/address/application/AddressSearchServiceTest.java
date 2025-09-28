@@ -14,7 +14,7 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
-import org.songeun.petdongne_server.map.domain.ZoomLevel;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +42,6 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
     @Autowired
     private LegalAddressCoreRepository coreRepository;
-
-    @MockitoBean
-    private ZoomLevel zoomLevel;
 
     public static final double LATITUDE = 37.1326117;
     public static final double LONGITUDE = 125.2422193;
@@ -143,12 +140,11 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double minLat = LATITUDE;
         Double maxLon = LONGITUDE + 0.1;
         Double maxLat = LATITUDE + 0.1;
-        int regionLevel = 11;
-        BDDMockito.given(zoomLevel.toRegionAddressLevel(regionLevel)).willReturn(RegionAddressLevel.SIDO);
+        KakaoZoomLevel overview = KakaoZoomLevel.OVERVIEW;
 
         // when
         List<AddressBoundsSearchResponseDto> result = addressSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, regionLevel);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, overview);
 
         // then
         List<LegalAddress> filteredFixture = fixture.stream()

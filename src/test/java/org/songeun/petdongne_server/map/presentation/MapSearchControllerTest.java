@@ -6,8 +6,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.songeun.petdongne_server.map.application.MapSearchService;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
+import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
@@ -37,6 +40,7 @@ class MapSearchControllerTest {
     private MapSearchService searchService;
 
     private static final String BASE_URL = "/api/v1/map/clusters";
+    private static final String CLUSTER_BASE_URL = "/api/v1/map/clusters";
 
     @Test
     @DisplayName("유효한 파라미터로 클러스터 조회 요청 시 HTTP 200 OK와 결과를 반환한다")
@@ -57,12 +61,12 @@ class MapSearchControllerTest {
 
         List<AddressBoundsSearchResponseDto> mockResponse = List.of(dto);
 
-        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt()))
+        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class)))
                 .willReturn(mockResponse);
 
         // when & then
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", String.valueOf(minLon))
                                 .param("minLat", String.valueOf(minLat))
                                 .param("maxLon", String.valueOf(maxLon))
@@ -80,7 +84,7 @@ class MapSearchControllerTest {
                 .andExpect(jsonPath("$.data[0].latitude").value(37.5))
                 .andExpect(jsonPath("$.data[0].regionLevel").value("시도"));
 
-        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, level);
+        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
     }
 
     @Test
@@ -93,12 +97,12 @@ class MapSearchControllerTest {
         Double maxLat = 38.0;
         Integer level = 7;
 
-        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt()))
+        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class)))
                 .willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", String.valueOf(minLon))
                                 .param("minLat", String.valueOf(minLat))
                                 .param("maxLon", String.valueOf(maxLon))
@@ -109,7 +113,7 @@ class MapSearchControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isEmpty());
 
-        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, level);
+        verify(searchService).searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
     }
 
     @ParameterizedTest(name = "{index} => minLon:{0}, minLat:{1}, maxLon:{2}, maxLat:{3}, level:{4}")
@@ -129,7 +133,7 @@ class MapSearchControllerTest {
     ) throws Exception {
         // when & then
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", String.valueOf(minLon))
                                 .param("minLat", String.valueOf(minLat))
                                 .param("maxLon", String.valueOf(maxLon))
@@ -142,7 +146,7 @@ class MapSearchControllerTest {
                 .andExpect(jsonPath("$.code").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message").value("잘못된 요청입니다."));
 
-        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt());
+        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class));
     }
 
     @ParameterizedTest(name = "{index} => level:{0}")
@@ -157,7 +161,7 @@ class MapSearchControllerTest {
 
         // when & then
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", String.valueOf(minLon))
                                 .param("minLat", String.valueOf(minLat))
                                 .param("maxLon", String.valueOf(maxLon))
@@ -170,7 +174,7 @@ class MapSearchControllerTest {
                 .andExpect(jsonPath("$.code").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message").value("잘못된 요청입니다."));
 
-        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt());
+        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class));
     }
 
     @ParameterizedTest(name = "{index} => 누락 파라미터: {0}")
@@ -186,7 +190,7 @@ class MapSearchControllerTest {
             String minLon, String minLat, String maxLon, String maxLat, String level, String missingParam
     ) throws Exception {
         // when & then
-        MockHttpServletRequestBuilder requestBuilder = get(BASE_URL)
+        MockHttpServletRequestBuilder requestBuilder = get(CLUSTER_BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON);
 
         if (minLon != null) requestBuilder.param("minLon", minLon);
@@ -199,19 +203,19 @@ class MapSearchControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest());
 
-        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt());
+        verify(searchService, never()).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class));
     }
 
     @Test
     @DisplayName("유효한 최소/최대값으로 요청 시 성공한다")
     void searchClusters_boundaryValues() throws Exception {
         // given
-        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt()))
+        given(searchService.searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class)))
                 .willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", "-180")
                                 .param("minLat", "-90")
                                 .param("maxLon", "180")
@@ -222,7 +226,7 @@ class MapSearchControllerTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(
-                        get(BASE_URL)
+                        get(CLUSTER_BASE_URL)
                                 .param("minLon", "180")
                                 .param("minLat", "90")
                                 .param("maxLon", "-180")
@@ -232,7 +236,7 @@ class MapSearchControllerTest {
                 )
                 .andExpect(status().isOk());
 
-        verify(searchService, times(2)).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), anyInt());
+        verify(searchService, times(2)).searchClustersWithinBounds(anyDouble(), anyDouble(), anyDouble(), anyDouble(), any(ZoomLevel.class));
     }
 
 }

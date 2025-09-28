@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.map.application.MapSearchService;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class MapSearchController {
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, level);
+                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
 
         return ApiResponse.ok(searched);
     }
