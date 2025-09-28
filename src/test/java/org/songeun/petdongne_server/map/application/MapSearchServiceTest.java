@@ -3,16 +3,22 @@ package org.songeun.petdongne_server.map.application;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
+import org.songeun.petdongne_server.building.application.BuildingSearchService;
+import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
+import org.songeun.petdongne_server.global.exception.BusinessException;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
+import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.BDDMockito.given;
@@ -25,6 +31,8 @@ class MapSearchServiceTest extends IntegrationTestSupport {
 
     @MockitoBean
     private AddressSearchService addressSearchService;
+    @Mock
+    private ZoomLevel zoomLevel;
 
     @Test
     @DisplayName("경계 내부 클러스터 정보를 반환한다")
@@ -34,7 +42,7 @@ class MapSearchServiceTest extends IntegrationTestSupport {
         Double minLat = 37.5665;
         Double maxLon = 127.0284;
         Double maxLat = 37.6165;
-        Integer level = 11;
+        given(zoomLevel.isSupportedInCluster()).willReturn(true);
 
         List<AddressBoundsSearchResponseDto> expectedResponse = List.of(
                 AddressBoundsSearchResponseDto.builder()
@@ -51,15 +59,14 @@ class MapSearchServiceTest extends IntegrationTestSupport {
                         .build()
         );
 
-        given(addressSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, level))
+        given(addressSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
                 .willReturn(expectedResponse);
 
         // when
         List<AddressBoundsSearchResponseDto> result = mapSearchService
-                .searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, level);
+                .searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
 
         // then
-        assertThat(result).isNotNull();
         assertThat(result).hasSize(2);
         assertThat(result)
                 .extracting("name", "longitude", "latitude", "regionLevel")
@@ -71,7 +78,10 @@ class MapSearchServiceTest extends IntegrationTestSupport {
         // verify
         then(addressSearchService)
                 .should(times(1))
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, level);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+        then(zoomLevel)
+                .should(times(1))
+                .isSupportedInCluster();
     }
 
 }
