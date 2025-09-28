@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum MapErrorStatus implements ErrorStatus {
-    ZOOM_LEVEL_OUT_OF_BOUNDS(HttpStatus.BAD_REQUEST, "ZOOM_LEVEL_OUT_OF_BOUNDS", "가능한 줌 레벨 범위를 벗어났습니다. 줌 레벨은 1-14까지만 가능합니다.");
+    ZOOM_LEVEL_OUT_OF_BOUNDS(HttpStatus.BAD_REQUEST, "ZOOM_LEVEL_OUT_OF_BOUNDS", "가능한 줌 레벨 범위를 벗어났습니다. 줌 레벨은 1-14까지만 가능합니다."),
+    ZOOM_LEVEL_NOT_SUPPORTED(HttpStatus.BAD_REQUEST, "ZOOM_LEVEL_NOT_SUPPORTED", "지원하지 않는 줌 레벨입니다.")
+    ;
 
     private final HttpStatus httpStatus;
     private final String code;
