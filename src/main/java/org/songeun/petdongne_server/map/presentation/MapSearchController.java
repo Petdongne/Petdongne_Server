@@ -38,4 +38,18 @@ public class MapSearchController {
         return ApiResponse.ok(searched);
     }
 
+    @GetMapping("/details")
+    public ResponseEntity<?> searchDetails(
+            @RequestParam @Min(value = -180) @Max(180) Double minLon,
+            @RequestParam @Min(value = -90) @Max(value = 90) Double minLat,
+            @RequestParam @Min(value = -180) @Max(180) Double maxLon,
+            @RequestParam @Min(value = -90) @Max(value = 90) Double maxLat,
+            @RequestParam @Min(1) @Max(14) Integer level
+    ){
+        List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
+                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+
+        return ApiResponse.ok(searched);
+    }
+
 }

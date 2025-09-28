@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.building.infrastructure.repository.BuildingSearchRepository;
+import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,7 +19,7 @@ public class BuildingSearchService {
     private final BuildingSearchRepository searchRepository;
 
     public List<BuildingBoundSearchQueryResponseDto> searchWithinBounds(
-              Double minLon, Double minLat, Double maxLon,Double maxLat) {
+            Double minLon, Double minLat, Double maxLon, Double maxLat, ZoomLevel zoomLevel) {
         Assert.notNull(maxLat, "maxLat must not be null");
         Assert.notNull(maxLon, "maxLon must not be null");
         Assert.notNull(minLat, "minLat must not be null");

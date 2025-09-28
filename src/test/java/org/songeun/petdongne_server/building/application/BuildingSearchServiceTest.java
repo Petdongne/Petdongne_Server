@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
         //when
         List<BuildingBoundSearchQueryResponseDto> result = buildingSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL);
 
         //then
         assertThat(result).hasSize(saved.size());
@@ -69,7 +70,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
         //when
         List<BuildingBoundSearchQueryResponseDto> result = buildingSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL);
 
         //then
         assertThat(result).hasSize(saved.size());
@@ -87,7 +88,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("유효하지 않은 검색 경계값으로 요청 시 예외를 던진다 (null, 범위 초과, 순서 오류)")
     void shouldThrowExceptionForInvalidBounds(Double minLon, Double minLat, Double maxLon, Double maxLat){
         //when & then
-        assertThatThrownBy(() -> buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat))
+        assertThatThrownBy(() -> buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, KakaoZoomLevel.DETAIL))
                 .isInstanceOfAny(IllegalArgumentException.class);
     }
 
