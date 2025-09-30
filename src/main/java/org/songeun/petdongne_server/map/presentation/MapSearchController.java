@@ -4,8 +4,11 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.map.application.MapSearchService;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevelCategory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +35,21 @@ public class MapSearchController {
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, level);
+                minLon, minLat, maxLon, maxLat, KakaoZoomLevelCategory.from(level));
+
+        return ApiResponse.ok(searched);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<?> searchDetails(
+            @RequestParam @Min(value = -180) @Max(180) Double minLon,
+            @RequestParam @Min(value = -90) @Max(value = 90) Double minLat,
+            @RequestParam @Min(value = -180) @Max(180) Double maxLon,
+            @RequestParam @Min(value = -90) @Max(value = 90) Double maxLat,
+            @RequestParam @Min(1) @Max(14) Integer level
+    ){
+        List<BuildingBoundSearchResponseDto> searched = searchService.searchDetailsWithinBounds(
+                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
 
         return ApiResponse.ok(searched);
     }

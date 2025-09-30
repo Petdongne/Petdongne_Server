@@ -33,6 +33,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // 캐싱
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.2.2'
+
     // queryDSL
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
@@ -42,6 +45,7 @@ dependencies {
     // 공간/지도 기능
     implementation 'org.hibernate.orm:hibernate-spatial:6.6.13.Final'
     implementation 'org.locationtech.jts:jts-core:1.20.0'
+    implementation 'com.github.davidmoten:geo:0.8.1'
     // general-purpose utilities for both Spring and Hibernate
     implementation "io.hypersistence:hypersistence-utils-hibernate-63:3.11.0"
 

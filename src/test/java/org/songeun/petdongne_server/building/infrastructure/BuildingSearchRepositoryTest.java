@@ -1,19 +1,18 @@
 package org.songeun.petdongne_server.building.infrastructure;
 
-import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
-import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
+import org.songeun.petdongne_server.building.infrastructure.dto.BuildingGeoHashSearchQueryResponseDto;
 import org.songeun.petdongne_server.building.infrastructure.repository.BuildingSearchRepository;
-import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -29,25 +28,23 @@ class BuildingSearchRepositoryTest extends PostgresSQLIntegrationTestSupport {
     private BuildingFixtureFactory fixtureFactory;
 
     @Test
-    @DisplayName("주어진 경계 내에 포함된 빌딩을 찾는다")
-    void shouldReturnBuildingWithinBoundary() {
+    @DisplayName("GeoHash 집합에 속하는 빌딩을 찾는다")
+    void shouldFindBuildingsByGeoHashes(){
         //given
-        Double minLon = 126.0172249;
-        Double minLat = 36.4905425;
-        Double maxLon = 126.0386825;
-        Double maxLat = 36.5024595;
-
-        List<Building> saved = fixtureFactory.makeAndSaveBuildingsWithin(minLon, minLat);
+        Double latitude = 126.0172249;
+        Double longitude = 36.4905425;
+        List<Building> expectedResult = fixtureFactory.makeAndSaveBuildingsWithin(latitude, longitude);
+        Set<String> geoHashes = expectedResult.stream().map(Building::getGeohash).collect(Collectors.toSet());
 
         //when
-        List<BuildingBoundSearchQueryResponseDto> result = searchRepository.findWithinBounds(minLon, minLat, maxLon, maxLat);
+        Set<BuildingGeoHashSearchQueryResponseDto> result = searchRepository.findByGeoHashes(geoHashes);
 
         //then
-        assertThat(result).hasSize(saved.size());
+        assertThat(result).hasSize(expectedResult.size());
         assertThat(result)
                 .extracting("name", "longitude", "latitude")
                 .containsExactlyInAnyOrderElementsOf(
-                        saved.stream()
+                        expectedResult.stream()
                                 .map(b -> tuple(b.getName(), b.getLongitude(), b.getLatitude()))
                                 .toList()
                 );

@@ -53,6 +53,9 @@ public class Building {
     @Column(columnDefinition = "double precision")
     private Double latitude;
 
+    @Column(columnDefinition = "varchar(10)")
+    private String geohash;
+
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")
     private Map<String, String> details = new HashMap<>();
