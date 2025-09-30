@@ -1,5 +1,6 @@
 package org.songeun.petdongne_server.building.fixture;
 
+import com.github.davidmoten.geo.GeoHash;
 import jakarta.persistence.EntityManagerFactory;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
@@ -99,6 +100,9 @@ public class BuildingFixtureFactory {
 
         // cluster Y/N
         ReflectionTestUtils.setField(building, "clusterYn", Boolean.TRUE);
+
+        // geohash
+        ReflectionTestUtils.setField(building, "geohash", GeoHash.encodeHash(y, x, 6));
 
         return building;
     }
