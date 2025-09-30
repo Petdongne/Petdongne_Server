@@ -89,7 +89,7 @@ spring:
 
 
   jpa:
-    database: postgresql
+    database: h2
     open-in-view: false
     hibernate:
       ddl-auto: create-drop
