@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
+import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
-import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -20,7 +21,7 @@ import static org.mockito.BDDMockito.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 
-class MapSearchServiceTest extends IntegrationTestSupport {
+class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
     @Autowired
     private MapSearchService mapSearchService;
@@ -100,7 +101,7 @@ class MapSearchServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("경계 내부 건물 상세 정보를 반환한다")
+    @DisplayName("경계 내부 지형물 정보를 반환한다")
     void shouldReturnDetailsWithinBounds() {
         // given
         Double minLon = 126.9784;
@@ -109,14 +110,14 @@ class MapSearchServiceTest extends IntegrationTestSupport {
         Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInDetail()).willReturn(true);
 
-        List<BuildingBoundSearchQueryResponseDto> expectedResponse = List.of(
-                BuildingBoundSearchQueryResponseDto.builder()
+        List<BuildingBoundSearchResponseDto> expectedResponse = List.of(
+                BuildingBoundSearchResponseDto.builder()
                         .id(1L)
                         .name("서울타워")
                         .longitude(126.9784)
                         .latitude(37.5665)
                         .build(),
-                BuildingBoundSearchQueryResponseDto.builder()
+                BuildingBoundSearchResponseDto.builder()
                         .id(2L)
                         .name("롯데월드타워")
                         .longitude(127.1028)
@@ -128,7 +129,7 @@ class MapSearchServiceTest extends IntegrationTestSupport {
                 .willReturn(expectedResponse);
 
         // when
-        List<BuildingBoundSearchQueryResponseDto> result = mapSearchService
+        List<BuildingBoundSearchResponseDto> result = mapSearchService
                 .searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
 
         // then
