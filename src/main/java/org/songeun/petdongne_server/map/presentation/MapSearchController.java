@@ -33,7 +33,7 @@ public class MapSearchController {
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, KakaoZoomTier.from(level));
+                minLon, minLat, maxLon, maxLat, KakaoZoomLevelCategory.from(level));
 
         return ApiResponse.ok(searched);
     }

@@ -5,10 +5,11 @@ import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 
 import java.util.Arrays;
+
 import java.util.Set;
 
 @AllArgsConstructor
-public enum KakaoZoomTier implements ZoomLevel {
+public enum KakaoZoomLevelCategory implements ZoomLevel {
 
     DETAIL(Set.of(1, 2, 3, 4), RegionAddressLevel.EMD),
     LOCAL(Set.of(5, 6), RegionAddressLevel.EMD),
@@ -33,8 +34,25 @@ public enum KakaoZoomTier implements ZoomLevel {
         return this == DETAIL;
     }
 
-    public static KakaoZoomTier from(final int zoomLevel) {
-        return Arrays.stream(KakaoZoomTier.values())
+    @Override
+    public Integer determineGeoHashLength() {
+        if (this == KakaoZoomLevelCategory.OVERVIEW) {
+
+        }
+
+        if (this == KakaoZoomLevelCategory.AREA) {
+
+        }
+
+        if (this == KakaoZoomLevelCategory.LOCAL) {
+
+        }
+
+        throw new RuntimeException("상세 조회 레벨은 KakaoZoomLevel 클래스를 이용하세요");
+    }
+
+    public static KakaoZoomLevelCategory from(final int zoomLevel) {
+        return Arrays.stream(KakaoZoomLevelCategory.values())
                 .filter(level -> level.zoomLevels.contains(zoomLevel))
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(MapErrorStatus.ZOOM_LEVEL_OUT_OF_BOUNDS));

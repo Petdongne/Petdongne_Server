@@ -13,7 +13,7 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
-import org.songeun.petdongne_server.map.domain.KakaoZoomTier;
+import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -137,11 +137,11 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double minLat = LATITUDE;
         Double maxLon = LONGITUDE + 0.1;
         Double maxLat = LATITUDE + 0.1;
-        KakaoZoomTier overview = KakaoZoomTier.OVERVIEW;
+        KakaoZoomLevel zoomLevel = KakaoZoomLevel.from(11);
 
         // when
         List<AddressBoundsSearchResponseDto> result = addressSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, overview);
+                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
 
         // then
         List<LegalAddress> filteredFixture = fixture.stream()
