@@ -64,6 +64,7 @@ logging:
       springframework:
         jdbc: trace
         orm: debug
+    root: debug
 
 ---
 spring:
