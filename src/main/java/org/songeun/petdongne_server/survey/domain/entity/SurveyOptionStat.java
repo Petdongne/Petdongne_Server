@@ -14,7 +14,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_survey_option_stat_option_complex",
-                        columnNames = {"survey_option_id", "residential_complex_id"})
+                        columnNames = {"survey_option_id", "building_id"})
         }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
