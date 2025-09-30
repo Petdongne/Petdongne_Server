@@ -1,9 +1,11 @@
 package org.songeun.petdongne_server.map.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 
 @Slf4j
+@EqualsAndHashCode
 public class KakaoZoomLevel implements ZoomLevel{
 
     private final KakaoZoomLevelCategory levelCategory;
