@@ -11,8 +11,8 @@ import java.util.Set;
 @AllArgsConstructor
 public enum KakaoZoomLevelCategory implements ZoomLevel {
 
-    DETAIL(Set.of(1, 2, 3, 4), RegionAddressLevel.EMD),
-    LOCAL(Set.of(5, 6), RegionAddressLevel.EMD),
+    DETAIL(Set.of(1, 2, 3), RegionAddressLevel.EMD),
+    LOCAL(Set.of(4, 5, 6), RegionAddressLevel.EMD),
     AREA(Set.of(7, 8, 9, 10), RegionAddressLevel.SIGUNGU),
     OVERVIEW(Set.of(11, 12, 13, 14), RegionAddressLevel.SIDO);
 
