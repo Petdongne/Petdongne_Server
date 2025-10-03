@@ -38,15 +38,15 @@ public enum KakaoZoomLevelCategory implements ZoomLevel {
     @Override
     public Integer determineGeoHashLength() {
         if (this == KakaoZoomLevelCategory.OVERVIEW) {
-            return 4;
+            return 3;
         }
 
         if (this == KakaoZoomLevelCategory.AREA) {
-            return 5;
+            return 3;
         }
 
         if (this == KakaoZoomLevelCategory.LOCAL) {
-            return 5;
+            return 4;
         }
 
         throw new RuntimeException("DETAIL 줌 레벨은 KakaoZoomLevel 클래스를 이용하세요");
