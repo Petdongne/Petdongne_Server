@@ -15,6 +15,7 @@ import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.songeun.petdongne_server.global.util.GeoHashUtil;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
+import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -132,34 +133,37 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("경계 내부 법정동 주소를 반환한다")
-    void shouldReturnSidoAddressWithinBounds() {
+    @DisplayName("지오해시와 행정주소 레벨이 동일한 법정동 주소를 반환한다")
+    void shouldReturnLegalAddressWithSameGeoHashesAndRegionLevel() {
         // given
         Double minLon = LONGITUDE;
         Double minLat = LATITUDE;
         Double maxLon = LONGITUDE + 0.1;
         Double maxLat = LATITUDE + 0.1;
-        KakaoZoomLevel zoomLevel = KakaoZoomLevel.from(11);
-        Set<String> hashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, zoomLevel.toRegionAddressLevel());
+
+        RegionAddressLevel regionLevel = RegionAddressLevel.SIDO;
+        Set<String> getHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, regionLevel);
 
         // when
         List<AddressBoundsSearchResponseDto> result = addressSearchService
-                .searchWithinBounds(hashes, zoomLevel);
+                .searchWithinBounds(getHashes, regionLevel);
 
         // then
         List<LegalAddress> filteredFixture = fixture.stream()
-                .filter(legalAddress -> legalAddress.getRegionAddressLevel().equals(RegionAddressLevel.SIDO))
+                .filter(legalAddress -> legalAddress.getRegionAddressLevel().equals(regionLevel)
+                    && getHashes.contains(legalAddress.getGeohash()))
                 .toList();
 
         assertThat(result).hasSize(filteredFixture.size());
         assertThat(result)
-                .extracting("longitude", "latitude", "regionLevel")
+                .extracting("longitude", "latitude", "regionLevel", "geoHash")
                 .containsExactlyInAnyOrderElementsOf(
                         filteredFixture.stream()
                                 .map(legalAddress -> tuple(
                                         legalAddress.getLongitude(),
                                         legalAddress.getLatitude(),
-                                        legalAddress.getRegionAddressLevel().getDescription()))
+                                        legalAddress.getRegionAddressLevel().getDescription(),
+                                        legalAddress.getGeohash()))
                                 .toList()
                 );
     }

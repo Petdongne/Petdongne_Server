@@ -27,7 +27,7 @@ public class MapSearchService {
             throw new BusinessException(MapErrorStatus.ZOOM_LEVEL_NOT_SUPPORTED);
         }
 
-        return addressSearchService.searchWithinBounds(geoHashes, zoomLevel);
+        return addressSearchService.searchWithinBounds(geoHashes, zoomLevel.toRegionAddressLevel());
     }
 
     public List<BuildingBoundSearchResponseDto> searchDetailsWithinBounds(

@@ -7,6 +7,7 @@ import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchR
 import org.songeun.petdongne_server.address.application.dto.AddressDtoMapper;
 import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.address.domain.AddressErrorStatus;
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.infrastructure.cache.LegalAddressCacheKey;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressGeoHashSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
@@ -60,9 +61,8 @@ public class AddressSearchService {
         }
     }
 
-
-    public List<AddressBoundsSearchResponseDto> searchWithinBounds(Set<String> geoHashes, ZoomLevel zoomLevel) {
-        var legalAddressesByCacheKey = readFromCache(geoHashes, zoomLevel);
+    public List<AddressBoundsSearchResponseDto> searchWithinBounds(Set<String> geoHashes, RegionAddressLevel level) {
+        var legalAddressesByCacheKey = readFromCache(geoHashes, level);
 
         return legalAddressesByCacheKey.values().stream()
                 .flatMap(Optional::stream)
@@ -72,9 +72,9 @@ public class AddressSearchService {
     }
 
     private Map<LegalAddressCacheKey, Optional<List<LegalAddressGeoHashSearchQueryResponseDto>>> readFromCache(
-            Set<String> geoHashes, ZoomLevel zoomLevel) {
+            Set<String> geoHashes, RegionAddressLevel level) {
         List<LegalAddressCacheKey> cacheKeys = geoHashes.stream()
-                .map(hash -> LegalAddressCacheKey.of(hash, zoomLevel.toRegionAddressLevel()))
+                .map(hash -> LegalAddressCacheKey.of(hash, level))
                 .toList();
 
         return legalAddressCache.getAll(cacheKeys);

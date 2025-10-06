@@ -64,7 +64,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
                         .build()
         );
 
-        given(addressSearchService.searchWithinBounds(geoHashes, zoomLevel))
+        given(addressSearchService.searchWithinBounds(geoHashes, any(RegionAddressLevel.class)))
                 .willReturn(expectedResponse);
 
         // when
@@ -83,7 +83,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         // verify
         then(addressSearchService)
                 .should(times(1))
-                .searchWithinBounds(geoHashes, zoomLevel);
+                .searchWithinBounds(geoHashes, any(RegionAddressLevel.class));
         then(zoomLevel)
                 .should(times(1))
                 .isSupportedInCluster();
