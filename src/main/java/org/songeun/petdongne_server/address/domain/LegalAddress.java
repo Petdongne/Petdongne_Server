@@ -42,7 +42,7 @@ public class LegalAddress extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RegionAddressLevel regionAddressLevel;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String geohash;
 
 }
