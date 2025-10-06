@@ -31,12 +31,12 @@ public class MapSearchService {
     }
 
     public List<BuildingBoundSearchResponseDto> searchDetailsWithinBounds(
-            Double minLon, Double minLat, Double maxLon, Double maxLat, ZoomLevel zoomLevel) {
+            Set<String> geoHashes, ZoomLevel zoomLevel) {
         if (!zoomLevel.isSupportedInDetail()) {
             throw new BusinessException(MapErrorStatus.ZOOM_LEVEL_NOT_SUPPORTED);
         }
 
-        return buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+        return buildingSearchService.searchWithinBounds(geoHashes);
     }
 
 }
