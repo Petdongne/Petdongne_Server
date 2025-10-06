@@ -50,7 +50,8 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     private List<Building> expectedResult;
     private final Double minLon = 127.0172249;
     private final Double minLat = 37.4905425;
-    private final ZoomLevel zoomLevel = KakaoZoomLevel.from(4);
+    private final ZoomLevel zoomLevel = KakaoZoomLevel.from(3);
+    int geohashLength= BuildingSearchService.BUILDING_GEOHASH_LENGTH; // todo 수정 필요
     // == end
 
     @BeforeAll
@@ -133,7 +134,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
                 minLon, minLat, maxLon, maxLat, zoomLevel);
 
         //then
-        Set<String> keys = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, zoomLevel.toRegionAddressLevel());
+        Set<String> keys = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, geohashLength);
         assertSameContent(result, expectedResult, capturedCacheMap);
         assertCacheCalledOnceWithKeys(keys);
     }
@@ -171,7 +172,7 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double maxLat = minLat + 0.01;
 
         Coverage coverBoundingBox = GeoHash.coverBoundingBox(
-                maxLat, minLon, minLat, maxLon, zoomLevel.toRegionAddressLevel().determineGeoHashLength()
+                maxLat, minLon, minLat, maxLon, geohashLength
         );
         Set<String> hashes = coverBoundingBox.getHashes();
 
