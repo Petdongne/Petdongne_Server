@@ -47,6 +47,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double maxLon = 127.0284;
         Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInCluster()).willReturn(true);
+        given(zoomLevel.toRegionAddressLevel()).willReturn(RegionAddressLevel.SIDO);
         Set<String> geoHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, RegionAddressLevel.SIDO);
 
         List<AddressBoundsSearchResponseDto> expectedResponse = List.of(
@@ -64,7 +65,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
                         .build()
         );
 
-        given(addressSearchService.searchWithinBounds(geoHashes, any(RegionAddressLevel.class)))
+        given(addressSearchService.searchWithinBounds(geoHashes, RegionAddressLevel.SIDO))
                 .willReturn(expectedResponse);
 
         // when
@@ -83,7 +84,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         // verify
         then(addressSearchService)
                 .should(times(1))
-                .searchWithinBounds(geoHashes, any(RegionAddressLevel.class));
+                .searchWithinBounds(geoHashes, RegionAddressLevel.SIDO);
         then(zoomLevel)
                 .should(times(1))
                 .isSupportedInCluster();
