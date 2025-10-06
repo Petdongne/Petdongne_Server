@@ -10,6 +10,4 @@ public interface ZoomLevel {
 
     boolean isSupportedInDetail();
 
-    Integer determineGeoHashLength();
-
 }

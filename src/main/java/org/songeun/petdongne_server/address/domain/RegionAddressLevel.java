@@ -7,8 +7,30 @@ import lombok.Getter;
 @Getter
 public enum RegionAddressLevel {
 
-    SIDO("시도"), SIGUNGU("시군구"), EMD("읍면동"), DL("동리");
+    SIDO("시도") {
+        @Override
+        public int determineGeoHashLength() {
+            return 3;
+        }
+    }, SIGUNGU("시군구") {
+        @Override
+        public int determineGeoHashLength() {
+            return 4;
+        }
+    }, EMD("읍면동") {
+        @Override
+        public int determineGeoHashLength() {
+            return 5;
+        }
+    }, DL("동리") {
+        @Override
+        public int determineGeoHashLength() {
+            return 6;
+        }
+    };
 
     private final String description;
+
+    public abstract int determineGeoHashLength();
 
 }

@@ -35,18 +35,4 @@ public class KakaoZoomLevel implements ZoomLevel{
         return levelCategory.isSupportedInDetail();
     }
 
-    @Override
-    public Integer determineGeoHashLength() {
-        if (levelCategory.isSupportedInCluster()) {
-            return levelCategory.determineGeoHashLength();
-        }
-
-        if (levelCategory.isSupportedInDetail()) {
-            return 6;
-        }
-
-        log.error("Unmapped zoom level {}.", rawValue);
-        throw new IllegalStateException("줌 레벨 " + rawValue + "은(는) GeoHash로 변환할 수 없습니다.");
-    }
-
 }

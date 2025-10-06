@@ -19,6 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BuildingSearchService {
 
+    public static final int BUILDING_GEOHASH_LENGTH = 6;
     private final LoadingCache<String, Optional<Set<BuildingGeoHashSearchQueryResponseDto>>> buildingCache;
 
     public List<BuildingBoundSearchResponseDto> searchWithinBounds(
@@ -31,7 +32,7 @@ public class BuildingSearchService {
         validateBoundsRange(minLon, minLat, maxLon, maxLat);
         validateMaxGreaterThanMin(minLon, minLat, maxLon, maxLat);
 
-        Set<String> keys = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, zoomLevel);
+        Set<String> keys = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, BUILDING_GEOHASH_LENGTH);
         Map<String, Optional<Set<BuildingGeoHashSearchQueryResponseDto>>> buildingCacheAll = buildingCache.getAll(keys);
 
         return buildingCacheAll.values().stream()

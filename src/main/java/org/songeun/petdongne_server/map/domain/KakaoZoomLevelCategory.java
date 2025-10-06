@@ -34,24 +34,6 @@ public enum KakaoZoomLevelCategory implements ZoomLevel {
         return this == DETAIL;
     }
 
-    // todo 지오 해시 길이 검토 필요
-    @Override
-    public Integer determineGeoHashLength() {
-        if (this == KakaoZoomLevelCategory.OVERVIEW) {
-            return 3;
-        }
-
-        if (this == KakaoZoomLevelCategory.AREA) {
-            return 3;
-        }
-
-        if (this == KakaoZoomLevelCategory.LOCAL) {
-            return 4;
-        }
-
-        throw new RuntimeException("DETAIL 줌 레벨은 KakaoZoomLevel 클래스를 이용하세요");
-    }
-
     public static KakaoZoomLevelCategory from(final int zoomLevel) {
         return Arrays.stream(KakaoZoomLevelCategory.values())
                 .filter(level -> level.zoomLevels.contains(zoomLevel))
