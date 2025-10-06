@@ -23,6 +23,11 @@ public enum GlobalErrorStatus implements ErrorStatus {
 
     NULL_OBJECT_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "NULL_OBJECT_NOT_ALLOWED", "null일 수 없습니다."),
     NULL_OR_EMPTY_STRING_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "NULL_OR_EMPTY_STRING_NOT_ALLOWED", "null이거나 빈 문자열일 수 없습니다."),
+
+    /**
+     * geoHash
+     */
+    GEOHASH_LENGTH_INVALID(HttpStatus.BAD_REQUEST, "GEOHASH_LENGTH_INVALID" , "지오해시 길이가 올바르지 않습니다.")
     ;
 
     private final HttpStatus httpStatus;

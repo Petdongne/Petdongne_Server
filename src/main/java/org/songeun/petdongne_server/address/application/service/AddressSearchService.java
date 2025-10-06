@@ -15,7 +15,7 @@ import org.songeun.petdongne_server.global.common.*;
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.*;
-import org.songeun.petdongne_server.map.domain.ZoomLevel;
+import org.songeun.petdongne_server.global.util.GeoHashValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AddressSearchService {
 
+    private final GeoHashValidator geoHashValidator;
     private final LegalAddressSearchRepository searchRepository;
     private final SynonymResolver regionSynonymResolver;
     private final WhiteSpaceTokenizer whiteSpaceTokenizer;
@@ -62,6 +63,7 @@ public class AddressSearchService {
     }
 
     public List<AddressBoundsSearchResponseDto> searchWithinBounds(Set<String> geoHashes, RegionAddressLevel level) {
+        geoHashValidator.validGeoHashLength(geoHashes, level.determineGeoHashLength());
         var legalAddressesByCacheKey = readFromCache(geoHashes, level);
 
         return legalAddressesByCacheKey.values().stream()

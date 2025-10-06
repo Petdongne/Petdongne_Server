@@ -16,6 +16,7 @@ import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSuppor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,17 +39,14 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @Mock
     private ZoomLevel zoomLevel;
 
+    private static final Set<String> geoHashes = Set.of("wymsk", "wjklsf");
+
     @Test
     @DisplayName("지오해시가 같은 클러스터 정보를 반환한다")
     void shouldReturnClusters() {
         // given
-        Double minLon = 126.9784;
-        Double minLat = 37.5665;
-        Double maxLon = 127.0284;
-        Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInCluster()).willReturn(true);
         given(zoomLevel.toRegionAddressLevel()).willReturn(RegionAddressLevel.SIDO);
-        Set<String> geoHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, RegionAddressLevel.SIDO);
 
         List<AddressBoundsSearchResponseDto> expectedResponse = List.of(
                 AddressBoundsSearchResponseDto.builder()
@@ -94,12 +92,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("지도 줌 레벨이 클러스터 조회를 지원하지 않으면 예외를 던진다")
     void shouldThrowExceptionWhenZoomLevelIsNotSupported() {
         //given
-        Double minLon = 126.9784;
-        Double minLat = 37.5665;
-        Double maxLon = 127.0284;
-        Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInCluster()).willReturn(false);
-        Set<String> geoHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, RegionAddressLevel.SIDO);
 
         //when & then
         assertThatThrownBy(() -> mapSearchService.searchClustersWithinBounds(geoHashes, zoomLevel))
@@ -110,10 +103,6 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("경계 내부 지형물 정보를 반환한다")
     void shouldReturnDetailsWithinBounds() {
         // given
-        Double minLon = 126.9784;
-        Double minLat = 37.5665;
-        Double maxLon = 127.0284;
-        Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInDetail()).willReturn(true);
 
         List<BuildingBoundSearchResponseDto> expectedResponse = List.of(
@@ -131,12 +120,10 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
                         .build()
         );
 
-        given(buildingSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
-                .willReturn(expectedResponse);
+        given(buildingSearchService.searchWithinBounds(anySet())).willReturn(expectedResponse);
 
         // when
-        List<BuildingBoundSearchResponseDto> result = mapSearchService
-                .searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+        List<BuildingBoundSearchResponseDto> result = mapSearchService.searchDetailsWithinBounds(geoHashes, zoomLevel);
 
         // then
         assertThat(result).hasSize(2);
@@ -150,7 +137,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         // verify
         then(buildingSearchService)
                 .should(times(1))
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+                .searchWithinBounds(anySet());
         then(zoomLevel)
                 .should(times(1))
                 .isSupportedInDetail();
@@ -160,14 +147,10 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     @DisplayName("지도 줌 레벨이 상세 조회를 지원하지 않으면 예외를 던진다")
     void shouldThrowExceptionWhenZoomLevelIsNotSupportedInDetail() {
         // given
-        Double minLon = 126.9784;
-        Double minLat = 37.5665;
-        Double maxLon = 127.0284;
-        Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInDetail()).willReturn(false);
 
         // when & then
-        assertThatThrownBy(() -> mapSearchService.searchDetailsWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+        assertThatThrownBy(() -> mapSearchService.searchDetailsWithinBounds(geoHashes, zoomLevel))
                 .isInstanceOf(BusinessException.class);
 
         // verify
