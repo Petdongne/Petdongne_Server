@@ -110,21 +110,6 @@ public class LegalLegalAddressSearchRepositoryImpl implements LegalAddressSearch
     }
 
     @Override
-    public List<LegalAddressBoundsSearchQueryResponseDto> findAddressWithinBounds(
-            Double minLon, Double minLat, Double maxLon, Double maxLat, RegionAddressLevel regionAddressLevel) {
-        return queryFactory.select(new QLegalAddressBoundsSearchQueryResponseDto(
-                        legalAddress.fullAddress, legalAddress.longitude,
-                        legalAddress.latitude, legalAddress.regionAddressLevel
-                ))
-                .from(legalAddress)
-                .where(
-                        legalAddress.longitude.between(minLon, maxLon),
-                        legalAddress.latitude.between(minLat, maxLat),
-                        legalAddress.regionAddressLevel.eq(regionAddressLevel))
-                .fetch();
-    }
-
-    @Override
     public List<LegalAddressGeoHashSearchQueryResponseDto> findByGeoHashAndLevel(
             Set<String> geoHashes, RegionAddressLevel regionAddressLevel) {
 
