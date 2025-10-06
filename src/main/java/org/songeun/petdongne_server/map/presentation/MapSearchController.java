@@ -40,14 +40,11 @@ public class MapSearchController {
 
     @GetMapping("/details")
     public ResponseEntity<?> searchDetails(
-            @RequestParam @Min(value = -180) @Max(180) Double minLon,
-            @RequestParam @Min(value = -90) @Max(value = 90) Double minLat,
-            @RequestParam @Min(value = -180) @Max(180) Double maxLon,
-            @RequestParam @Min(value = -90) @Max(value = 90) Double maxLat,
+            @RequestParam Set<String> geoHashes,
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<BuildingBoundSearchResponseDto> searched = searchService.searchDetailsWithinBounds(
-                minLon, minLat, maxLon, maxLat, KakaoZoomLevel.from(level));
+                geoHashes, KakaoZoomLevel.from(level));
 
         return ApiResponse.ok(searched);
     }

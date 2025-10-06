@@ -7,15 +7,18 @@ public record BuildingBoundSearchResponseDto(
         Long id,
         String name,
         Double longitude,
-        Double latitude
+        Double latitude,
+        String geoHash
 ) {
 
-    public static BuildingBoundSearchResponseDto of(final Long id, final String name, final Double longitude, final Double latitude) {
+    public static BuildingBoundSearchResponseDto of(
+            final Long id, final String name, final Double longitude, final Double latitude, final String geoHash) {
         return BuildingBoundSearchResponseDto.builder()
                 .id(id)
                 .name(name)
                 .longitude(longitude)
-                .latitude(latitude).build();
+                .latitude(latitude)
+                .geoHash(geoHash).build();
     }
 
 }
