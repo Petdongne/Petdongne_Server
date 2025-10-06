@@ -6,9 +6,11 @@ import org.songeun.petdongne_server.address.domain.LegalAddress;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.fixture.LegalAddressFixture;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressGeoHashSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.songeun.petdongne_server.global.search.Token;
+import org.songeun.petdongne_server.global.util.GeoHashUtil;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -138,8 +141,8 @@ class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport
     }
 
     @Test
-    @DisplayName("경계 내에 존재하는 특정 단계의 법정동 주소를 찾는다")
-    void test(){
+    @DisplayName("지오해시와 행정구역 레벨로 법정동 주소를 찾는다")
+    void tes2t(){
         //given
         Double minLon = LONGITUDE;
         Double minLat = LATITUDE;
@@ -147,24 +150,20 @@ class LegalAddressSearchRepositoryTest extends PostgresSQLIntegrationTestSupport
         Double maxLat = LATITUDE + 0.1;
         RegionAddressLevel addressLevel = RegionAddressLevel.EMD;
 
+        Set<String> getHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, addressLevel);
+
         //when
-        List<LegalAddressBoundsSearchQueryResponseDto> result = searchRepository.findAddressWithinBounds(
-                minLon, minLat, maxLon, maxLat, addressLevel);
+        List<LegalAddressGeoHashSearchQueryResponseDto> result = searchRepository.findByGeoHashAndLevel(getHashes, addressLevel);
 
         //then
-        List<LegalAddress> filteredFixture = fixture.stream()
-                .filter(legalAddress -> legalAddress.getRegionAddressLevel().equals(RegionAddressLevel.EMD))
+        List<LegalAddress> expected = fixture.stream()
+                .filter(address -> getHashes.contains(address.getGeohash())
+                        && address.getRegionAddressLevel().equals(addressLevel))
                 .toList();
-
-        assertThat(result).hasSize(filteredFixture.size());
-        assertThat(result).extracting("fullAddress", "latitude", "longitude", "regionLevel")
-                            .containsExactlyInAnyOrderElementsOf(
-                                    filteredFixture.stream()
-                                            .map(address -> Tuple.tuple(
-                                                    address.getFullAddress(), address.getLatitude(),
-                                                    address.getLongitude(), address.getRegionAddressLevel()))
-                                            .toList()
-                            );
+        assertThat(result).hasSize(expected.size());
+        assertThat(result).extracting("latitude", "longitude")
+                .containsExactlyInAnyOrderElementsOf(expected.stream().map(expect ->
+                        Tuple.tuple(expect.getLatitude(), expect.getLongitude())).toList());
     }
 
 }
