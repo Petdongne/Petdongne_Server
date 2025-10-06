@@ -22,9 +22,9 @@ public class LegalAddress extends BaseEntity {
 
     private String code;
 
-    private String fullAddress;
+    private String fullAddress; // full name
 
-    private String addressInitials;
+    private String addressInitials; // init names
 
     @Embedded
     private LegalAddressParts addressParts;
@@ -41,5 +41,8 @@ public class LegalAddress extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private RegionAddressLevel regionAddressLevel;
+
+    @Column(length = 6)
+    private String geohash;
 
 }

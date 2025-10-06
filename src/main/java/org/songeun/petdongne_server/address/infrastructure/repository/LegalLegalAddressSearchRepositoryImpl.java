@@ -3,17 +3,16 @@ package org.songeun.petdongne_server.address.infrastructure.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberTemplate;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
-import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
-import org.songeun.petdongne_server.address.infrastructure.dto.QLegalAddressBoundsSearchQueryResponseDto;
-import org.songeun.petdongne_server.address.infrastructure.dto.QLegalAddressSearchQueryResponseDto;
+import org.songeun.petdongne_server.address.infrastructure.cache.LegalAddressCacheKey;
+import org.songeun.petdongne_server.address.infrastructure.dto.*;
 import org.songeun.petdongne_server.global.search.Token;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
-import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.songeun.petdongne_server.address.domain.QLegalAddress.legalAddress;
 
@@ -110,18 +110,26 @@ public class LegalLegalAddressSearchRepositoryImpl implements LegalAddressSearch
     }
 
     @Override
-    public List<LegalAddressBoundsSearchQueryResponseDto> findAddressWithinBounds(
-            Double minLon, Double minLat, Double maxLon, Double maxLat, RegionAddressLevel regionAddressLevel) {
-        return queryFactory.select(new QLegalAddressBoundsSearchQueryResponseDto(
-                        legalAddress.fullAddress, legalAddress.longitude,
-                        legalAddress.latitude, legalAddress.regionAddressLevel
+    public List<LegalAddressGeoHashSearchQueryResponseDto> findByGeoHashAndLevel(
+            Set<String> geoHashes, RegionAddressLevel regionAddressLevel) {
+
+        StringPath regionName;
+        switch (regionAddressLevel){
+            case SIDO -> regionName = legalAddress.addressParts.sido;
+            case SIGUNGU -> regionName = legalAddress.addressParts.sigungu;
+            case EMD -> regionName = legalAddress.addressParts.eupmyeondong;
+            case DL -> regionName = legalAddress.addressParts.li;
+            default -> throw new IllegalArgumentException("Unknown region address level: " + regionAddressLevel);
+        }
+
+        return queryFactory.select(new QLegalAddressGeoHashSearchQueryResponseDto(
+                        regionName, legalAddress.latitude, legalAddress.longitude,
+                        legalAddress.regionAddressLevel, legalAddress.geohash
                 ))
                 .from(legalAddress)
-                .where(
-                        legalAddress.longitude.between(minLon, maxLon),
-                        legalAddress.latitude.between(minLat, maxLat),
-                        legalAddress.regionAddressLevel.eq(regionAddressLevel))
+                .where(legalAddress.regionAddressLevel.eq(regionAddressLevel), legalAddress.geohash.in(geoHashes))
                 .fetch();
     }
+
 
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
+import org.songeun.petdongne_server.global.config.CorsConfig;
 import org.songeun.petdongne_server.global.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = AddressSearchController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class,CorsConfig.class})
 class AddressSearchControllerTest {
 
     @Autowired
