@@ -1,13 +1,14 @@
 package org.songeun.petdongne_server.address.application.service;
 
+import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.dto.AddressDtoMapper;
 import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.address.domain.AddressErrorStatus;
-import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
-import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
+import org.songeun.petdongne_server.address.infrastructure.cache.LegalAddressCacheKey;
+import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressGeoHashSearchQueryResponseDto;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressSearchQueryResponseDto;
 import org.songeun.petdongne_server.global.common.*;
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
@@ -17,9 +18,11 @@ import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class AddressSearchService {
     private final LegalAddressSearchRepository searchRepository;
     private final SynonymResolver regionSynonymResolver;
     private final WhiteSpaceTokenizer whiteSpaceTokenizer;
+    private final LoadingCache<LegalAddressCacheKey, Optional<List<LegalAddressGeoHashSearchQueryResponseDto>>> legalAddressCache;
 
     // todo: request dto 풀어주기
     public Slice<LegalAddressSearchQueryResponseDto> searchByText(AddressSearchRequestDto requestDto) {
@@ -56,26 +60,24 @@ public class AddressSearchService {
         }
     }
 
-    /**
-     * 주어진 범위 내 행정구역(법정동) 주소 정보를 반환합니다.
-     * @param minLat 최소 경도
-     * @param minLon 최소 위도
-     * @param maxLat 최대 경도
-     * @param maxLon 최대 위도
-     * @param zoomLevel 지도 줌 레벨
-     * @return 행정구역(법정동) 주소 정보
-     */
-    public List<AddressBoundsSearchResponseDto> searchWithinBounds(
-            Double minLon, Double minLat, Double maxLon, Double maxLat, ZoomLevel zoomLevel) {
-        Assert.notNull(maxLat, "maxLat must not be null");
-        Assert.notNull(maxLon, "maxLon must not be null");
-        Assert.notNull(minLat, "minLat must not be null");
-        Assert.notNull(minLon, "minLon must not be null");
 
-        List<LegalAddressBoundsSearchQueryResponseDto> addressesInBounds = searchRepository
-                .findAddressWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel.toRegionAddressLevel());
+    public List<AddressBoundsSearchResponseDto> searchWithinBounds(Set<String> geoHashes, ZoomLevel zoomLevel) {
+        var legalAddressesByCacheKey = readFromCache(geoHashes, zoomLevel);
 
-        return AddressDtoMapper.toBoundSearchResponseDtos(addressesInBounds);
+        return legalAddressesByCacheKey.values().stream()
+                .flatMap(Optional::stream)
+                .flatMap(List::stream)
+                .map(AddressDtoMapper::toBoundSearchResponseDto)
+                .toList();
+    }
+
+    private Map<LegalAddressCacheKey, Optional<List<LegalAddressGeoHashSearchQueryResponseDto>>> readFromCache(
+            Set<String> geoHashes, ZoomLevel zoomLevel) {
+        List<LegalAddressCacheKey> cacheKeys = geoHashes.stream()
+                .map(hash -> LegalAddressCacheKey.of(hash, zoomLevel.toRegionAddressLevel()))
+                .toList();
+
+        return legalAddressCache.getAll(cacheKeys);
     }
 
 }

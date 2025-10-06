@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/map")
@@ -28,14 +29,11 @@ public class MapSearchController {
 
     @GetMapping("/clusters")
     public ResponseEntity<?> search(
-            @RequestParam @Min(value = -180) @Max(180) Double minLon,
-            @RequestParam @Min(value = -90) @Max(value = 90) Double minLat,
-            @RequestParam @Min(value = -180) @Max(180) Double maxLon,
-            @RequestParam @Min(value = -90) @Max(value = 90) Double maxLat,
+            @RequestParam Set<String> geoHashes,
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<AddressBoundsSearchResponseDto> searched = searchService.searchClustersWithinBounds(
-                minLon, minLat, maxLon, maxLat, KakaoZoomLevelCategory.from(level));
+                geoHashes, KakaoZoomLevelCategory.from(level));
 
         return ApiResponse.ok(searched);
     }

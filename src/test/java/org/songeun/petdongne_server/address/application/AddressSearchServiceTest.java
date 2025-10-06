@@ -13,6 +13,7 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddressSearchRepository;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
+import org.songeun.petdongne_server.global.util.GeoHashUtil;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
@@ -138,10 +140,11 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double maxLon = LONGITUDE + 0.1;
         Double maxLat = LATITUDE + 0.1;
         KakaoZoomLevel zoomLevel = KakaoZoomLevel.from(11);
+        Set<String> hashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, zoomLevel.toRegionAddressLevel());
 
         // when
         List<AddressBoundsSearchResponseDto> result = addressSearchService
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+                .searchWithinBounds(hashes, zoomLevel);
 
         // then
         List<LegalAddress> filteredFixture = fixture.stream()
@@ -150,12 +153,13 @@ class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
 
         assertThat(result).hasSize(filteredFixture.size());
         assertThat(result)
-                .extracting("name", "longitude", "latitude", "regionLevel")
+                .extracting("longitude", "latitude", "regionLevel")
                 .containsExactlyInAnyOrderElementsOf(
                         filteredFixture.stream()
                                 .map(legalAddress -> tuple(
-                                        legalAddress.getFullAddress(), legalAddress.getLongitude(),
-                                        legalAddress.getLatitude(), legalAddress.getRegionAddressLevel().getDescription()))
+                                        legalAddress.getLongitude(),
+                                        legalAddress.getLatitude(),
+                                        legalAddress.getRegionAddressLevel().getDescription()))
                                 .toList()
                 );
     }

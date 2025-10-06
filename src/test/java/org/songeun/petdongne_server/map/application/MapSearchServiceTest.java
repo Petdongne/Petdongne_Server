@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
+import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
 import org.songeun.petdongne_server.global.exception.BusinessException;
+import org.songeun.petdongne_server.global.util.GeoHashUtil;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -36,7 +39,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     private ZoomLevel zoomLevel;
 
     @Test
-    @DisplayName("경계 내부 클러스터 정보를 반환한다")
+    @DisplayName("지오해시가 같은 클러스터 정보를 반환한다")
     void shouldReturnClusters() {
         // given
         Double minLon = 126.9784;
@@ -44,6 +47,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double maxLon = 127.0284;
         Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInCluster()).willReturn(true);
+        Set<String> geoHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, RegionAddressLevel.SIDO);
 
         List<AddressBoundsSearchResponseDto> expectedResponse = List.of(
                 AddressBoundsSearchResponseDto.builder()
@@ -60,12 +64,12 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
                         .build()
         );
 
-        given(addressSearchService.searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+        given(addressSearchService.searchWithinBounds(geoHashes, zoomLevel))
                 .willReturn(expectedResponse);
 
         // when
         List<AddressBoundsSearchResponseDto> result = mapSearchService
-                .searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+                .searchClustersWithinBounds(geoHashes, zoomLevel);
 
         // then
         assertThat(result).hasSize(2);
@@ -79,7 +83,7 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         // verify
         then(addressSearchService)
                 .should(times(1))
-                .searchWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel);
+                .searchWithinBounds(geoHashes, zoomLevel);
         then(zoomLevel)
                 .should(times(1))
                 .isSupportedInCluster();
@@ -94,9 +98,10 @@ class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         Double maxLon = 127.0284;
         Double maxLat = 37.6165;
         given(zoomLevel.isSupportedInCluster()).willReturn(false);
+        Set<String> geoHashes = GeoHashUtil.getCoverBoundingBoxHashes(minLon, minLat, maxLon, maxLat, RegionAddressLevel.SIDO);
 
         //when & then
-        assertThatThrownBy(() -> mapSearchService.searchClustersWithinBounds(minLon, minLat, maxLon, maxLat, zoomLevel))
+        assertThatThrownBy(() -> mapSearchService.searchClustersWithinBounds(geoHashes, zoomLevel))
                 .isInstanceOf(BusinessException.class);
     }
 
