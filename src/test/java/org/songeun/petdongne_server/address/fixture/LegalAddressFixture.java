@@ -6,6 +6,7 @@ import org.geolatte.geom.builder.DSL;
 import org.geolatte.geom.crs.CoordinateReferenceSystems;
 import org.songeun.petdongne_server.address.domain.LegalAddress;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
+import org.songeun.petdongne_server.global.util.GeoHashUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -151,6 +152,12 @@ public class LegalAddressFixture {
             Field regionAddressLevel = LegalAddress.class.getDeclaredField("regionAddressLevel");
             regionAddressLevel.setAccessible(true);
             regionAddressLevel.set(obj, addressLevel);
+
+            // geohash 필드
+            String geoHash = GeoHashUtil.getGeoHash(latitude, longitude, addressLevel.determineGeoHashLength());
+            Field geohashField = LegalAddress.class.getDeclaredField("geohash");
+            geohashField.setAccessible(true);
+            geohashField.set(obj, geoHash);
 
             return obj;
         } catch (Exception e) {
