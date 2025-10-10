@@ -1,5 +1,5 @@
 
-# 🏡 **펫동네 (PetDongne)**
+# 🏡 **펫동네 (PetDongne)** [![codecov](https://codecov.io/gh/Petdongne/Petdongne_Server/branch/develop/graph/badge.svg)](https://codecov.io/gh/Petdongne/Petdongne_Server)
 
 > **반려동물과 함께 살기 좋은 동네를 찾아주는 부동산 서비스**
 
