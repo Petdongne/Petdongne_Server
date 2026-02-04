@@ -17,6 +17,10 @@
 * 📝 **반려동물과 함께 거주한 리뷰 등록 / 조회** — *구현 예정*
 
 ---
+## 🗂️ ERD
+<img width="1561" height="2075" alt="Untitled (25)" src="https://github.com/user-attachments/assets/503a52a6-9191-490e-a393-e684235d4307" />
+
+---
 
 ## ⚙️ **기술 스택**
 
