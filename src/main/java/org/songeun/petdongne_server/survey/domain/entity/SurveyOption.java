@@ -21,8 +21,8 @@ public class SurveyOption extends BaseEntity {
     @Size(min = 1, max = 150)
     private String optionText;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "survey_question_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "survey_question_id", nullable = false)
     private SurveyQuestion question;
 
     public String optionText() {

@@ -1,6 +1,7 @@
 package org.songeun.petdongne_server.address.domain;
 
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LegalAddressParts {
 
+    @NotNull
     private String sido;
 
     private String sigungu;

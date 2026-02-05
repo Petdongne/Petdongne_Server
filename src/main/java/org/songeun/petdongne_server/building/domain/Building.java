@@ -10,6 +10,7 @@ import org.geolatte.geom.G2D;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
 import org.hibernate.annotations.Type;
+import org.songeun.petdongne_server.global.common.BaseEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Building {
+public class Building extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,12 +26,14 @@ public class Building {
 
     private String name;
 
+    @NotNull
     private String jibunAddress;
 
     private int groundFloorCount;
 
     private int basementFloorCount;
 
+    @NotNull
     private String pnu;
 
     private String roadAddressCode;
@@ -47,12 +50,15 @@ public class Building {
     @Column(columnDefinition = "geometry(Point, 4326)")
     private Point<G2D> centerPoint;
 
+    @NotNull
     @Column(columnDefinition = "double precision")
     private Double longitude;
 
+    @NotNull
     @Column(columnDefinition = "double precision")
     private Double latitude;
 
+    @NotNull
     @Column(columnDefinition = "varchar(10)")
     private String geohash;
 
@@ -60,8 +66,10 @@ public class Building {
     @Column(columnDefinition = "jsonb")
     private Map<String, String> details = new HashMap<>();
 
+    @NotNull
     private String mapIdSource;
 
+    @NotNull
     private Boolean clusterYn;
 
 }

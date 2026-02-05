@@ -9,22 +9,22 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SurveyResponse extends BaseEntity {
+public class SelectedOption extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "survey_optoin_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "survey_optoin_id", nullable = false)
     private SurveyOption surveyOption;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "residence_review_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "residence_review_id", nullable = false)
     private ResidenceReview residenceReview;
 
     @Builder
-    private SurveyResponse(SurveyOption surveyOption, ResidenceReview residenceReview) {
+    private SelectedOption(SurveyOption surveyOption, ResidenceReview residenceReview) {
         this.surveyOption = surveyOption;
         this.residenceReview = residenceReview;
     }

@@ -19,20 +19,20 @@ public class ReviewStat extends BaseEntity {
     private Long id;
 
     @NotNull
-    private Integer reviewCount;
+    private Integer totalCount;
 
     @NotNull
     @DecimalMin("0.00")
     @DecimalMax("5.00")
     private Double averageRating;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "building_id")
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "building_id", nullable = false)
     private Building building;
 
     @Builder
-    private ReviewStat(Integer reviewCount, Double averageRating, Building building) {
-        this.reviewCount = reviewCount;
+    private ReviewStat(Integer totalCount, Double averageRating, Building building) {
+        this.totalCount = totalCount;
         this.averageRating = averageRating;
         this.building = building;
     }

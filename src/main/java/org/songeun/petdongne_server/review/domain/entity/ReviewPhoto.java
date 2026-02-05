@@ -22,8 +22,8 @@ public class ReviewPhoto extends BaseEntity {
     @NotNull
     private Boolean isPetPhoto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "residence_review_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "residence_review_id", nullable = false)
     private ResidenceReview review;
 
     @Builder
