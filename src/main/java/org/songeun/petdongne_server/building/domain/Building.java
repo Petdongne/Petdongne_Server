@@ -63,15 +63,15 @@ public class Building extends BaseEntity {
     private String roadName;
 
     @Comment("도로건물번호 본번")
-    @Column(name = "road_hmno", columnDefinition = "smallint")
+    @Column(name = "road_hmno", length = 6)
     private String roadAddressMainNum;
 
     @Comment("도로건물번호 부번")
-    @Column(name = "road_vcno", columnDefinition = "smallint")
+    @Column(name = "road_vcno", length = 6)
     private String roadAddressSubNum;
 
     @Comment("시군구코드")
-    @Column(name = "sigungu_cd", columnDefinition = "smallint")
+    @Column(name = "sigungu_cd", length = 5)
     private String sigunguCode;
 
     @NotNull
