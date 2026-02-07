@@ -13,7 +13,7 @@ spring:
     active: dev
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongneDev}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongne_v2}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -22,6 +22,7 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+
       jdbc:
         time_zone: Asia/Seoul
 
@@ -78,14 +79,10 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url:
-    username:
-    password:
-    driver-class-name:
-#    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/petDongneTest
-#    username: ${DB_USERNAME}
-#    password: ${DB_PASSWORD}
-#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/petDongneTest
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     open-in-view: false
