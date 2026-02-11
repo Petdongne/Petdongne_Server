@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j; // Added import
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
@@ -14,6 +15,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j // Added annotation
 public class Building extends BaseEntity {
 
     @Id
@@ -100,4 +102,25 @@ public class Building extends BaseEntity {
     @Column(length = 10)
     private String geohash;
 
+    public String getApprovalYear() {
+        if (this.approvalDate == null || this.approvalDate.length() < 4) {
+            if (this.approvalDate != null) { // Log only if not null but too short
+                log.warn("approvalDate '{}' is too short (length < 4) for Building ID: {}", this.approvalDate, this.id);
+            }
+            return null;
+        }
+        return this.approvalDate.substring(0, 4);
+    }
+
+    public String getApprovalMonth() {
+        if (this.approvalDate == null || this.approvalDate.length() < 6) {
+            if (this.approvalDate != null) { // Log only if not null but too short
+                log.warn("approvalDate '{}' is too short (length < 6) for Building ID: {}", this.approvalDate, this.id);
+            }
+            return null;
+        }
+        return this.approvalDate.substring(4, 6);
+    }
+
 }
+
