@@ -28,7 +28,6 @@ dependencies {
     // Spring Boot Starters
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -46,6 +45,7 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-spatial:6.6.13.Final'
     implementation 'org.locationtech.jts:jts-core:1.20.0'
     implementation 'com.github.davidmoten:geo:0.8.1'
+    implementation 'org.geolatte:geolatte-geojson:1.10'
     // general-purpose utilities for both Spring and Hibernate
     implementation "io.hypersistence:hypersistence-utils-hibernate-63:3.11.0"
 
@@ -67,8 +67,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.orbisgis:h2gis-utilities:2.2.3'
-    testImplementation 'org.testcontainers:junit-jupiter:1.21.3'
-    testImplementation 'org.testcontainers:postgresql:1.21.3'
+    testImplementation 'org.testcontainers:testcontainers:2.0.3'
+    testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.3'
+    testImplementation 'org.testcontainers:testcontainers-postgresql:2.0.3'
     testImplementation 'org.hibernate.orm:hibernate-testing:6.6.13.Final'
 }
 
