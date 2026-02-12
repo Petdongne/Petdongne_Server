@@ -7,6 +7,7 @@ import org.geolatte.geom.crs.CoordinateReferenceSystems;
 import org.songeun.petdongne_server.address.domain.LegalAddress;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.global.util.GeoHashUtil;
+import org.songeun.petdongne_server.testSupport.GeometryTestUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -147,6 +148,10 @@ public class LegalAddressFixture {
             Field pointField = LegalAddress.class.getDeclaredField("centerPoint");
             pointField.setAccessible(true);
             pointField.set(obj, point);
+
+            Field polygonField = LegalAddress.class.getDeclaredField("polygon");
+            polygonField.setAccessible(true);
+            polygonField.set(obj, GeometryTestUtils.multiPolygon());
 
             // level 필드
             Field regionAddressLevel = LegalAddress.class.getDeclaredField("regionAddressLevel");
