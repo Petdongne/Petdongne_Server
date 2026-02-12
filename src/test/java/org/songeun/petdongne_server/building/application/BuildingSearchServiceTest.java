@@ -2,16 +2,16 @@ package org.songeun.petdongne_server.building.application;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import com.github.davidmoten.geo.Coverage;
-import com.github.davidmoten.geo.GeoHash;
 import org.junit.jupiter.api.*;
+import org.songeun.petdongne_server.building.application.dto.BuildingDetailResponseDto;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.domain.BuildingGeoHashLengthProvider;
 import org.songeun.petdongne_server.building.fixture.BuildingFixtureFactory;
 import org.songeun.petdongne_server.building.infrastructure.dto.BuildingGeoHashSearchQueryResponseDto;
 import org.songeun.petdongne_server.building.infrastructure.repository.BuildingSearchRepository;
+import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
+import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.util.GeoHashUtil;
-import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
@@ -109,6 +109,52 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
         assertCacheCalledOnceWithKeys(geoHashes);
     }
 
+    @Test
+    @DisplayName("캐시가 존재하면 DB 조회는 발생하지 않는다")
+    void shouldStoreFetchedResultsInCacheWithoutReload() throws Exception {
+        // given & when
+        buildingSearchService.searchWithinBounds(geoHashes);
+        buildingSearchService.searchWithinBounds(geoHashes);
+
+        // then
+        verify(buildingCacheLoader, times(1)).loadAll(any());
+        verify(buildingSearchRepository, times(1)).findByGeoHashes(any(Set.class));
+    }
+
+    @Test
+    @DisplayName("ID로 건물 상세 정보를 조회한다.")
+    void shouldReturnBuildingDetailById() {
+        // given
+        Building savedBuilding = fixtureFactory.makeAndSaveBuilding();
+
+        // when
+        BuildingDetailResponseDto result = buildingSearchService.getBuildingDetail(savedBuilding.getId());
+
+        // then
+        assertThat(result.name()).isEqualTo(savedBuilding.getName());
+        assertThat(result.dongCount()).isEqualTo(savedBuilding.getDongCount());
+        assertThat(result.householdCount()).isEqualTo(savedBuilding.getHouseholdCount());
+        assertThat(result.topFloorCount()).isEqualTo(savedBuilding.getTopFloorCount());
+        assertThat(result.approvalYear()).isEqualTo(savedBuilding.getApprovalYear());
+        assertThat(result.approvalMonth()).isEqualTo(savedBuilding.getApprovalMonth());
+        assertThat(result.jibunAddress()).isEqualTo(savedBuilding.getJibunAddress());
+        assertThat(result.buildingType()).isEqualTo(savedBuilding.getBuildingUsage().name());
+        assertThat(result.longitude()).isEqualTo(savedBuilding.getLongitude());
+        assertThat(result.latitude()).isEqualTo(savedBuilding.getLatitude());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 ID로 건물 상세 정보 조회 시 예외를 발생시킨다.")
+    void shouldThrowExceptionWhenBuildingDetailNotFound() {
+        // given
+        Long nonExistentId = Long.MAX_VALUE;
+
+        // when // then
+        assertThatThrownBy(() -> buildingSearchService.getBuildingDetail(nonExistentId))
+                .isInstanceOf(BusinessException.class)
+                .hasMessageContaining(GlobalErrorStatus.NOT_FOUND.getMessage());
+    }
+
     private void assertSameContent(
             List<BuildingBoundSearchResponseDto> result,
             Map<String, Optional<Set<BuildingGeoHashSearchQueryResponseDto>>> capturedCacheMap) {
@@ -122,18 +168,6 @@ class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
     private void assertCacheCalledOnceWithKeys(Set<String> keys) {
         verify(buildingCache, times(1)).getAll(keys);
         verify(buildingCache, times(0)).get(any());
-    }
-
-    @Test
-    @DisplayName("캐시가 존재하면 DB 조회는 발생하지 않는다")
-    void shouldStoreFetchedResultsInCacheWithoutReload() throws Exception {
-        // given & when
-        buildingSearchService.searchWithinBounds(geoHashes);
-        buildingSearchService.searchWithinBounds(geoHashes);
-
-        // then
-        verify(buildingCacheLoader, times(1)).loadAll(any());
-        verify(buildingSearchRepository, times(1)).findByGeoHashes(any(Set.class));
     }
 
 }

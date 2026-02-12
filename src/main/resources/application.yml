@@ -13,7 +13,7 @@ spring:
     active: dev
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongneDev}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongne_v2}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -22,6 +22,7 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+
       jdbc:
         time_zone: Asia/Seoul
 
@@ -33,10 +34,6 @@ spring:
         default_batch_fetch_size: 1000
         validator:
           apply_to_ddl: true
-  data:
-    redis:
-      host: localhost
-      port: 6379
 
   servlet:
     multipart:
@@ -77,22 +74,15 @@ spring:
   config:
     activate:
       on-profile: test
+
   datasource:
-    url:
-    username:
-    password:
-    driver-class-name:
-#    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/petDongneTest
-#    username: ${DB_USERNAME}
-#    password: ${DB_PASSWORD}
-#    driver-class-name: org.postgresql.Driver
+    url: 'jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL'
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
 
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: create-drop
       show-sql: true
-
-    redis:
-      host: localhost
-      port: 6378
