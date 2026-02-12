@@ -96,7 +96,7 @@ public class BuildingFixtureFactory {
         });
     }
 
-    public Building createBuilding(
+    public static Building createBuilding(
             String name,
             String houseId,
             Integer dongCount,

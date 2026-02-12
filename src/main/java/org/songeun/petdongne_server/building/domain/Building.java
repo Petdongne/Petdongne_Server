@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j; // Added import
+import lombok.extern.slf4j.Slf4j;
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
@@ -15,7 +15,7 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j // Added annotation
+@Slf4j
 public class Building extends BaseEntity {
 
     @Id
