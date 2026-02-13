@@ -39,6 +39,25 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: ${KAKAO_REDIRECT_URI}
+            scope:
+              - openid
+              - profile_nickname
+              - account_email
+            client-name: kakao
+        provider:
+          kakao:
+            issuer-uri: "https://kauth.kakao.com"
+            jwk-set-uri: "https://kauth.kakao.com/.well-known/jwks.json"
+
 
 # 스웨거 설정
 springdoc:
