@@ -18,6 +18,10 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
+    redis:
+      host: localhost
+      port: 6379
+
     database: postgresql
     open-in-view: false
     hibernate:
