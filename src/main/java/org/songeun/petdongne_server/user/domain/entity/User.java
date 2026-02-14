@@ -26,29 +26,39 @@ public class User extends BaseEntity {
     private String email;
 
     @NotNull
-    private String providerId;
+    private String identifierFromProvider;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthenticationProvider authenticationProvider;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_image_id")
     private ProfileImage profileImage;
 
-    public static User of(String nickname, String email, String providerId, ProfileImage profileImage){
+    public static User of(String nickname, String email, String providerId, AuthenticationProvider provider, ProfileImage profileImage){
 
         return User.builder()
                 .nickname(nickname)
                 .email(email)
-                .providerId(providerId)
+                .identifierFromProvider(providerId)
+                .authenticationProvider(provider)
                 .profileImage(profileImage)
                 .build();
     }
 
     @Builder
-    private User(String nickname, String email, String providerId, ProfileImage profileImage) {
+    private User(String nickname, String email, String identifierFromProvider, AuthenticationProvider authenticationProvider, ProfileImage profileImage) {
         this.nickname = nickname;
         this.email = email;
-        this.providerId = providerId;
+        this.identifierFromProvider = identifierFromProvider;
+        this.authenticationProvider = authenticationProvider;
         this.profileImage = profileImage;
     }
 
+    public void updateInfo(String nickName, String email) {
+        this.nickname = nickName;
+        this.email = email;
+    }
 }
 
