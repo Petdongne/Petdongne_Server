@@ -9,14 +9,11 @@ import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
 import org.songeun.petdongne_server.global.exception.BusinessException;
-import org.songeun.petdongne_server.global.util.GeoHashUtil;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
-import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +22,7 @@ import static org.mockito.BDDMockito.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 
-class MapSearchServiceTest extends PostgresSQLIntegrationTestSupport {
+class MapSearchServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private MapSearchService mapSearchService;
