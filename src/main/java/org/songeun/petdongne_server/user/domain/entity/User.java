@@ -5,11 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @Table(name = "users")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -48,7 +50,8 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    private User(String nickname, String email, String identifierFromProvider, AuthenticationProvider authenticationProvider, ProfileImage profileImage) {
+    private User(Long id, String nickname, String email, String identifierFromProvider, AuthenticationProvider authenticationProvider, ProfileImage profileImage) {
+        this.id = id;
         this.nickname = nickname;
         this.email = email;
         this.identifierFromProvider = identifierFromProvider;
