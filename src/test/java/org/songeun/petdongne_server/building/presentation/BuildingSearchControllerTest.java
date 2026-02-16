@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
 import org.songeun.petdongne_server.building.application.dto.BuildingDetailResponseDto;
 import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
-import org.songeun.petdongne_server.global.config.CorsConfig;
+import org.songeun.petdongne_server.security.CorsConfig;
 import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
 import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.global.exception.BusinessException;

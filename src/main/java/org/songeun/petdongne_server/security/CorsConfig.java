@@ -1,4 +1,4 @@
-package org.songeun.petdongne_server.global.config;
+package org.songeun.petdongne_server.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
