@@ -20,3 +20,5 @@
 - Avoid exposing technical details in error messages
 - Write clean, intention-revealing code
 - Use Java record for DTO classes
+- Use '@MockitoBean' for mocking Spring beans in tests.
+- Do not include logging statements in test assertions.
