@@ -10,7 +10,7 @@ import org.songeun.petdongne_server.building.application.dto.BuildingDetailRespo
 import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
 import org.songeun.petdongne_server.global.config.CorsConfig;
 import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
-import org.songeun.petdongne_server.global.config.SecurityConfig;
+import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.testSupport.GeometryTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
