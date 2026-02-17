@@ -40,7 +40,6 @@ import static org.mockito.Mockito.when;
 import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_COOKIE_NAME;
 import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_TIMEOUT_MINUTES;
 
-@AutoConfigureMockMvc
 @TestPropertySource(properties = {
         "app.frontend.url=http://localhost:3000",
         "app.cookie.secure=false"

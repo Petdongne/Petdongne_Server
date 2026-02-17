@@ -18,9 +18,11 @@ import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.songeun.petdongne_server.security.authentication.BearerTokenAuthenticationFilter;
 import org.songeun.petdongne_server.security.login.OAuth2LoginFailureHandler;
 import org.songeun.petdongne_server.security.login.OAuth2LoginSuccessHandler;
+import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -37,10 +39,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = MapSearchController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@Import({SecurityConfig.class, ObjectMapperConfig.class})
-class MapSearchControllerTest {
+class MapSearchControllerTest extends IntegrationTestSupport {
 
     @Autowired
     private MockMvc mockMvc;
