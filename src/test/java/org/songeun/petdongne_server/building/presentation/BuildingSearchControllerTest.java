@@ -12,10 +12,13 @@ import org.songeun.petdongne_server.security.CorsConfig;
 import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
 import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.global.exception.BusinessException;
+import org.songeun.petdongne_server.security.login.OAuth2LoginFailureHandler;
+import org.songeun.petdongne_server.security.login.OAuth2LoginSuccessHandler;
 import org.songeun.petdongne_server.testSupport.GeometryTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BuildingSearchController.class)
-@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class})
+@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class, OAuth2LoginFailureHandler.class, OAuth2LoginSuccessHandler.class, AuthenticationFilter.class})
 class BuildingSearchControllerTest {
 
     @Autowired
