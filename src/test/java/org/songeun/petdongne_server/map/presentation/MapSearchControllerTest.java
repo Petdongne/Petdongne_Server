@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = MapSearchController.class)
 @AutoConfigureMockMvc
-@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class})
+@Import({SecurityConfig.class, ObjectMapperConfig.class})
 class MapSearchControllerTest {
 
     @Autowired
@@ -51,6 +51,7 @@ class MapSearchControllerTest {
     @MockitoBean OAuth2LoginSuccessHandler loginSuccessHandler;
     @MockitoBean OAuth2LoginFailureHandler loginFailureHandler;
     @MockitoBean BearerTokenAuthenticationFilter bearerTokenAuthenticationFilter;
+    @MockitoBean CorsConfig corsConfig;
 
     private static final String CLUSTER_BASE_URL = "/api/v1/map/clusters";
 

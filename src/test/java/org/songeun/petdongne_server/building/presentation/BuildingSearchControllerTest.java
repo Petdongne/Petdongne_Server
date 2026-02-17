@@ -46,6 +46,7 @@ class BuildingSearchControllerTest {
     @MockitoBean OAuth2LoginSuccessHandler loginSuccessHandler;
     @MockitoBean OAuth2LoginFailureHandler loginFailureHandler;
     @MockitoBean BearerTokenAuthenticationFilter bearerTokenAuthenticationFilter;
+    @MockitoBean CorsConfig corsConfig;
 
     @DisplayName("건물 상세 정보를 조회한다.")
     @Test
