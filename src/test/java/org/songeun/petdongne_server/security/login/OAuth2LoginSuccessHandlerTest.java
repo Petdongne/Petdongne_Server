@@ -40,6 +40,7 @@ import static org.songeun.petdongne_server.security.session.SessionConfig.SESSIO
 import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_TIMEOUT_MINUTES;
 
 @TestPropertySource(properties = {
+        "app.frontend.url=http://localhost:3000",
         "app.cookie.secure=false"
 })
 class OAuth2LoginSuccessHandlerTest extends IntegrationTestSupport {
