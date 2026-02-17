@@ -1,6 +1,6 @@
 app:
   frontend:
-    url: ${APP.FRONTEND.URL}
+    url: ${APP.FRONTEND.URL:http://localhost:3000}
   cookie:
     secure: ${APP.COOKIE.SECURE:false}
 
