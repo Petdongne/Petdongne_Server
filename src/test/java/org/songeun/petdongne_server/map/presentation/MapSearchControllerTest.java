@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
+import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
 import org.songeun.petdongne_server.security.CorsConfig;
 import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.map.application.MapSearchService;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = MapSearchController.class)
-@Import({SecurityConfig.class, CorsConfig.class})
+@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class})
 class MapSearchControllerTest {
 
     @Autowired
