@@ -12,7 +12,7 @@
 ## Standards
 - Always follow Test Driven Development (TDD)
 - Use Testcontainers when tests require external dependencies
-- Integration tests requiring database interaction must extend PostgresSQLIntegrationTestSupport, otherwise extend IntegrationTestSupport.
+- Integration tests that require RDB or Redis dependencies must extend IntegrationTestSupport.
 - Prefer integration tests except for pure domain logic, which should be covered by unit tests
 - Follow RESTful API conventions
 - Apply SOLID principles and DIP
@@ -20,3 +20,5 @@
 - Avoid exposing technical details in error messages
 - Write clean, intention-revealing code
 - Use Java record for DTO classes
+- Use '@MockitoBean' for mocking Spring beans in tests.
+- Do not include logging statements in test assertions.

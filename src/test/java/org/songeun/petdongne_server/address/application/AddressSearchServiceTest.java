@@ -14,9 +14,7 @@ import org.songeun.petdongne_server.address.infrastructure.repository.LegalAddre
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.search.OrderedTokens;
 import org.songeun.petdongne_server.global.util.GeoHashUtil;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
-import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -26,13 +24,12 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AddressSearchServiceTest extends PostgresSQLIntegrationTestSupport {
+class AddressSearchServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private AddressSearchService addressSearchService;

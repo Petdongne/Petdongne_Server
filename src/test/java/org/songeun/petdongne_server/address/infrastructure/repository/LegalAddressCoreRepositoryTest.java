@@ -6,14 +6,13 @@ import org.songeun.petdongne_server.address.domain.LegalAddress;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.fixture.LegalAddressFixture;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
-import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LegalAddressCoreRepositoryTest extends PostgresSQLIntegrationTestSupport {
+class LegalAddressCoreRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private LegalAddressCoreRepository legalAddressCoreRepository;

@@ -1,5 +1,6 @@
-package org.songeun.petdongne_server.global.config;
+package org.songeun.petdongne_server.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -9,6 +10,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class CorsConfig {
 
 /*    @Value("${spring.security.cors.allowed-origins}")
@@ -26,11 +28,14 @@ public class CorsConfig {
     @Value("${spring.security.auth.header}")
     private String authHeader;*/
 
+    public final FrontendUrlProperties frontendUrlProperties;
+
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of(frontendUrlProperties.getUrl()));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.addAllowedHeader("*");
         config.addExposedHeader("*");
         config.setAllowCredentials(true);
 

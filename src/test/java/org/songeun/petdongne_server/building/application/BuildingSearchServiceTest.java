@@ -12,7 +12,7 @@ import org.songeun.petdongne_server.building.infrastructure.repository.BuildingS
 import org.songeun.petdongne_server.global.common.GlobalErrorStatus;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.util.GeoHashUtil;
-import org.songeun.petdongne_server.testSupport.PostgresSQLIntegrationTestSupport;
+import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BuildingSearchServiceTest extends PostgresSQLIntegrationTestSupport {
+class BuildingSearchServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private BuildingSearchService buildingSearchService;

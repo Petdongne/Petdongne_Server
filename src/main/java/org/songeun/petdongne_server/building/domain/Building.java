@@ -19,7 +19,8 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 public class Building extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "building_seq", sequenceName = "building_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "building_seq")
     private Long id;
 
     private String name;
@@ -123,4 +124,3 @@ public class Building extends BaseEntity {
     }
 
 }
-

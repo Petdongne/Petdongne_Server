@@ -6,19 +6,23 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.MockedStatic;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
-import org.songeun.petdongne_server.building.infrastructure.dto.BuildingBoundSearchQueryResponseDto;
-import org.songeun.petdongne_server.global.config.CorsConfig;
-import org.songeun.petdongne_server.global.config.SecurityConfig;
-import org.songeun.petdongne_server.global.util.GeoHashUtil;
+import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
+import org.songeun.petdongne_server.security.CorsConfig;
+import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.map.application.MapSearchService;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevelCategory;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
+import org.songeun.petdongne_server.security.authentication.BearerTokenAuthenticationFilter;
+import org.songeun.petdongne_server.security.login.OAuth2LoginFailureHandler;
+import org.songeun.petdongne_server.security.login.OAuth2LoginSuccessHandler;
+import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -29,16 +33,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = MapSearchController.class)
-@Import({SecurityConfig.class, CorsConfig.class})
-class MapSearchControllerTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+class MapSearchControllerTest extends IntegrationTestSupport {
 
     @Autowired
     private MockMvc mockMvc;
