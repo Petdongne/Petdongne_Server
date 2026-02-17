@@ -30,7 +30,7 @@ public class OpaqueTokenAuthenticationToken extends AbstractAuthenticationToken 
         return principal;
     }
 
-    public String getToken() {
+    public String getValue() {
         return token;
     }
 

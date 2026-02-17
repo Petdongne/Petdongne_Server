@@ -6,13 +6,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
 import org.songeun.petdongne_server.security.session.SessionConfig;
 import org.songeun.petdongne_server.security.session.SessionData;
 import org.songeun.petdongne_server.security.session.SessionStore;
 import org.songeun.petdongne_server.user.domain.entity.AuthenticationProvider;
 import org.songeun.petdongne_server.user.domain.entity.User;
 import org.songeun.petdongne_server.user.infrastructure.UserRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -20,31 +20,29 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_COOKIE_NAME;
-import static org.songeun.petdongne_server.security.session.SessionConfig.TIMEOUT_IN_SEC;
+import static org.songeun.petdongne_server.security.session.SessionConfig.*;
 
 @Slf4j
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    public static final String BEARER = "Bearer ";
     private final UserRepository userRepository;
     private final OAuth2LoginRedirectUrls oAuth2LoginRedirectUrls;
     private final SessionStore sessionStore;
-    private final boolean isCookieSecure;
+    private final SessionConfig sessionConfig;
 
     public OAuth2LoginSuccessHandler(
             UserRepository userRepository,
             OAuth2LoginRedirectUrls oAuth2LoginRedirectUrls,
             SessionStore sessionStore,
-            @Value("${app.cookie.secure}")
-            boolean cookieSecure) {
+            SessionConfig sessionConfig) {
 
         this.userRepository = userRepository;
         this.oAuth2LoginRedirectUrls = oAuth2LoginRedirectUrls;
         this.sessionStore = sessionStore;
-        this.isCookieSecure = cookieSecure;
+        this.sessionConfig = sessionConfig;
 
         setDefaultTargetUrl(oAuth2LoginRedirectUrls.getSuccessRedirectUrl());
         setAlwaysUseDefaultTargetUrl(true);
@@ -67,12 +65,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             User user = saveOrUpdateUser(oidcUser);
 
             String opaqueToken = generateOpaqueToken();
-
-            String sessionId = SessionConfig.SESSION_ID_PREFIX + opaqueToken;
+            String sessionId = opaqueToken;
             generateSession(sessionId, user);
 
-            String cookieValue = BEARER + opaqueToken;
-            setSessionCookie(response, cookieValue);
+            BearerAccessToken accessToken = BearerAccessToken.of(opaqueToken);
+            setTokenToSessionCookie(accessToken, response);
 
             log.info("OAuth2 login successful for user ID: {}", user.getId());
 
@@ -83,6 +80,16 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             getRedirectStrategy().sendRedirect(request, response,
                     oAuth2LoginRedirectUrls.getFailureRedirectUrl("server_error"));
         }
+    }
+
+    private void setTokenToSessionCookie(BearerAccessToken accessToken, HttpServletResponse response) {
+        Cookie cookie = new Cookie(SESSION_COOKIE_NAME, accessToken.getValueWithBearer());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(sessionConfig.isCookieSecure());
+        cookie.setPath("/");
+        cookie.setMaxAge((int) TimeUnit.MINUTES.toSeconds(SESSION_TIMEOUT_MINUTES));
+
+        response.addCookie(cookie);
     }
 
     private User saveOrUpdateUser(OidcUser oidcUser) {
@@ -113,15 +120,5 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     private void generateSession(String sessionId, User user) throws JsonProcessingException {
         SessionData sessionData = new SessionData(user.getId());
         sessionStore.saveSession(sessionId, sessionData);
-    }
-
-    private void setSessionCookie(HttpServletResponse response, String cookieValue) {
-        Cookie cookie = new Cookie(SESSION_COOKIE_NAME, cookieValue);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(isCookieSecure);
-        cookie.setPath("/");
-        cookie.setMaxAge(TIMEOUT_IN_SEC);
-
-        response.addCookie(cookie);
     }
 }

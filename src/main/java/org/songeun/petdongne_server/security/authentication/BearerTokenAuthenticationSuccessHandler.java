@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.security.session.SessionConfig;
 import org.songeun.petdongne_server.security.session.SessionStore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -40,9 +39,9 @@ public class BearerTokenAuthenticationSuccessHandler implements AuthenticationSu
         }
 
         OpaqueTokenAuthenticationToken opaqueToken = (OpaqueTokenAuthenticationToken) authentication;
-        String token = opaqueToken.getToken();
-        String sessionKey = SessionConfig.SESSION_ID_PREFIX + token;
-        sessionStore.resetSessionExpiration(sessionKey);
+        String token = opaqueToken.getValue();
+        String sessionId = token;
+        sessionStore.resetSessionExpiration(sessionId);
         log.debug("Session expiration reset for token");
     }
 }

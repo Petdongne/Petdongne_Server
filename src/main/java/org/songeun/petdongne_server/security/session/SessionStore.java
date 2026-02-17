@@ -15,22 +15,29 @@ import static org.songeun.petdongne_server.security.session.SessionConfig.SESSIO
 @RequiredArgsConstructor
 public class SessionStore {
 
+    private static final String SESSION_ID_PREFIX = "session:";
+
     private final StringRedisTemplate stringRedisTemplate;
     private final ObjectMapper objectMapper;
 
-    public String getSession(String key) {
-        return stringRedisTemplate.opsForValue().get(key);
+    public SessionData getSession(String sessionId) throws JsonProcessingException {
+        String sessionIdWithPrefix = SESSION_ID_PREFIX + sessionId;
+
+        String sessionStr = stringRedisTemplate.opsForValue().get(sessionIdWithPrefix);
+        return objectMapper.readValue(sessionStr, SessionData.class);
     }
 
     public void resetSessionExpiration(String sessionId) {
-        stringRedisTemplate.expire(sessionId, SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+        String sessionIdWithPrefix = SESSION_ID_PREFIX + sessionId;
+        stringRedisTemplate.expire(sessionIdWithPrefix, SESSION_TIMEOUT_MINUTES, TimeUnit.MINUTES);
     }
 
     public void saveSession(String sessionId, SessionData sessionData) throws JsonProcessingException {
+        String sessionIdWithPrefix = SESSION_ID_PREFIX + sessionId;
         String sessionJson = objectMapper.writeValueAsString(sessionData);
 
         stringRedisTemplate.opsForValue().set(
-                sessionId,
+                sessionIdWithPrefix,
                 sessionJson,
                 SESSION_TIMEOUT_MINUTES,
                 TimeUnit.MINUTES

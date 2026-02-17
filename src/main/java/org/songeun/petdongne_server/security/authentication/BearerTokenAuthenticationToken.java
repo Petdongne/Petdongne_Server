@@ -13,7 +13,7 @@ public class BearerTokenAuthenticationToken extends AbstractAuthenticationToken 
         this.token = token;
     }
 
-    public String getToken() {
+    public String getValue() {
         return this.token;
     }
 
