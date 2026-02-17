@@ -15,6 +15,7 @@ import org.songeun.petdongne_server.user.domain.entity.AuthenticationProvider;
 import org.songeun.petdongne_server.user.domain.entity.User;
 import org.songeun.petdongne_server.user.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -39,6 +40,7 @@ import static org.mockito.Mockito.when;
 import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_COOKIE_NAME;
 import static org.songeun.petdongne_server.security.session.SessionConfig.SESSION_TIMEOUT_MINUTES;
 
+@AutoConfigureMockMvc
 @TestPropertySource(properties = {
         "app.frontend.url=http://localhost:3000",
         "app.cookie.secure=false"
