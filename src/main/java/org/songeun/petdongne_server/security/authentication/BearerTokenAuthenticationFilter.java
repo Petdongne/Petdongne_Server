@@ -14,9 +14,9 @@ public class BearerTokenAuthenticationFilter extends AuthenticationFilter {
             AuthenticationManager opaqueTokenAuthenticationManager,
             AuthenticationConverter bearerTokenAuthenticationConverter,
             @Qualifier("bearerTokenAuthenticationSuccessHandler")
-            AuthenticationSuccessHandler bearerTokenAuthenticatoinSuccessHandler) {
+            AuthenticationSuccessHandler bearerTokenAuthenticationSuccessHandler) {
         super(opaqueTokenAuthenticationManager, bearerTokenAuthenticationConverter);
-        setSuccessHandler(bearerTokenAuthenticatoinSuccessHandler);
+        setSuccessHandler(bearerTokenAuthenticationSuccessHandler);
     }
 
 }
