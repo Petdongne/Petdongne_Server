@@ -49,11 +49,6 @@ class MapSearchControllerTest extends IntegrationTestSupport {
     @MockitoBean
     private MapSearchService searchService;
 
-    @MockitoBean OAuth2LoginSuccessHandler loginSuccessHandler;
-    @MockitoBean OAuth2LoginFailureHandler loginFailureHandler;
-    @MockitoBean BearerTokenAuthenticationFilter bearerTokenAuthenticationFilter;
-    @MockitoBean CorsConfig corsConfig;
-
     private static final String CLUSTER_BASE_URL = "/api/v1/map/clusters";
 
     private static final Set<String> MOCK_GEOHASHES = Set.of("u4pruydqq", "u4pruydqr");
