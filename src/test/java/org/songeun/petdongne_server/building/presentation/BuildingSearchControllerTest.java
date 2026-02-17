@@ -12,6 +12,7 @@ import org.songeun.petdongne_server.security.CorsConfig;
 import org.songeun.petdongne_server.global.config.ObjectMapperConfig;
 import org.songeun.petdongne_server.security.SecurityConfig;
 import org.songeun.petdongne_server.global.exception.BusinessException;
+import org.songeun.petdongne_server.security.authentication.BearerTokenAuthenticationFilter;
 import org.songeun.petdongne_server.security.login.OAuth2LoginFailureHandler;
 import org.songeun.petdongne_server.security.login.OAuth2LoginSuccessHandler;
 import org.songeun.petdongne_server.testSupport.GeometryTestUtils;
@@ -29,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BuildingSearchController.class)
-@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class, OAuth2LoginFailureHandler.class, OAuth2LoginSuccessHandler.class, AuthenticationFilter.class})
+@WebMvcTest(controllers = BuildingSearchController.class)
+@Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class})
 class BuildingSearchControllerTest {
 
     @Autowired
@@ -41,6 +42,10 @@ class BuildingSearchControllerTest {
 
     @MockitoBean
     private BuildingSearchService buildingSearchService;
+
+    @MockitoBean OAuth2LoginSuccessHandler loginSuccessHandler;
+    @MockitoBean OAuth2LoginFailureHandler loginFailureHandler;
+    @MockitoBean BearerTokenAuthenticationFilter bearerTokenAuthenticationFilter;
 
     @DisplayName("건물 상세 정보를 조회한다.")
     @Test

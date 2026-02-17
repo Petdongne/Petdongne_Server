@@ -15,7 +15,11 @@ import org.songeun.petdongne_server.map.application.MapSearchService;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevelCategory;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
+import org.songeun.petdongne_server.security.authentication.BearerTokenAuthenticationFilter;
+import org.songeun.petdongne_server.security.login.OAuth2LoginFailureHandler;
+import org.songeun.petdongne_server.security.login.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -34,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = MapSearchController.class)
+@AutoConfigureMockMvc
 @Import({SecurityConfig.class, CorsConfig.class, ObjectMapperConfig.class})
 class MapSearchControllerTest {
 
@@ -42,6 +47,10 @@ class MapSearchControllerTest {
 
     @MockitoBean
     private MapSearchService searchService;
+
+    @MockitoBean OAuth2LoginSuccessHandler loginSuccessHandler;
+    @MockitoBean OAuth2LoginFailureHandler loginFailureHandler;
+    @MockitoBean BearerTokenAuthenticationFilter bearerTokenAuthenticationFilter;
 
     private static final String CLUSTER_BASE_URL = "/api/v1/map/clusters";
 
