@@ -1,10 +1,9 @@
-package org.songeun.petdongne_server.survey.domain.entity;
+package org.songeun.petdongne_server.survey.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.global.common.BaseEntity;

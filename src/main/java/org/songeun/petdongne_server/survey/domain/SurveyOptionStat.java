@@ -1,13 +1,11 @@
-package org.songeun.petdongne_server.survey.domain.entity;
+package org.songeun.petdongne_server.survey.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.building.domain.Building;
-import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
