@@ -2,7 +2,6 @@ package org.songeun.petdongne_server.survey.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -10,27 +9,27 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SurveyOption extends BaseEntity {
+public class Answer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 150)
-    private String optionText;
+    @Enumerated(EnumType.STRING)
+    private AnswerOption answerOption;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "survey_question_id", nullable = false)
-    private SurveyQuestion question;
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
-    public String optionText() {
-        return this.optionText;
+    public AnswerOption option() {
+        return this.answerOption;
     }
 
     @Builder
-    private SurveyOption(String optionText, SurveyQuestion question) {
-        this.optionText = optionText;
+    private Answer(AnswerOption answerOption, Question question) {
+        this.answerOption = answerOption;
         this.question = question;
     }
 
