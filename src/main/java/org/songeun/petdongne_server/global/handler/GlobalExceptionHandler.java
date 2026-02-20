@@ -10,10 +10,13 @@ import org.songeun.petdongne_server.global.exception.SystemException;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.List;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -35,6 +38,20 @@ public class GlobalExceptionHandler {
         var error = new FieldErrorResponse(field, message);
 
         return ApiResponse.failWithDetails(GlobalErrorStatus.MISSING_REQUEST_PARAMETER, error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ApiResponse<Object>> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exception) {
+        List message;
+        if (!exception.getBindingResult().getFieldErrors().isEmpty()) {
+            message = exception.getBindingResult().getFieldErrors().stream()
+                    .map(error -> new FieldErrorResponse(error.getField(), error.getDefaultMessage()))
+                    .toList();
+        } else {
+            message = List.of(GlobalErrorStatus.BAD_REQUEST.getMessage());
+        }
+        return ApiResponse.failWithDetails(GlobalErrorStatus.BAD_REQUEST, message);
     }
 
     /**
