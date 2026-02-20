@@ -10,4 +10,8 @@ public class ResidenceReviewService {
 
     private final ResidenceReviewRepository reviewRepository;
 
+    public CreateReviewResponseDto createReview(CreateReviewRequestDto requestDto) {
+        return null;
+    }
+
 }
