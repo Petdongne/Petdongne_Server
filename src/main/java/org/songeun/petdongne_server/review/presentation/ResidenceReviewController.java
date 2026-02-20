@@ -13,8 +13,10 @@ public class ResidenceReviewController {
 
     private final ResidenceReviewService residenceReviewService;
 
-    @GetMapping("/{building_id}/reviews")
-    public ResponseEntity<?> getReview(@PathVariable("building_id") Long buildingId){
+    @GetMapping("/{building_id}/reviews/{review_id}")
+    public ResponseEntity<?> getReview(
+            @PathVariable("building_id") Long buildingId,
+            @PathVariable("review_id") Long reviewId){
         // to do implements...
         return ApiResponse.ok(null);
     }

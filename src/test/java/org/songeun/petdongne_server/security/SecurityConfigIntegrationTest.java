@@ -1,27 +1,16 @@
 package org.songeun.petdongne_server.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
-import org.songeun.petdongne_server.security.session.SessionData;
-import org.songeun.petdongne_server.security.session.SessionStore;
+import org.songeun.petdongne_server.testSupport.AuthTestFixture;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
-import org.songeun.petdongne_server.user.domain.entity.User;
-import org.songeun.petdongne_server.user.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
-
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,47 +26,22 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
     private MockMvc mockMvc;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-    @MockitoBean
-    private UserRepository userRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private FrontendUrlProperties frontendUrlProperties;
 
     @Autowired
-    private SessionStore sessionStore;
-
-    private final String VALID_BEARER_TOKEN = "Bearer valid-test-token";
-    private final String INVALID_BEARER_TOKEN = "invalid-test-token";
-    private final Long USER_ID = 1L;
-    private User testUser;
-    private SessionData testSessionData;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        stringRedisTemplate.getConnectionFactory().getConnection().flushAll();
-
-        testUser = User.builder()
-                .id(USER_ID)
-                .email("test@example.com")
-                .nickname("testuser")
-                .build();
-        testSessionData = new SessionData(USER_ID);
-
-        BearerAccessToken bearerAccessToken = BearerAccessToken.parse(VALID_BEARER_TOKEN).orElseThrow();
-        sessionStore.saveSession(bearerAccessToken.getValue(), testSessionData);
-        given(userRepository.findById(USER_ID)).willReturn(Optional.of(testUser));
-    }
+    private AuthTestFixture authTestFixture;
 
     @DisplayName("유효한 토큰으로 보호된 엔드포인트에 접근하면 200 OK를 반환한다.")
     @Test
     void shouldAllowAccessToProtectedEndpointWithValidToken() throws Exception {
-        mockMvc.perform(get("/api/v1/buildings/1/reviews")
-                        .cookie(new Cookie(SESSION_COOKIE_NAME, VALID_BEARER_TOKEN)))
+        // given
+        String sessionId = authTestFixture.getSessionId();
+        authTestFixture.resetSession(sessionId);
+        Cookie sessionCookie = authTestFixture.getSessionCookie(sessionId);
+
+        // when & then
+        mockMvc.perform(get("/api/v1/buildings/1/reviews/1")
+                        .cookie(sessionCookie))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -85,8 +49,8 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
     @DisplayName("유효하지 않은 토큰으로 보호된 엔드포인트에 접근하면 401 Unauthorized를 반환한다.")
     @Test
     void shouldRejectAccessToProtectedEndpointWithInvalidToken() throws Exception {
-        mockMvc.perform(get("/api/v1/buildings/1/reviews")
-                        .cookie(new Cookie(SESSION_COOKIE_NAME, INVALID_BEARER_TOKEN)))
+        mockMvc.perform(get("/api/v1/buildings/1/reviews/1")
+                        .cookie(new Cookie(SESSION_COOKIE_NAME, "invalid_value")))
                 .andDo(print())
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.isSuccess").value(false))
