@@ -185,36 +185,7 @@ class ResidenceReviewControllerTest extends IntegrationTestSupport {
     }
 
     private CreateReviewResponseDto createResponseDto() {
-        return new CreateReviewResponseDto(
-                1L,
-                new CreateReviewResponseDto.BuildingReviewStatsDto(4.3, 42L),
-                List.of(
-                        new CreateReviewResponseDto.BuildingQuestionStatDto(
-                                QuestionType.SOUND_PROOF,
-                                Map.of(
-                                        AnswerOption.AVERAGE, 0.4,
-                                        AnswerOption.GOOD, 0.3,
-                                        AnswerOption.BAD, 0.3
-                                )
-                        ),
-                        new CreateReviewResponseDto.BuildingQuestionStatDto(
-                                QuestionType.WALKING_ENV,
-                                Map.of(
-                                        AnswerOption.GOOD, 0.3,
-                                        AnswerOption.BAD, 0.2,
-                                        AnswerOption.AVERAGE, 0.5
-                                )
-                        ),
-                        new CreateReviewResponseDto.BuildingQuestionStatDto(
-                                QuestionType.NEIGHBOR_REACTION,
-                                Map.of(
-                                        AnswerOption.AVERAGE, 0.6,
-                                        AnswerOption.GOOD, 0.25,
-                                        AnswerOption.BAD, 0.15
-                                )
-                        )
-                )
-        );
+        return new CreateReviewResponseDto(1L);
     }
 
 }
