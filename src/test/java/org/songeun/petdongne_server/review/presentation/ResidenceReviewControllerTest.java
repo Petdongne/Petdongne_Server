@@ -153,7 +153,7 @@ class ResidenceReviewControllerTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("요청 성공 시 리뷰 통계와 함께 200 OK를 반환한다")
+    @DisplayName("요청 성공 시 200 OK를 반환한다")
     void shouldReturnOkWhenSuccess() throws Exception {
         // given
         CreateReviewResponseDto responseDto = createResponseDto();
