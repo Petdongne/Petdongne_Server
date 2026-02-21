@@ -6,6 +6,7 @@ import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.review.application.CreateReviewRequestDto;
 import org.songeun.petdongne_server.review.application.CreateReviewResponseDto;
 import org.songeun.petdongne_server.review.application.ResidenceReviewService;
+import org.songeun.petdongne_server.review.domain.Rating;
 import org.songeun.petdongne_server.security.authentication.UserPrincipal;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class ResidenceReviewController {
                 (UserPrincipal) userDetails,
                 buildingId,
                 requestDto.residenceYear(),
-                requestDto.rating(),
+                Rating.fromValue(requestDto.rating()),
                 requestDto.content(),
                 requestDto.answers(),
                 photos

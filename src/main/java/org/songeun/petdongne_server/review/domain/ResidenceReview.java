@@ -22,10 +22,9 @@ public class ResidenceReview extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
-    @DecimalMin("0.0")
-    @DecimalMax("5.0")
-    private Double rating;
+    @Convert(converter = RatingConverter.class)
+    @Column(name = "rating", nullable = false)
+    private Rating rating;
 
     @NotNull
     @Size(min = 50, max = 1000)
@@ -43,7 +42,7 @@ public class ResidenceReview extends BaseEntity {
     private User user;
 
     @Builder
-    private ResidenceReview(Double rating, String reviewText, Integer lastOccupiedYear, Building building, User user) {
+    private ResidenceReview(Rating rating, String reviewText, Integer lastOccupiedYear, Building building, User user) {
         this.rating = rating;
         this.reviewText = reviewText;
         this.lastOccupiedYear = lastOccupiedYear;

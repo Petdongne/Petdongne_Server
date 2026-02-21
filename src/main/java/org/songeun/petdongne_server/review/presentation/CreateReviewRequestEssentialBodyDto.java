@@ -10,8 +10,8 @@ public record CreateReviewRequestEssentialBodyDto(
         @NotNull
         Integer residenceYear,
 
-        @NotNull @DecimalMin("0.0") @DecimalMax("5.0")
-        Double rating,
+        @NotNull
+        String rating,
 
         @NotBlank
         String content,

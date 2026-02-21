@@ -136,8 +136,8 @@ class ResidenceReviewControllerTest extends IntegrationTestSupport {
         return 2022;
     }
 
-    private static double validRating() {
-        return 4.0;
+    private static String validRating() {
+        return "4.0";
     }
 
     private static String validContent() {
