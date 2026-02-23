@@ -18,16 +18,19 @@ import org.songeun.petdongne_server.global.common.BaseEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResidenceReview extends BaseEntity {
 
+    private static final int MIN_CONTENT_LENGTH = 50;
+    private static final int MAX_CONTENT_LENGTH = 1000;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Convert(converter = RatingConverter.class)
+    @Convert(converter = RatingAttributeConverter.class)
     @Column(name = "rating", nullable = false)
     private Rating rating;
 
     @NotNull
-    @Size(min = 50, max = 1000)
+    @Size(min = MIN_CONTENT_LENGTH, max = MAX_CONTENT_LENGTH)
     private String reviewText;
 
     @NotNull

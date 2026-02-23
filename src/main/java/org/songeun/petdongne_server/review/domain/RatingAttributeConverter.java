@@ -2,7 +2,7 @@ package org.songeun.petdongne_server.review.domain;
 
 import jakarta.persistence.AttributeConverter;
 
-public class RatingConverter implements AttributeConverter<Rating, Double> {
+public class RatingAttributeConverter implements AttributeConverter<Rating, Double> {
 
     @Override
     public Double convertToDatabaseColumn(Rating rating) {
