@@ -19,18 +19,13 @@ public class Answer extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AnswerOption answerOption;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
-
     public AnswerOption option() {
         return this.answerOption;
     }
 
     @Builder
-    private Answer(AnswerOption answerOption, Question question) {
+    private Answer(AnswerOption answerOption) {
         this.answerOption = answerOption;
-        this.question = question;
     }
 
 }
