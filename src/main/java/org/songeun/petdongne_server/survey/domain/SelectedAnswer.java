@@ -16,6 +16,10 @@ public class SelectedAnswer extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
@@ -24,7 +28,8 @@ public class SelectedAnswer extends BaseEntity {
     private ResidenceReview residenceReview;
 
     @Builder
-    private SelectedAnswer(Answer answer, ResidenceReview residenceReview) {
+    private SelectedAnswer(Question question, Answer answer, ResidenceReview residenceReview) {
+        this.question = question;
         this.answer = answer;
         this.residenceReview = residenceReview;
     }
