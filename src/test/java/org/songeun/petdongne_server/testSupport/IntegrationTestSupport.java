@@ -43,6 +43,7 @@ public abstract class IntegrationTestSupport {
         registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
+        registry.add("spring.datasource.hikari.maximum-pool-size", () -> 2);
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
 
         // Redis properties
