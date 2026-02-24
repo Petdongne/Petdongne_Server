@@ -54,7 +54,6 @@ public class OpaqueTokenAuthenticationManager implements AuthenticationManager {
         } catch (JsonProcessingException e) {
             log.error("세션 데이터 파싱 실패: {}", e.getMessage(), e);
             throw new AuthenticationServiceException("인증 서버 문제로 인증에 실패했습니다.");
-
         }
     }
 
