@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
 import org.songeun.petdongne_server.security.session.SessionData;
 import org.songeun.petdongne_server.security.session.SessionStore;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
@@ -15,7 +14,6 @@ import org.songeun.petdongne_server.user.domain.entity.AuthenticationProvider;
 import org.songeun.petdongne_server.user.domain.entity.User;
 import org.songeun.petdongne_server.user.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -31,7 +29,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -118,12 +115,10 @@ class OAuth2LoginSuccessHandlerTest extends IntegrationTestSupport {
 
             //then
             User savedUser = findUserOrThrow(subject);
-
             Cookie sessionCookie = response.getCookie(SESSION_COOKIE_NAME);
-            BearerAccessToken accessToken = BearerAccessToken.parse(sessionCookie.getValue()).orElseThrow();
 
-            ensureValidSessionCookie(sessionCookie, accessToken);
-            ensureValidSessionStored(accessToken, savedUser);
+            ensureValidSessionCookie(sessionCookie);
+            ensureValidSessionStored(sessionCookie.getValue(), savedUser);
         }
     }
 
@@ -174,12 +169,10 @@ class OAuth2LoginSuccessHandlerTest extends IntegrationTestSupport {
 
             // then
             User savedUser = findUserOrThrow(subject);
-
             Cookie sessionCookie = response.getCookie(SESSION_COOKIE_NAME);
-            BearerAccessToken accessToken = BearerAccessToken.parse(sessionCookie.getValue()).orElseThrow();
 
-            ensureValidSessionCookie(sessionCookie, accessToken);
-            ensureValidSessionStored(accessToken, savedUser);
+            ensureValidSessionCookie(sessionCookie);
+            ensureValidSessionStored(sessionCookie.getValue(), savedUser);
         }
     }
 
@@ -202,9 +195,9 @@ class OAuth2LoginSuccessHandlerTest extends IntegrationTestSupport {
         );
     }
 
-    private void ensureValidSessionCookie(Cookie sessionCookie, BearerAccessToken accessToken) {
+    private void ensureValidSessionCookie(Cookie sessionCookie) {
         assertThat(sessionCookie).isNotNull();
-        assertThat(sessionCookie.getValue()).isEqualTo(accessToken.getValueWithBearer());
+        assertThat(sessionCookie.getValue()).doesNotContain("Bearer ");
         assertThat(sessionCookie.isHttpOnly()).isTrue();
         assertThat(sessionCookie.getSecure()).isFalse();
         assertThat(sessionCookie.getPath()).isEqualTo("/");
@@ -213,8 +206,8 @@ class OAuth2LoginSuccessHandlerTest extends IntegrationTestSupport {
         );
     }
 
-    private void ensureValidSessionStored(BearerAccessToken accessToken, User savedUser) throws JsonProcessingException {
-        String sessionId = accessToken.getValue();
+    private void ensureValidSessionStored(String accessToken, User savedUser) throws JsonProcessingException {
+        String sessionId = accessToken;
         SessionData session = sessionStore.getSession(sessionId);
         assertThat(session).isNotNull();
         assertThat(session.userId()).isEqualTo(savedUser.getId());

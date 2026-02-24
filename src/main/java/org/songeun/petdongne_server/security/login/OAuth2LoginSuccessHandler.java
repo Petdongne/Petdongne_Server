@@ -6,7 +6,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
 import org.songeun.petdongne_server.security.session.SessionConfig;
 import org.songeun.petdongne_server.security.session.SessionData;
 import org.songeun.petdongne_server.security.session.SessionStore;
@@ -63,13 +62,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         try {
             User user = saveOrUpdateUser(oidcUser);
-
             String opaqueToken = generateOpaqueToken();
+
             String sessionId = opaqueToken;
             generateSession(sessionId, user);
 
-            BearerAccessToken accessToken = BearerAccessToken.of(opaqueToken);
-            setTokenToSessionCookie(accessToken, response);
+            String sessionCookieValue = opaqueToken;
+            setSessionCookie(sessionCookieValue, response);
 
             log.info("OAuth2 login successful for user ID: {}", user.getId());
 
@@ -82,8 +81,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         }
     }
 
-    private void setTokenToSessionCookie(BearerAccessToken accessToken, HttpServletResponse response) {
-        Cookie cookie = new Cookie(SESSION_COOKIE_NAME, accessToken.getValueWithBearer());
+    private void setSessionCookie(String token, HttpServletResponse response) {
+        Cookie cookie = new Cookie(SESSION_COOKIE_NAME, token);
         cookie.setHttpOnly(true);
         cookie.setSecure(sessionConfig.isCookieSecure());
         cookie.setPath("/");

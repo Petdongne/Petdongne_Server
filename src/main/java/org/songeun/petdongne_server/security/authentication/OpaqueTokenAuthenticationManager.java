@@ -25,19 +25,18 @@ public class OpaqueTokenAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        if (!(authentication instanceof BearerTokenAuthenticationToken)) {
+        if (!(authentication instanceof OpaqueTokenUnAuthenticationToken)) {
             throw new AuthenticationServiceException(
                     "Unsupported authentication type: " + authentication.getClass().getName()
             );
         }
-        BearerTokenAuthenticationToken bearerToken = (BearerTokenAuthenticationToken) authentication;
-        String token = bearerToken.getValue(); // opaqueToken
-        String sessionId = token;
+        OpaqueTokenUnAuthenticationToken token = (OpaqueTokenUnAuthenticationToken) authentication;
+        String sessionId = token.getValue();
         SessionData session = getSessionOrThrow(sessionId);
         UserPrincipal userPrincipal = createUserPrincipalOrThrow(session);
 
         return new OpaqueTokenAuthenticationToken(
-                token,
+                token.getValue(),
                 userPrincipal,
                 userPrincipal.getAuthorities()
         );
@@ -55,7 +54,6 @@ public class OpaqueTokenAuthenticationManager implements AuthenticationManager {
         } catch (JsonProcessingException e) {
             log.error("세션 데이터 파싱 실패: {}", e.getMessage(), e);
             throw new AuthenticationServiceException("인증 서버 문제로 인증에 실패했습니다.");
-
         }
     }
 

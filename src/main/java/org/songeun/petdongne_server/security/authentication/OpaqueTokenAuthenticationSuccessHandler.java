@@ -15,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class BearerTokenAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class OpaqueTokenAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final SessionStore sessionStore;
 
