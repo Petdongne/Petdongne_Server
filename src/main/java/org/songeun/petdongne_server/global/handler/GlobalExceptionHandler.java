@@ -10,10 +10,14 @@ import org.songeun.petdongne_server.global.exception.SystemException;
 import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.List;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -23,18 +27,32 @@ public class GlobalExceptionHandler {
     /**
      * 필수 쿼리 파라미터를 누락한 경우 발생하는 error를 handling 합니다.
      */
-    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class, MissingServletRequestPartException.class})
     public ResponseEntity<ApiResponse<Object>> handleMissingServletRequestParameterException(
             MissingServletRequestParameterException e
     ) {
         log.warn(">>> handle: MissingServletRequestParameterException", e);
 
         String field = e.getParameterName();
-        String message = String.format("요청 파라미터 '%s'는 필수입니다.", field);
+        String message = String.format("Request param or part '%s'는 필수입니다.", field);
 
         var error = new FieldErrorResponse(field, message);
 
         return ApiResponse.failWithDetails(GlobalErrorStatus.MISSING_REQUEST_PARAMETER, error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ApiResponse<Object>> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exception) {
+        List message;
+        if (!exception.getBindingResult().getFieldErrors().isEmpty()) {
+            message = exception.getBindingResult().getFieldErrors().stream()
+                    .map(error -> new FieldErrorResponse(error.getField(), error.getDefaultMessage()))
+                    .toList();
+        } else {
+            message = List.of(GlobalErrorStatus.BAD_REQUEST.getMessage());
+        }
+        return ApiResponse.failWithDetails(GlobalErrorStatus.BAD_REQUEST, message);
     }
 
     /**

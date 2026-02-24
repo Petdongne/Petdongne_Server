@@ -33,9 +33,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation platform ('io.awspring.cloud:spring-cloud-aws-dependencies:4.0.0')
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter'
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
 
     // 캐싱
     implementation 'com.github.ben-manes.caffeine:caffeine:3.2.2'
+
+    // 이미지 감지
+    implementation 'org.apache.tika:tika-core:3.2.3'
 
     // queryDSL
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
@@ -82,7 +88,8 @@ jacoco {
 ext {
     qTypes = ('A'..'Z').collect {"**/Q${it}*"}
     commonExcludes = qTypes + ['**/*Exception*', '**/*Application*', '**/*Config*', '**/*Properties',
-                               '**/*Dto*','**/common/*', '**/*Converter*', '**/*ErrorStatus*']
+                               '**/*Dto*','**/common/*', '**/*Converter*', '**/*ErrorStatus*',
+                                '**/Delimiters', '**/DataInitializer']
 }
 
 jacocoTestReport {

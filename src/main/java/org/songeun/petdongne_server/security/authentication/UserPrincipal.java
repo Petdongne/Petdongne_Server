@@ -13,18 +13,11 @@ import java.util.Collections;
 @Getter
 public class UserPrincipal implements UserDetails {
 
-    private final Long id;
-    private final String nickname;
-    private final String email;
-    private final AuthenticationProvider authProvider;
+    private final User user;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(User user) {
-        this.id = user.getId();
-        this.nickname = user.getNickname();
-        this.email = user.getEmail();
-        this.authProvider = user.getAuthenticationProvider();
-
+        this.user = user;
         this.authorities = Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_USER")
         );
@@ -37,7 +30,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return user.getEmail();
     }
 
     @Override

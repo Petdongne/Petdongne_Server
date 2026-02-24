@@ -1,6 +1,6 @@
 app:
   frontend:
-    url: ${APP.FRONTEND.URL:http://localhost:3000}
+    url: ${APP.FRONTEND.URL:http://localhost:5173}
   cookie:
     secure: ${APP.COOKIE.SECURE:false}
 
@@ -23,6 +23,16 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key : ${AWS_SECRET_KEY}
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: test-bucket-it-is-mine
 
   data:
     redis:
@@ -83,6 +93,9 @@ springdoc:
 # 로깅 설정
 logging:
   level:
+    org.springframework.security: TRACE
+    org.springframework.security.web.access: TRACE
+
     com.zaxxer.hikari: DEBUG
     org.hibernate.SQL: DEBUG              # SQL 쿼리
     org.hibernate.type.descriptor.sql: TRACE  # 파라미터 값

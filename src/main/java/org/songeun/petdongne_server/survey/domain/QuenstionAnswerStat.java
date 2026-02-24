@@ -1,18 +1,16 @@
-package org.songeun.petdongne_server.survey.domain.entity;
+package org.songeun.petdongne_server.survey.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.songeun.petdongne_server.building.domain.Building;
-import org.songeun.petdongne_server.global.exception.BusinessException;
 import org.songeun.petdongne_server.global.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SurveyOptionStat extends BaseEntity {
+public class QuenstionAnswerStat extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,29 +27,29 @@ public class SurveyOptionStat extends BaseEntity {
     private Building building;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "survey_option_id", nullable = false)
-    private SurveyOption surveyOption;
+    @JoinColumn(name = "answer_id", nullable = false)
+    private Answer answer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "survey_question_id", nullable = false)
-    private SurveyQuestion surveyQuestion;
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
     public Integer selectedCount() {
         return this.selectedCount;
     }
 
     @Builder
-    private SurveyOptionStat(
+    private QuenstionAnswerStat(
             Integer selectedCount,
             Building building,
-            SurveyOption surveyOption,
-            SurveyQuestion surveyQuestion,
+            Answer answer,
+            Question question,
             Integer percentage
     ) {
         this.selectedCount = selectedCount;
         this.building = building;
-        this.surveyOption = surveyOption;
-        this.surveyQuestion = surveyQuestion;
+        this.answer = answer;
+        this.question = question;
         this.percentage = percentage;
     }
 
