@@ -113,29 +113,6 @@ class ResidenceReviewServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("null이면 안돼용")
-    void nong() {
-        // given
-        CreateReviewRequestDto requestDto = new CreateReviewRequestDto(
-                null,
-                2,
-                2022,
-                Rating.THREE,
-                "좋아요! ".repeat(10),
-                List.of(
-                        new SurveyAnswerDto(QuestionType.NEIGHBOR_REACTION, AnswerOption.AVERAGE),
-                        new SurveyAnswerDto(QuestionType.WALKING_ENV, AnswerOption.AVERAGE),
-                        new SurveyAnswerDto(QuestionType.SOUND_PROOF, AnswerOption.AVERAGE)
-                ),
-                List.of()
-        );
-        // when
-
-        // then
-        CreateReviewResponseDto responseDto = reviewService.createReview(requestDto);
-    }
-
-    @Test
     @DisplayName("중복된 질문에 답변하면 오류를 던진다")
     void shouldThrowExceptionWhenDuplicatedAnswer() throws IOException {
         //given
