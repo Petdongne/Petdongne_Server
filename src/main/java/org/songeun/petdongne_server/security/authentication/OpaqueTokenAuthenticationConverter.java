@@ -15,16 +15,14 @@ import static org.songeun.petdongne_server.security.session.SessionConfig.SESSIO
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class BearerTokenAuthenticationConverter implements AuthenticationConverter {
+public class OpaqueTokenAuthenticationConverter implements AuthenticationConverter {
 
     @Override
     public Authentication convert(HttpServletRequest request) {
         String cookieValue = extractCookieValue(request);
         if (cookieValue == null) return null;
 
-        return BearerAccessToken.parse(cookieValue)
-                .map(token -> new BearerTokenAuthenticationToken(token.getValue()))
-                .orElse(null);
+        return new OpaqueTokenUnAuthenticationToken(cookieValue);
     }
 
     private String extractCookieValue(HttpServletRequest request) {

@@ -8,14 +8,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @Component
-public class BearerTokenAuthenticationFilter extends AuthenticationFilter {
+public class OpaqueTokenAuthenticationFilter extends AuthenticationFilter {
 
-    public BearerTokenAuthenticationFilter(
+    public OpaqueTokenAuthenticationFilter(
             AuthenticationManager opaqueTokenAuthenticationManager,
-            AuthenticationConverter bearerTokenAuthenticationConverter,
+            AuthenticationConverter opaqueTokenAuthenticationConverter,
             @Qualifier("bearerTokenAuthenticationSuccessHandler")
             AuthenticationSuccessHandler bearerTokenAuthenticatoinSuccessHandler) {
-        super(opaqueTokenAuthenticationManager, bearerTokenAuthenticationConverter);
+        super(opaqueTokenAuthenticationManager, opaqueTokenAuthenticationConverter);
         setSuccessHandler(bearerTokenAuthenticatoinSuccessHandler);
     }
 

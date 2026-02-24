@@ -25,12 +25,12 @@ public class OpaqueTokenAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        if (!(authentication instanceof BearerTokenAuthenticationToken)) {
+        if (!(authentication instanceof OpaqueTokenUnAuthenticationToken)) {
             throw new AuthenticationServiceException(
                     "Unsupported authentication type: " + authentication.getClass().getName()
             );
         }
-        BearerTokenAuthenticationToken bearerToken = (BearerTokenAuthenticationToken) authentication;
+        OpaqueTokenUnAuthenticationToken bearerToken = (OpaqueTokenUnAuthenticationToken) authentication;
         String token = bearerToken.getValue(); // opaqueToken
         String sessionId = token;
         SessionData session = getSessionOrThrow(sessionId);
