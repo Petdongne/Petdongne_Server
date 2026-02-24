@@ -5,7 +5,6 @@ import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
 import org.songeun.petdongne_server.security.session.SessionData;
 import org.songeun.petdongne_server.security.session.SessionStore;
 import org.songeun.petdongne_server.testSupport.IntegrationTestSupport;
@@ -51,8 +50,8 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
     @Autowired
     private SessionStore sessionStore;
 
-    private final String VALID_BEARER_TOKEN = "Bearer valid-test-token";
-    private final String INVALID_BEARER_TOKEN = "invalid-test-token";
+    private final String VALID_TOKEN = "valid-test-token";
+    private final String INVALID_TOKEN = "invalid-test-token";
     private final Long USER_ID = 1L;
     private User testUser;
     private SessionData testSessionData;
@@ -67,9 +66,7 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
                 .nickname("testuser")
                 .build();
         testSessionData = new SessionData(USER_ID);
-
-        BearerAccessToken bearerAccessToken = BearerAccessToken.parse(VALID_BEARER_TOKEN).orElseThrow();
-        sessionStore.saveSession(bearerAccessToken.getValue(), testSessionData);
+        sessionStore.saveSession(VALID_TOKEN, testSessionData);
         given(userRepository.findById(USER_ID)).willReturn(Optional.of(testUser));
     }
 
@@ -77,7 +74,7 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
     @Test
     void shouldAllowAccessToProtectedEndpointWithValidToken() throws Exception {
         mockMvc.perform(get("/api/v1/buildings/1/reviews")
-                        .cookie(new Cookie(SESSION_COOKIE_NAME, VALID_BEARER_TOKEN)))
+                        .cookie(new Cookie(SESSION_COOKIE_NAME, VALID_TOKEN)))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -86,7 +83,7 @@ public class SecurityConfigIntegrationTest extends IntegrationTestSupport {
     @Test
     void shouldRejectAccessToProtectedEndpointWithInvalidToken() throws Exception {
         mockMvc.perform(get("/api/v1/buildings/1/reviews")
-                        .cookie(new Cookie(SESSION_COOKIE_NAME, INVALID_BEARER_TOKEN)))
+                        .cookie(new Cookie(SESSION_COOKIE_NAME, INVALID_TOKEN)))
                 .andDo(print())
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.isSuccess").value(false))

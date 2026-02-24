@@ -4,11 +4,11 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 import java.util.Collections;
 
-public class BearerTokenAuthenticationToken extends AbstractAuthenticationToken {
+public class OpaqueTokenUnAuthenticationToken extends AbstractAuthenticationToken {
 
     private String token;
 
-    public BearerTokenAuthenticationToken(String token) {
+    public OpaqueTokenUnAuthenticationToken(String token) {
         super(Collections.emptyList());
         this.token = token;
     }

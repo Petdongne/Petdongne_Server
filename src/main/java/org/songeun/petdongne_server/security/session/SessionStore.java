@@ -2,6 +2,7 @@ package org.songeun.petdongne_server.security.session;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,10 +21,14 @@ public class SessionStore {
     private final StringRedisTemplate stringRedisTemplate;
     private final ObjectMapper objectMapper;
 
+    @Nullable
     public SessionData getSession(String sessionId) throws JsonProcessingException {
         String sessionIdWithPrefix = SESSION_ID_PREFIX + sessionId;
 
         String sessionStr = stringRedisTemplate.opsForValue().get(sessionIdWithPrefix);
+        if (sessionStr == null || sessionStr.isEmpty()) {
+            return null;
+        }
         return objectMapper.readValue(sessionStr, SessionData.class);
     }
 
