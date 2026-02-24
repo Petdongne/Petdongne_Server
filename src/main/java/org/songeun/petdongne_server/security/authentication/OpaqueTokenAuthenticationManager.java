@@ -30,14 +30,13 @@ public class OpaqueTokenAuthenticationManager implements AuthenticationManager {
                     "Unsupported authentication type: " + authentication.getClass().getName()
             );
         }
-        OpaqueTokenUnAuthenticationToken bearerToken = (OpaqueTokenUnAuthenticationToken) authentication;
-        String token = bearerToken.getValue(); // opaqueToken
-        String sessionId = token;
+        OpaqueTokenUnAuthenticationToken token = (OpaqueTokenUnAuthenticationToken) authentication;
+        String sessionId = token.getValue();
         SessionData session = getSessionOrThrow(sessionId);
         UserPrincipal userPrincipal = createUserPrincipalOrThrow(session);
 
         return new OpaqueTokenAuthenticationToken(
-                token,
+                token.getValue(),
                 userPrincipal,
                 userPrincipal.getAuthorities()
         );

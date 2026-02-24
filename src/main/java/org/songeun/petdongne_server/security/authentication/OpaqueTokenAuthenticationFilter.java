@@ -13,10 +13,9 @@ public class OpaqueTokenAuthenticationFilter extends AuthenticationFilter {
     public OpaqueTokenAuthenticationFilter(
             AuthenticationManager opaqueTokenAuthenticationManager,
             AuthenticationConverter opaqueTokenAuthenticationConverter,
-            @Qualifier("bearerTokenAuthenticationSuccessHandler")
-            AuthenticationSuccessHandler bearerTokenAuthenticatoinSuccessHandler) {
+            @Qualifier("opaqueTokenAuthenticationSuccessHandler")
+            AuthenticationSuccessHandler opaqueTokenAuthenticationSuccessHandler) {
         super(opaqueTokenAuthenticationManager, opaqueTokenAuthenticationConverter);
-        setSuccessHandler(bearerTokenAuthenticatoinSuccessHandler);
+        setSuccessHandler(opaqueTokenAuthenticationSuccessHandler);
     }
-
 }
