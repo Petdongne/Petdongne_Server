@@ -77,7 +77,7 @@ class AddressSearchControllerTest extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.code").value("MISSING_REQUEST_PARAMETER"))
                 .andExpect(jsonPath("$.message").value("필수 요청 파라미터가 누락되었습니다."))
                 .andExpect(jsonPath("$.data.field").value("query"))
-                .andExpect(jsonPath("$.data.message").value("요청 파라미터 'query'는 필수입니다."));
+                .andExpect(jsonPath("$.data.message").value("Request param or part 'query'는 필수입니다."));
     }
 
     @Test
