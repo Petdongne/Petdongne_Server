@@ -1,7 +1,6 @@
 package org.songeun.petdongne_server.testSupport;
 
 import jakarta.servlet.http.Cookie;
-import org.songeun.petdongne_server.security.authentication.BearerAccessToken;
 import org.songeun.petdongne_server.security.session.SessionData;
 import org.songeun.petdongne_server.security.session.SessionStore;
 import org.songeun.petdongne_server.user.domain.entity.AuthenticationProvider;
@@ -24,9 +23,7 @@ public class AuthTestFixture implements ApplicationRunner {
     private final SessionStore sessionStore;
 
     private User user;
-
-    private final static BearerAccessToken bearerAccessToken =
-            BearerAccessToken.parse("Bearer valid-test-token").orElseThrow();
+    private String sessionId;
 
     public AuthTestFixture(UserRepository userRepository, SessionStore sessionStore) {
         this.userRepository = userRepository;
@@ -49,14 +46,18 @@ public class AuthTestFixture implements ApplicationRunner {
                 .build();
 
         SessionData sessionData = new SessionData(seedUserId);
-        String sessionId = getSessionId();
+        sessionId = UUID.randomUUID().toString();
 
         sessionStore.saveSession(sessionId, sessionData);
         userRepository.save(user);
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getSessionId() {
-        return bearerAccessToken.getValue();
+        return sessionId;
     }
 
     public String resetSession(String sessionId) {
@@ -65,7 +66,7 @@ public class AuthTestFixture implements ApplicationRunner {
     }
 
     public Cookie getSessionCookie(String sessionId) {
-        return new Cookie(SESSION_COOKIE_NAME, BearerAccessToken.of(sessionId).getValueWithBearer());
+        return new Cookie(SESSION_COOKIE_NAME, sessionId);
     }
 
 }

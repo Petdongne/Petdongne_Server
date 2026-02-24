@@ -3,6 +3,7 @@ package org.songeun.petdongne_server.survey.infrastructure;
 import io.awspring.cloud.s3.ObjectMetadata;
 import io.awspring.cloud.s3.S3Template;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.global.util.Delimiters;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class S3Uploader {
 

@@ -9,6 +9,7 @@ import org.geolatte.geom.jts.JTS;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.domain.BuildingUsage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -24,7 +25,7 @@ import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 import static org.hibernate.testing.transaction.TransactionUtil.doInJPA;
 
 
-@ActiveProfiles("test")
+@Profile("test")
 @Component
 public class BuildingFixtureFactory {
 

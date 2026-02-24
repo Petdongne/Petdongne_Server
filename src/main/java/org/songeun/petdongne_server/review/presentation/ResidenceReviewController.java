@@ -2,7 +2,10 @@ package org.songeun.petdongne_server.review.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.songeun.petdongne_server.global.common.ApiResponse;
+import org.songeun.petdongne_server.global.common.Image;
+import org.songeun.petdongne_server.global.util.ImageFileConverter;
 import org.songeun.petdongne_server.review.application.CreateReviewRequestDto;
 import org.songeun.petdongne_server.review.application.CreateReviewResponseDto;
 import org.songeun.petdongne_server.review.application.ResidenceReviewService;
@@ -16,19 +19,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/buildings")
 @RequiredArgsConstructor
 public class ResidenceReviewController {
 
     private final ResidenceReviewService residenceReviewService;
+    private final ImageFileConverter imageFileConverter;
 
     @GetMapping("/{building_id}/reviews/{review_id}")
     public ResponseEntity<?> getReview(
             @PathVariable("building_id") Long buildingId,
             @PathVariable("review_id") Long reviewId){
-        // to do implements...
         return ApiResponse.ok(null);
     }
 
@@ -36,10 +41,10 @@ public class ResidenceReviewController {
     public ResponseEntity<?> createReview(
             @PathVariable("building_id") Long buildingId,
             @RequestPart("review") @Valid CreateReviewRequestEssentialBodyDto requestDto,
-            @RequestPart(value = "photos", required = false) List<MultipartFile> photos,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
             @AuthenticationPrincipal UserDetails userDetails){
         CreateReviewResponseDto response =
-                residenceReviewService.createReview(toDto(userDetails, buildingId, requestDto, photos));
+                residenceReviewService.createReview(toDto(userDetails, buildingId, requestDto, images));
         return ApiResponse.ok(response);
     }
 
@@ -47,7 +52,7 @@ public class ResidenceReviewController {
             UserDetails userDetails,
             Long buildingId,
             CreateReviewRequestEssentialBodyDto requestDto,
-            List<MultipartFile> photos) {
+            List<MultipartFile> images) {
         return new CreateReviewRequestDto(
                 (UserPrincipal) userDetails,
                 buildingId,
@@ -55,7 +60,8 @@ public class ResidenceReviewController {
                 Rating.fromValue(requestDto.rating()),
                 requestDto.content(),
                 requestDto.answers(),
-                photos
+                images == null ? null
+                        : images.stream().map(imageFileConverter::parse).toList()
         );
     }
 
