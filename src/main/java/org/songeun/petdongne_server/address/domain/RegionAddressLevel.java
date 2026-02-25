@@ -15,7 +15,7 @@ public enum RegionAddressLevel {
     }, SIGUNGU("시군구") {
         @Override
         public int determineGeoHashLength() {
-            return 4;
+            return 3;
         }
     }, EMD("읍면동") {
         @Override
