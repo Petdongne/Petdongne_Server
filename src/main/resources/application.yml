@@ -32,12 +32,14 @@ spring:
       region:
         static: ap-northeast-2
       s3:
-        bucket: test-bucket-it-is-mine
+        bucket: ${BUCKET_NAME}
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      ssl:
+        enabled: ${REDIS_SSL}
 
   jpa:
 
