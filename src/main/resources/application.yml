@@ -18,7 +18,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus, health, metrics
+        include: ${ACTUATOR_EXPOSURE_ENDPOINT}
   endpoint:
     prometheus:
       enabled: true
