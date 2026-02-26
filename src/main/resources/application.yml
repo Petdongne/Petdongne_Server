@@ -11,6 +11,23 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+management:
+  server:
+    port: ${ACTUATOR_PORT}
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, metrics
+  endpoint:
+    prometheus:
+      enabled: true
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
 spring:
   application:
     name: petdongne_server
@@ -42,7 +59,6 @@ spring:
         enabled: ${REDIS_SSL}
 
   jpa:
-
     database: postgresql
     open-in-view: false
     hibernate:
