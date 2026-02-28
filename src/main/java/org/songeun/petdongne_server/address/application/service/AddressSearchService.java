@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDtoNoneGeoHash;
 import org.songeun.petdongne_server.address.application.dto.AddressDtoMapper;
 import org.songeun.petdongne_server.address.application.dto.AddressSearchRequestDto;
 import org.songeun.petdongne_server.address.domain.AddressErrorStatus;
@@ -70,6 +71,18 @@ public class AddressSearchService {
                 .flatMap(Optional::stream)
                 .flatMap(List::stream)
                 .map(AddressDtoMapper::toBoundSearchResponseDto)
+                .toList();
+    }
+
+    public List<AddressBoundsSearchResponseDtoNoneGeoHash> searchWithinBounds(
+            double minLat, double minLng, double maxLat, double maxLng, RegionAddressLevel level) {
+        return searchRepository.findByBBox(minLat, minLng, maxLat, maxLng, level).stream()
+                .map(r -> AddressBoundsSearchResponseDtoNoneGeoHash.of(
+                        r.getName(),
+                        r.getLongitude(),
+                        r.getLatitude(),
+                        r.getRegionLevel().getDescription()
+                ))
                 .toList();
     }
 

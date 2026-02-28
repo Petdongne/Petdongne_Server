@@ -2,11 +2,12 @@ package org.songeun.petdongne_server.map.application;
 
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDtoNoneGeoHash;
 import org.songeun.petdongne_server.address.application.service.AddressSearchService;
-import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.building.application.BuildingSearchService;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDtoNonGeoHash;
 import org.songeun.petdongne_server.global.exception.BusinessException;
-import org.songeun.petdongne_server.map.domain.KakaoZoomLevelCategory;
 import org.songeun.petdongne_server.map.domain.MapErrorStatus;
 import org.songeun.petdongne_server.map.domain.ZoomLevel;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class MapSearchService {
     private final AddressSearchService addressSearchService;
     private final BuildingSearchService buildingSearchService;
 
+    // == 지오해시 == //
     public List<AddressBoundsSearchResponseDto> searchClustersWithinBounds(
             Set<String> geoHashes, ZoomLevel zoomLevel) {
         if (!zoomLevel.isSupportedInCluster()) {
@@ -39,4 +41,36 @@ public class MapSearchService {
         return buildingSearchService.searchWithinBounds(geoHashes);
     }
 
+    // == BBOX == //
+    public List<AddressBoundsSearchResponseDtoNoneGeoHash> searchClustersWithinBounds(
+            double minLng,
+            double minLat,
+            double maxLng,
+            double maxLat,
+            ZoomLevel zoomLevel
+    ){
+        if (!zoomLevel.isSupportedInCluster()) {
+            throw new BusinessException(MapErrorStatus.ZOOM_LEVEL_NOT_SUPPORTED);
+        }
+
+        return addressSearchService.searchWithinBounds(
+                minLat, minLng, maxLat, maxLng, zoomLevel.toRegionAddressLevel()
+        );
+    }
+
+    public List<BuildingBoundSearchResponseDtoNonGeoHash> searchDetailsWithinBounds(
+            double minLng,
+            double minLat,
+            double maxLng,
+            double maxLat,
+            ZoomLevel zoomLevel
+    ){
+        if (!zoomLevel.isSupportedInDetail()) {
+            throw new BusinessException(MapErrorStatus.ZOOM_LEVEL_NOT_SUPPORTED);
+        }
+
+        return buildingSearchService.searchWithinBounds(
+                minLat, minLng, maxLat, maxLng
+        );
+    }
 }

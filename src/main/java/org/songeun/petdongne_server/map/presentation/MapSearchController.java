@@ -4,7 +4,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
-import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDtoNoneGeoHash;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDto;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDtoNonGeoHash;
 import org.songeun.petdongne_server.global.common.ApiResponse;
 import org.songeun.petdongne_server.map.application.MapSearchService;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
@@ -27,8 +29,9 @@ public class MapSearchController {
 
     private final MapSearchService searchService;
 
-    @GetMapping("/clusters")
-    public ResponseEntity<?> search(
+    // ===== 지오 해시 ====== //
+    @GetMapping("/addresses/geoHashes")
+    public ResponseEntity<?> searchAddresses(
             @RequestParam Set<String> geoHashes,
             @RequestParam @Min(1) @Max(14) Integer level
     ){
@@ -38,13 +41,48 @@ public class MapSearchController {
         return ApiResponse.ok(searched);
     }
 
-    @GetMapping("/details")
-    public ResponseEntity<?> searchDetails(
+    @GetMapping("/buildings/geoHashes")
+    public ResponseEntity<?> searchBuildings(
             @RequestParam Set<String> geoHashes,
             @RequestParam @Min(1) @Max(14) Integer level
     ){
         List<BuildingBoundSearchResponseDto> searched = searchService.searchDetailsWithinBounds(
                 geoHashes, KakaoZoomLevel.from(level));
+
+        return ApiResponse.ok(searched);
+    }
+
+    // ===== bbox ====== //
+    @GetMapping("/addresses")
+    public ResponseEntity<?> searchAddressesByBBox(
+            @RequestParam double minLng,
+            @RequestParam double minLat,
+            @RequestParam double maxLng,
+            @RequestParam double maxLat,
+            @RequestParam @Min(1) @Max(14) Integer level
+    ){
+        List<AddressBoundsSearchResponseDtoNoneGeoHash> searched =
+                searchService.searchClustersWithinBounds(
+                        minLng, minLat, maxLng, maxLat,
+                        KakaoZoomLevelCategory.from(level)
+                );
+
+        return ApiResponse.ok(searched);
+    }
+
+    @GetMapping("/buildings")
+    public ResponseEntity<?> searchBuildingsByBBox(
+            @RequestParam double minLng,
+            @RequestParam double minLat,
+            @RequestParam double maxLng,
+            @RequestParam double maxLat,
+            @RequestParam @Min(1) @Max(14) Integer level
+    ){
+        List<BuildingBoundSearchResponseDtoNonGeoHash> searched =
+                searchService.searchDetailsWithinBounds(
+                        minLng, minLat, maxLng, maxLat,
+                        KakaoZoomLevel.from(level)
+                );
 
         return ApiResponse.ok(searched);
     }

@@ -1,5 +1,7 @@
 package org.songeun.petdongne_server.address.infrastructure.repository;
 
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDtoNoneGeoHash;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.infrastructure.cache.LegalAddressCacheKey;
 import org.songeun.petdongne_server.address.infrastructure.dto.LegalAddressBoundsSearchQueryResponseDto;
@@ -31,4 +33,6 @@ public interface LegalAddressSearchRepository {
     List<LegalAddressGeoHashSearchQueryResponseDto> findByGeoHashAndLevel(
             Set<String> geoHash, RegionAddressLevel regionAddressLevel);
 
+    List<LegalAddressBoundsSearchQueryResponseDto> findByBBox(
+            double minLat, double minLng, double maxLat, double maxLng, RegionAddressLevel level);
 }

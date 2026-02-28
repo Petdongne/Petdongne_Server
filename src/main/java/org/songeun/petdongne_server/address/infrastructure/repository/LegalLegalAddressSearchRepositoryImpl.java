@@ -8,6 +8,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
+import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDtoNoneGeoHash;
 import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 import org.songeun.petdongne_server.address.infrastructure.cache.LegalAddressCacheKey;
 import org.songeun.petdongne_server.address.infrastructure.dto.*;
@@ -131,5 +133,27 @@ public class LegalLegalAddressSearchRepositoryImpl implements LegalAddressSearch
                 .fetch();
     }
 
+    @Override
+    public List<LegalAddressBoundsSearchQueryResponseDto> findByBBox(
+            double minLat, double minLng, double maxLat, double maxLng, RegionAddressLevel level) {
 
+        StringPath regionName;
+        switch (level){
+            case SIDO -> regionName = legalAddress.addressParts.sido;
+            case SIGUNGU -> regionName = legalAddress.addressParts.sigungu;
+            case EMD -> regionName = legalAddress.addressParts.eupmyeondong;
+            case DL -> regionName = legalAddress.addressParts.li;
+            default -> throw new IllegalArgumentException("Unknown region address level: " + level);
+        }
+
+        return queryFactory.select(new QLegalAddressBoundsSearchQueryResponseDto(
+                        regionName, legalAddress.longitude, legalAddress.latitude, legalAddress.regionAddressLevel
+                ))
+                .from(legalAddress)
+                .where(
+                        legalAddress.latitude.between(minLat, maxLat),
+                        legalAddress.longitude.between(minLng, maxLng)
+                )
+                .fetch();
+    }
 }

@@ -3,6 +3,7 @@ package org.songeun.petdongne_server.building.application;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import org.junit.jupiter.api.*;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.building.application.dto.BuildingDetailResponseDto;
 import org.songeun.petdongne_server.building.domain.Building;
 import org.songeun.petdongne_server.building.domain.BuildingGeoHashLengthProvider;

@@ -9,14 +9,14 @@ import org.songeun.petdongne_server.address.domain.RegionAddressLevel;
 @Getter
 public class LegalAddressBoundsSearchQueryResponseDto {
 
-    private final String fullAddress;
+    private final String name;
     private final Double longitude;
     private final Double latitude;
     private final RegionAddressLevel regionLevel;
 
     @QueryProjection
-    public LegalAddressBoundsSearchQueryResponseDto(String fullAddress, Double longitude, Double latitude, RegionAddressLevel regionLevel) {
-        this.fullAddress = fullAddress;
+    public LegalAddressBoundsSearchQueryResponseDto(String name, Double longitude, Double latitude, RegionAddressLevel regionLevel) {
+        this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
         this.regionLevel = regionLevel;

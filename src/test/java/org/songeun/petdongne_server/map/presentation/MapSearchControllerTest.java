@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.songeun.petdongne_server.address.application.dto.AddressBoundsSearchResponseDto;
-import org.songeun.petdongne_server.building.application.BuildingBoundSearchResponseDto;
+import org.songeun.petdongne_server.building.application.dto.BuildingBoundSearchResponseDto;
 import org.songeun.petdongne_server.map.application.MapSearchService;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevel;
 import org.songeun.petdongne_server.map.domain.KakaoZoomLevelCategory;
