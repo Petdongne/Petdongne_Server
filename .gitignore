@@ -40,3 +40,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+**/terraform.tfvars
