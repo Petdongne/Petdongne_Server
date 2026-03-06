@@ -36,16 +36,13 @@ spring:
     active: dev
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:petDongne_v2}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   cloud:
     aws:
-      credentials:
-        access-key: ${AWS_ACCESS_KEY}
-        secret-key : ${AWS_SECRET_KEY}
       region:
         static: ap-northeast-2
       s3:
@@ -53,8 +50,8 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
       ssl:
         enabled: ${REDIS_SSL:false}
 
@@ -131,6 +128,12 @@ spring:
   config:
     activate:
       on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
 
 ---
 spring:
